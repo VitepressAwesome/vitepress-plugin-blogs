@@ -4,6 +4,8 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+pnpmfileChecksum: sha256-jTXdz+po/IVFNeaGbv4PzzLNros91k35kr1tfkgfjps=
+
 importers:
 
   .:
@@ -27,7 +29,7 @@ importers:
   vitepress-plugin-autosidebar-toc:
     dependencies:
       '@knewbeing/utils':
-        specifier: workspace:*
+        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\utils
         version: link:../utils
       sanitize-html:
         specifier: ^2.17.2

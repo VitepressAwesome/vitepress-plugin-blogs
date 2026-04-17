@@ -1,6 +1,6 @@
 {
   "name": "@knewbeing/vitepress-plugin-autosidebar-toc",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Auto-generate sidebar, navigation, and blog components for VitePress. Provides Markdown scanning, metadata extraction, and ready-to-use components (BlogHome, AutoToc, SidebarArticleList).",
   "keywords": [
     "vitepress",
@@ -13,11 +13,29 @@
     "vue3",
     "typescript"
   ],
-  "private": true,
+  "license": "MIT",
+  "author": {
+    "name": "知在",
+    "email": "zz@dmsrs.org",
+    "url": "https://www.dmsrs.org"
+  },
+  "homepage": "https://github.com/VitepressAwesome/vitepress-plugin-blogs#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VitepressAwesome/vitepress-plugin-blogs.git",
+    "directory": "vitepress-plugin-autosidebar-toc"
+  },
+  "bugs": {
+    "url": "https://github.com/VitepressAwesome/vitepress-plugin-blogs/issues"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "files": [
     "dist",
     "client/AutoToc.vue",
@@ -37,7 +55,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@knewbeing/utils": "workspace:*",
+    "@knewbeing/utils": "^0.1.0",
     "sanitize-html": "^2.17.2"
   },
   "devDependencies": {
