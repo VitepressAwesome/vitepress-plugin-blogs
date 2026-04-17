@@ -1,0 +1,19 @@
+{
+  "name": "@knewbeing/vitepress-plugin-blogs",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Monorepo for VitePress blog plugins: utilities and auto-sidebar/TOC plugin.",
+  "engines": {
+    "node": ">=22.16.0 <25"
+  },
+  "scripts": {
+    "build": "pnpm --filter @knewbeing/utils build && pnpm --filter @knewbeing/vitepress-plugin-autosidebar-toc build",
+    "dev": "pnpm -r --parallel --stream --filter @knewbeing/utils --filter @knewbeing/vitepress-plugin-autosidebar-toc run dev",
+    "typecheck": "pnpm -r run typecheck"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.0",
+    "typescript": "^6.0.2"
+  }
+}
