@@ -20,8 +20,11 @@ import { getFrontmatterString } from './frontmatter'
 
 /**
  * 将图片 Buffer 解码为 RGBA 像素数据，用于生成 ThumbHash。
- * 使用动态 import 懒加载 `sharp`（仅在 Node.js 构建阶段使用）。
- * 若 sharp 不可用则返回 null。
+ *
+ * 使用动态 import 懒加载 `sharp`（仅在 Node.js 构建/dev 阶段使用，不打包进 dist）。
+ * `sharp` 声明为可选 peerDependency（`peerDependenciesMeta.sharp.optional = true`）：
+ *   - 若用户已安装 `sharp`（>=0.32.0），则生成 ThumbHash 占位图
+ *   - 若未安装，此函数返回 `null`，cover 图片退化为普通懒加载，不影响其他功能
  */
 async function decodeImageToRgba(
   buf: Buffer,

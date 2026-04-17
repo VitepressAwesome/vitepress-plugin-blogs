@@ -1,6 +1,6 @@
 {
   "name": "@knewbeing/vitepress-plugin-autosidebar-toc",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Auto-generate sidebar, navigation, and blog components for VitePress. Provides Markdown scanning, metadata extraction, and ready-to-use components (BlogHome, AutoToc, SidebarArticleList).",
   "keywords": [
     "vitepress",
@@ -70,9 +70,15 @@
     "vue": "^3.5.32"
   },
   "peerDependencies": {
+    "sharp": ">=0.32.0",
     "vite": "*",
     "vitepress": "*",
     "vue": "^3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "sharp": {
+      "optional": true
+    }
   },
   "exports": {
     ".": {

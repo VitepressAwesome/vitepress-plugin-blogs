@@ -32,6 +32,18 @@ npm install @knewbeing/vitepress-plugin-autosidebar-toc
 pnpm add @knewbeing/vitepress-plugin-autosidebar-toc
 ```
 
+### 可选：ThumbHash 封面占位
+
+若需要为**本地封面图**生成低清占位（ThumbHash），需额外安装 `sharp`：
+
+```bash
+npm install sharp
+# or
+pnpm add sharp
+```
+
+`sharp` 是可选 peerDependency。未安装时封面图退化为普通 `loading="lazy"` 懒加载，不影响其他功能。
+
 ---
 
 ## 快速开始 / Quick Start
