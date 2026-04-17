@@ -1,0 +1,93 @@
+{
+  "name": "@knewbeing/vitepress-plugin-nolebase",
+  "version": "1.0.0",
+  "description": "Vendored nolebase integrations for VitePress — enhanced-readabilities, git-changelog, inline-link-preview, highlight-targeted-heading, index, and more. Derived from @nolebase/integrations (MIT).",
+  "keywords": [
+    "vitepress",
+    "nolebase",
+    "enhanced-readabilities",
+    "git-changelog",
+    "inline-link-preview",
+    "vite-plugin",
+    "typescript"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "知在",
+    "email": "zz@dmsrs.org",
+    "url": "https://www.dmsrs.org"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "tsup"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./vitepress/client": "./src/vitepress/client/index.ts",
+    "./vitepress/vite": {
+      "import": "./dist/vitepress/vite.js",
+      "types": "./dist/vitepress/vite.d.ts"
+    },
+    "./vitepress/markdown-it": {
+      "import": "./dist/vitepress/markdown-it.js",
+      "types": "./dist/vitepress/markdown-it.d.ts"
+    },
+    "./meta/vitepress": {
+      "import": "./dist/meta/vitepress.js",
+      "types": "./dist/meta/vitepress.d.ts"
+    },
+    "./enhanced-readabilities/client": "./src/enhanced-readabilities/client/index.ts",
+    "./enhanced-readabilities/client/style.css": "./src/enhanced-readabilities/client/style.css",
+    "./highlight-targeted-heading/client": "./src/highlight-targeted-heading/client/index.ts",
+    "./highlight-targeted-heading/client/style.css": "./src/highlight-targeted-heading/client/style.css",
+    "./git-changelog/client": "./src/git-changelog/client/index.ts",
+    "./git-changelog/client/style.css": "./src/git-changelog/client/style.css",
+    "./git-changelog/vite": {
+      "import": "./dist/vitepress/vite.js",
+      "types": "./dist/vitepress/vite.d.ts"
+    },
+    "./git-changelog/vite/types": "./src/git-changelog/vite/types.ts",
+    "./inline-link-preview/client": "./src/inline-link-preview/client/index.ts",
+    "./inline-link-preview/client/style.css": "./src/inline-link-preview/client/style.css",
+    "./inline-link-preview/markdown-it": "./src/inline-link-preview/markdown-it/index.ts",
+    "./index-plugin/client": "./src/index-plugin/client/index.ts",
+    "./index-plugin/client/style.css": "./src/index-plugin/client/style.css",
+    "./index-plugin/vitepress": {
+      "import": "./dist/index-plugin/vitepress.js",
+      "types": "./dist/index-plugin/vitepress.d.ts"
+    },
+    "./enhanced-mark/client/style.css": "./src/enhanced-mark/client/style.css",
+    "./ui": "./src/ui/index.ts"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1",
+    "typescript": "^5.7.0"
+  },
+  "peerDependencies": {
+    "vite": "*",
+    "vitepress": "*",
+    "vue": "^3.0.0"
+  },
+  "dependencies": {
+    "@vueuse/core": "*",
+    "colorette": "*",
+    "date-fns": "*",
+    "debug": "*",
+    "defu": "*",
+    "es-toolkit": "*",
+    "execa": "*",
+    "globby": "*",
+    "gray-matter": "*",
+    "hast-util-select": "*",
+    "hast-util-to-text": "*",
+    "markdown-it": "*",
+    "markdown-it-attrs": "*",
+    "rehype-parse": "*",
+    "retext-stringify": "*",
+    "tinyglobby": "*",
+    "uncrypto": "*",
+    "unified": "*",
+    "unist-util-remove": "*",
+    "unist-util-remove-position": "*"
+  }
+}
