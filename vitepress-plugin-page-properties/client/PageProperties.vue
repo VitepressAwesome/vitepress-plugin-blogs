@@ -35,12 +35,75 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="pageData" class="vp-knewbeing-page-properties-container">
-    <div class="vp-knewbeing-page-properties-grid">
-      <div>字数</div>
-      <div>{{ pageData.wordsCount }} 字</div>
-      <div>阅读时间</div>
-      <div>约 {{ pageData.readingTime }} 分钟</div>
+  <div v-if="pageData" my-4 class="vp-knewbeing-page-properties vp-knewbeing-page-properties-container">
+    <div class="vp-knewbeing-page-properties-grid grid grid-cols-[180px_auto] gap-1 <sm:grid-cols-[120px_auto]">
+      <!-- 字数行 -->
+      <div
+        transition="all ease-in-out"
+        flex items-start
+        text="zinc-400 dark:zinc-500 sm <sm:xs"
+        duration-250
+      >
+        <div
+          transition="all ease-in-out"
+          min-h="8 <sm:7"
+          px="2 <sm:1" py="2 <sm:1"
+          w-full flex cursor-pointer items-center
+          bg="hover:zinc-100 dark:hover:zinc-800"
+          rounded-md
+          duration-250
+        >
+          <div i-icon-park-outline:add-text mr-1 />
+          <span overflow-hidden text-ellipsis whitespace-nowrap>字数</span>
+        </div>
+      </div>
+      <div
+        cursor-pointer
+        transition="all ease-in-out"
+        min-h="8 <sm:7"
+        px="2 <sm:1" py="1.5 <sm:1"
+        flex="~ row wrap" items-center gap-1
+        rounded-md
+        text="sm <sm:xs"
+        bg="hover:zinc-100 dark:hover:zinc-800"
+        duration-250
+      >
+        <span>{{ pageData.wordsCount }} 字</span>
+      </div>
+
+      <!-- 阅读时间行 -->
+      <div
+        transition="all ease-in-out"
+        flex items-start
+        text="zinc-400 dark:zinc-500 sm <sm:xs"
+        duration-250
+      >
+        <div
+          transition="all ease-in-out"
+          min-h="8 <sm:7"
+          px="2 <sm:1" py="2 <sm:1"
+          w-full flex cursor-pointer items-center
+          bg="hover:zinc-100 dark:hover:zinc-800"
+          rounded-md
+          duration-250
+        >
+          <div i-icon-park-outline:timer mr-1 />
+          <span overflow-hidden text-ellipsis whitespace-nowrap>阅读时间</span>
+        </div>
+      </div>
+      <div
+        cursor-pointer
+        transition="all ease-in-out"
+        min-h="8 <sm:7"
+        px="2 <sm:1" py="1.5 <sm:1"
+        flex="~ row wrap" items-center gap-1
+        rounded-md
+        text="sm <sm:xs"
+        bg="hover:zinc-100 dark:hover:zinc-800"
+        duration-250
+      >
+        <span>约 {{ pageData.readingTime }} 分钟</span>
+      </div>
     </div>
   </div>
 </template>
