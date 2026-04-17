@@ -10,6 +10,8 @@ export interface BlogArticle {
   tags: string[]
   description: string
   cover: string | null
+  /** ThumbHash base64，用于渲染低清占位图；无时为 null */
+  coverHash: string | null
 }
 
 function parseDate(dateStr: string | null | undefined): string | null {
@@ -42,6 +44,7 @@ function entryToArticle(entry: TocSidebarFileEntry): BlogArticle {
     tags,
     description: entry.excerpt ?? fm.description ?? fm.excerpt ?? fm.summary ?? '',
     cover: entry.cover ?? null,
+    coverHash: entry.coverHash ?? null,
   }
 }
 

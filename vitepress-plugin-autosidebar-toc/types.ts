@@ -201,6 +201,12 @@ export interface TocSidebarFileEntry {
 
   /** 封面图片 URL。 */
   cover: string | null
+
+  /**
+   * 封面图片的 ThumbHash base64 字符串，用于在图片加载前渲染低清占位图。
+   * 仅对本地图片（相对路径）生成；外链和绝对路径为 `null`。
+   */
+  coverHash: string | null
 }
 
 /**

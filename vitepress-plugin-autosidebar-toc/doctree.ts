@@ -18,15 +18,59 @@ import { computeDirectoryDisplayTitle, computeFileDisplayTitle, readMarkdownMeta
 import { getFrontmatterDate } from './frontmatter'
 import { getFrontmatterString } from './frontmatter'
 
-// 解析 cover 图片：将相对路径的图片复制到 public/covers/ 并返回可用的公共 URL。
+/**
+ * 将图片 Buffer 解码为 RGBA 像素数据，用于生成 ThumbHash。
+ * 使用动态 import 懒加载 `sharp`（仅在 Node.js 构建阶段使用）。
+ * 若 sharp 不可用则返回 null。
+ */
+async function decodeImageToRgba(
+  buf: Buffer,
+  targetSize = 100,
+): Promise<{ data: Uint8Array; width: number; height: number } | null> {
+  try {
+    const sharp = (await import('sharp')).default
+    const img = sharp(buf).resize(targetSize, targetSize, { fit: 'inside', withoutEnlargement: true })
+    const { data, info } = await img.ensureAlpha().raw().toBuffer({ resolveWithObject: true })
+    return { data: new Uint8Array(data), width: info.width, height: info.height }
+  }
+  catch {
+    return null
+  }
+}
+
+/**
+ * 将图片 Buffer 生成 ThumbHash base64 字符串。
+ * ThumbHash 是轻量级占位图算法（~30 bytes），可在客户端渲染出低清预览图。
+ * @see https://github.com/evanw/thumbhash
+ */
+async function generateThumbHash(buf: Buffer): Promise<string | null> {
+  try {
+    const { rgbaToThumbHash } = await import('thumbhash')
+    const decoded = await decodeImageToRgba(buf)
+    if (!decoded) return null
+    const hashBytes = rgbaToThumbHash(decoded.width, decoded.height, decoded.data)
+    // 将 Uint8Array 转为 base64 字符串，方便 JSON 传输
+    return Buffer.from(hashBytes).toString('base64')
+  }
+  catch {
+    return null
+  }
+}
+
+interface ResolvedCover {
+  url: string | null
+  hash: string | null
+}
+
+// 解析 cover 图片：将相对路径的图片复制到 public/covers/ 并返回可用的公共 URL 和 ThumbHash。
 async function resolveCoverImage(
   cover: string | undefined,
   mdAbsolutePath: string,
   publicDir: string,
-): Promise<string | null> {
-  if (!cover) return null
-  if (/^https?:\/\//.test(cover)) return cover
-  if (cover.startsWith('/')) return cover
+): Promise<ResolvedCover> {
+  if (!cover) return { url: null, hash: null }
+  if (/^https?:\/\//.test(cover)) return { url: cover, hash: null }
+  if (cover.startsWith('/')) return { url: cover, hash: null }
 
   const imgAbsPath = resolve(dirname(mdAbsolutePath), cover)
   try {
@@ -37,10 +81,11 @@ async function resolveCoverImage(
     const destDir = resolve(publicDir, 'covers')
     await mkdir(destDir, { recursive: true })
     await copyFile(imgAbsPath, resolve(destDir, destName))
-    return `/covers/${destName}`
+    const thumbHash = await generateThumbHash(buf)
+    return { url: `/covers/${destName}`, hash: thumbHash }
   }
   catch {
-    return null
+    return { url: null, hash: null }
   }
 }
 
@@ -97,9 +142,9 @@ export async function createDoctreeFileEntry(
   )
 
   const rawCover = getFrontmatterString(meta.frontmatter, 'cover') ?? getFrontmatterString(meta.frontmatter, 'image') ?? meta.firstImage
-  const coverUrl = publicDir
+  const resolvedCover = publicDir
     ? await resolveCoverImage(rawCover, absolutePath, publicDir)
-    : rawCover ?? null
+    : { url: rawCover ?? null, hash: null }
 
   return {
     name: fileName,
@@ -110,7 +155,8 @@ export async function createDoctreeFileEntry(
     h1: meta.h1 ?? null,
     updatedAt: bestDate ? bestDate.toISOString() : null,
     excerpt: meta.excerpt ?? null,
-    cover: coverUrl,
+    cover: resolvedCover.url,
+    coverHash: resolvedCover.hash,
   }
 }
 

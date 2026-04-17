@@ -3,6 +3,7 @@ import { ref, computed } from "vue";
 import { useRouter, useData } from "vitepress";
 import { useBlogHome } from "./useBlogHome";
 import TagsCloud from "./TagsCloud.vue";
+import ThumbHashImage from "./ThumbHashImage.vue";
 
 const router = useRouter();
 const { isDark } = useData();
@@ -164,7 +165,7 @@ function tagStyle(name: string, isActive: boolean) {
             </p>
           </div>
           <div v-if="item.cover" class="blog-card__cover">
-            <img :src="item.cover" :alt="item.title" loading="lazy" />
+            <ThumbHashImage :src="item.cover" :alt="item.title ?? ''" :hash="item.coverHash" />
           </div>
         </article>
 
@@ -426,12 +427,6 @@ function tagStyle(name: string, isActive: boolean) {
   height: 120px;
   border-radius: 8px;
   overflow: hidden;
-}
-
-.blog-card__cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 /* Pagination */

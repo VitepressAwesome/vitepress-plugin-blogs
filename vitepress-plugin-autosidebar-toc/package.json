@@ -42,6 +42,7 @@
     "client/BlogHome.vue",
     "client/SidebarArticleList.vue",
     "client/TagsCloud.vue",
+    "client/ThumbHashImage.vue",
     "client/useTocEntries.ts",
     "client/useBlogHome.ts",
     "client/useIndexTagsStore.ts",
@@ -55,7 +56,8 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "sanitize-html": "^2.17.2"
+    "sanitize-html": "^2.17.2",
+    "thumbhash": "^0.1.1"
   },
   "devDependencies": {
     "@types/node": "^22.19.17",
@@ -86,6 +88,7 @@
     "./client/useIndexTagsStore": "./client/useIndexTagsStore.ts",
     "./client/useTocSidebarConfig": "./client/useTocSidebarConfig.ts",
     "./client/TagsCloud.vue": "./client/TagsCloud.vue",
+    "./client/ThumbHashImage.vue": "./client/ThumbHashImage.vue",
     "./client/style.css": "./client/style.css"
   }
 }
