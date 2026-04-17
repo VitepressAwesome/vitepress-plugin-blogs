@@ -82,6 +82,24 @@ importers:
         specifier: 2.0.0-alpha.15
         version: 2.0.0-alpha.15(@types/node@22.19.17)(less@4.6.4)(postcss@8.5.10)(typescript@6.0.3)
 
+  vitepress-plugin-remove-sidebar:
+    devDependencies:
+      '@types/node':
+        specifier: ^22.19.17
+        version: 22.19.17
+      tsup:
+        specifier: ^8.5.0
+        version: 8.5.1(postcss@8.5.10)(typescript@6.0.3)
+      typescript:
+        specifier: ^6.0.2
+        version: 6.0.3
+      vite:
+        specifier: ^7.3.2
+        version: 7.3.2(@types/node@22.19.17)(less@4.6.4)
+      vitepress:
+        specifier: 2.0.0-alpha.15
+        version: 2.0.0-alpha.15(@types/node@22.19.17)(less@4.6.4)(postcss@8.5.10)(typescript@6.0.3)
+
 packages:
 
   '@babel/helper-string-parser@7.27.1':
