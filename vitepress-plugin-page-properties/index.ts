@@ -1,14 +1,14 @@
 /**
  * @knewbeing/vitepress-plugin-page-properties
  *
- * 完全自包含的 VitePress 页面属性插件，不依赖任何 `@nolebase` 包。
+ * 完全自包含的 VitePress 页面属性插件，无任何外部依赖（仅 gray-matter）。
  *
  * ## 功能
  *
  * ### 1. PageProperties —— Vite 核心插件
  *
  * 扫描每个 `.md` 文件的正文内容，统计字数与预计阅读时间，并将结果注入
- * 虚拟模块 `virtual:nolebase-page-properties`，客户端组件通过该虚拟模块
+ * 虚拟模块 `virtual:knewbeing-page-properties`，客户端 Vue 组件通过该模块
  * 读取数据并渲染文章属性面板。
  *
  * 支持多语言字数统计：
@@ -19,16 +19,21 @@
  * ### 2. PagePropertiesMarkdownSection —— Markdown 转换插件
  *
  * 在每个 `.md` 文件的 H1 标题之后（或文件开头）自动注入属性组件标签：
- *   - dev 模式：注入 `<NolebasePagePropertiesEditor />`（可编辑 frontmatter）
- *   - build 模式：注入 `<NolebasePageProperties />`（只读展示）
+ *   - dev 模式：注入 `<KnewbeingPagePropertiesEditor />`（可扩展为可编辑）
+ *   - build 模式：注入 `<KnewbeingPageProperties />`（只读展示）
  *
- * 注意：组件名沿用 nolebase 命名约定，与 `@nolebase/integrations` 的
- * `presetClient` 全局注册的组件保持兼容，无需额外注册。
+ * 需在主题 `enhanceApp` 中全局注册这两个客户端 Vue 组件：
+ * ```ts
+ * import PageProperties from '@knewbeing/vitepress-plugin-page-properties/client/PageProperties.vue'
+ * import PagePropertiesEditor from '@knewbeing/vitepress-plugin-page-properties/client/PagePropertiesEditor.vue'
+ * app.component('KnewbeingPageProperties', PageProperties)
+ * app.component('KnewbeingPagePropertiesEditor', PagePropertiesEditor)
+ * ```
  *
  * ### 3. createPagePropertiesDevPatch —— HMR 补丁插件
  *
  * **背景**：在 `vitepress dev` 模式下，虚拟模块
- * `virtual:nolebase-page-properties` 会在任意 `.md` transform 之前被首次
+ * `virtual:knewbeing-page-properties` 会在任意 `.md` transform 之前被首次
  * 请求并缓存为空对象 `{}`。之后即使 `PageProperties` 的 `transform` 已把
  * 字数写入内存，Vite 也不会再推送 HMR 通知。
  *
@@ -56,7 +61,7 @@
  * @module @knewbeing/vitepress-plugin-page-properties
  */
 
-import { relative, extname } from 'node:path'
+import { extname, relative } from 'node:path'
 import { env } from 'node:process'
 import GrayMatter from 'gray-matter'
 import { normalizePath } from 'vite'
@@ -138,13 +143,21 @@ function calculateWordsCountAndReadingTime(content: string): {
 // ── 虚拟模块常量 ──────────────────────────────────────────────────────────────
 
 /**
- * 客户端通过 `import data from 'virtual:nolebase-page-properties'` 访问。
- * 沿用 nolebase 的虚拟模块 ID，确保与 `@nolebase/integrations` 客户端组件兼容。
+ * 客户端通过 `import data from 'virtual:knewbeing-page-properties'` 访问。
+ * 类型声明见包根目录 `client.d.ts`。
  */
-const VIRTUAL_MODULE_ID = 'virtual:nolebase-page-properties'
+const VIRTUAL_MODULE_ID = 'virtual:knewbeing-page-properties'
 const RESOLVED_VIRTUAL_MODULE_ID = `\0${VIRTUAL_MODULE_ID}`
 
-/** 将路径规范化为相对于 srcDir 的小写路径，用作数据索引 key */
+/** HMR 事件：客户端页面挂载时发送，服务端收到后推送最新数据 */
+const HMR_EVENT_CLIENT_MOUNTED = 'knewbeing-page-properties:client-mounted'
+/** HMR 事件：服务端推送更新后的属性数据给客户端 */
+const HMR_EVENT_UPDATED = 'knewbeing-page-properties:updated'
+
+/**
+ * 将绝对路径规范化为相对于 srcDir 的小写 POSIX 路径，用作数据索引 key。
+ * 客户端的 `page.filePath` 也经过同样的小写/规范化处理。
+ */
 function normalizeKey(srcDir: string, filePath: string): string {
   return normalizePath(relative(srcDir, filePath)).toLowerCase()
 }
@@ -157,7 +170,7 @@ export interface PagePropertyData {
   readingTime: number
 }
 
-/** 虚拟模块导出的数据映射（相对路径 → 属性数据）*/
+/** 虚拟模块导出的数据映射（相对路径小写 → 属性数据）*/
 export type PagePropertiesData = Record<string, PagePropertyData>
 
 // ── 插件 1：PageProperties —— Vite 核心插件 ─────────────────────────────────
@@ -167,15 +180,15 @@ export type PagePropertiesData = Record<string, PagePropertyData>
  *
  * 该插件：
  *   1. 在 `transform` 阶段扫描每个 `.md` 文件，计算字数与阅读时间。
- *   2. 通过虚拟模块 `virtual:nolebase-page-properties` 将数据暴露给客户端。
- *   3. 在 dev 模式下监听 `nolebase-page-properties:client-mounted` HMR 事件，
+ *   2. 通过虚拟模块 `virtual:knewbeing-page-properties` 将数据暴露给客户端。
+ *   3. 在 dev 模式下监听 `knewbeing-page-properties:client-mounted` HMR 事件，
  *      实时更新当前页数据并通知客户端（兼容 Vite 5 的 `environments` API）。
  *
  * @returns 标准 Vite 插件实例
  */
 export function PageProperties(): VitePlugin {
   let srcDir = ''
-  /** 存储所有已扫描文件的属性数据，key 为相对路径小写 */
+  /** 存储所有已扫描文件的属性数据，key 为 normalizeKey() 产生的小写相对路径 */
   const pageData: PagePropertiesData = {}
   /** dev 模式下缓存已确认存在的文件路径（小写），避免重复 stat */
   const knownMarkdownFiles = new Set<string>()
@@ -187,17 +200,6 @@ export function PageProperties(): VitePlugin {
      * 以拿到原始 `.md` 内容（含完整 frontmatter）。
      */
     enforce: 'pre',
-
-    config: () => ({
-      optimizeDeps: {
-        // 告知 Vite 不要预打包客户端侧的 nolebase 包（它含 Vue 组件，不适合预打包）
-        exclude: ['@nolebase/vitepress-plugin-page-properties/client'],
-      },
-      ssr: {
-        // SSR 模式下也需要处理 nolebase 客户端组件（VitePress SSG 路径）
-        noExternal: ['@nolebase/vitepress-plugin-page-properties'],
-      },
-    }),
 
     configResolved(config: any) {
       // VitePress 把 srcDir 挂载在 config.vitepress.srcDir
@@ -237,7 +239,11 @@ export function PageProperties(): VitePlugin {
         if (!hot)
           return
 
-        hot.on('nolebase-page-properties:client-mounted', async (data: any) => {
+        /**
+         * 收到客户端发来的 `client-mounted` 事件后，重新读取并解析对应 `.md` 文件，
+         * 更新内存数据，使虚拟模块失效，并推送 `updated` 事件通知客户端重渲染。
+         */
+        hot.on(HMR_EVENT_CLIENT_MOUNTED, async (data: any) => {
           if (!data?.page?.filePath)
             return
           const filePath: string = data.page.filePath
@@ -245,24 +251,28 @@ export function PageProperties(): VitePlugin {
             return
 
           // 检查文件是否存在（首次访问时缓存结果）
-          const lower = filePath.toLowerCase()
-          if (!knownMarkdownFiles.has(lower)) {
+          const lowerFilePath = filePath.toLowerCase()
+          if (!knownMarkdownFiles.has(lowerFilePath)) {
             try {
               const { existsSync, lstatSync } = await import('node:fs')
               if (!existsSync(filePath) || !lstatSync(filePath).isFile())
                 return
-              knownMarkdownFiles.add(lower)
+              knownMarkdownFiles.add(lowerFilePath)
             }
             catch {
               return
             }
           }
 
-          // 重新读取并解析当前文件
+          // 重新读取并解析当前文件，使用与 transform 一致的 normalizeKey
           const { readFileSync } = await import('node:fs')
           const content = readFileSync(filePath, 'utf-8')
           const parsed = GrayMatter(content)
-          pageData[filePath] = calculateWordsCountAndReadingTime(parsed.content)
+          const key = normalizePath(filePath).toLowerCase().replace(
+            normalizePath(srcDir).toLowerCase() + '/',
+            '',
+          )
+          pageData[key] = calculateWordsCountAndReadingTime(parsed.content)
 
           // 使虚拟模块缓存失效并通知客户端
           const moduleGraph = envObj.moduleGraph ?? server.moduleGraph
@@ -272,7 +282,7 @@ export function PageProperties(): VitePlugin {
 
           hot.send({
             type: 'custom',
-            event: 'nolebase-page-properties:updated',
+            event: HMR_EVENT_UPDATED,
             data: pageData,
           })
         })
@@ -294,7 +304,7 @@ export function PageProperties(): VitePlugin {
 /** `PagePropertiesMarkdownSection` 的配置选项 */
 export interface PagePropertiesMarkdownSectionOptions {
   /**
-   * 按相对路径排除的文件列表（相对于 srcDir）。
+   * 按相对路径排除的文件列表（相对于 vite root）。
    * @default ['index.md']
    */
   excludes?: string[]
@@ -310,10 +320,19 @@ const pathHelpers = { pathEndsWith, pathEquals, pathStartsWith }
  * 创建 Markdown 节段注入插件。
  *
  * 在每个 `.md` 文件的 H1 标题之后（若无标题则在文件最前）自动插入属性组件：
- *   - dev 模式：`<NolebasePagePropertiesEditor />` — 支持实时编辑 frontmatter
- *   - build 模式：`<NolebasePageProperties />` — 纯展示
+ *   - dev 模式：`<KnewbeingPagePropertiesEditor />` — 可扩展为内联编辑
+ *   - build 模式：`<KnewbeingPageProperties />` — 只读展示
  *
- * 组件名与 `@nolebase/integrations` 的全局注册名一致，无需额外配置。
+ * 需在主题 `enhanceApp` 中全局注册这两个组件（见模块顶部注释）。
+ *
+ * 支持通过 frontmatter 禁用单篇文章的属性面板：
+ * ```yaml
+ * ---
+ * pageProperties: false
+ * knewbeing:
+ *   pageProperties: false
+ * ---
+ * ```
  *
  * @param options 可选配置
  * @returns 标准 Vite 插件实例
@@ -353,14 +372,15 @@ export function PagePropertiesMarkdownSection(
       // 根据环境选择注入的组件标签
       const componentTag
         = env.NODE_ENV === 'development'
-          ? '\n\n<NolebasePagePropertiesEditor />\n'
-          : '\n\n<NolebasePageProperties />\n\n'
+          ? '\n\n<KnewbeingPagePropertiesEditor />\n'
+          : '\n\n<KnewbeingPageProperties />\n\n'
 
       const parsed = GrayMatter(code)
       const hasFrontmatter = Object.keys(parsed.data).length > 0
 
       // 若 frontmatter 中明确禁用则跳过
-      if (parsed.data?.nolebase?.pageProperties === false)
+      // 同时保留 knewbeing.pageProperties 和 pageProperties 两种写法
+      if (parsed.data?.knewbeing?.pageProperties === false)
         return null
       if (parsed.data?.pageProperties === false)
         return null
@@ -393,7 +413,7 @@ export function PagePropertiesMarkdownSection(
 /**
  * 创建 dev 模式 HMR 补丁插件。
  *
- * **问题根源**：VitePress dev 模式下，虚拟模块 `virtual:nolebase-page-properties`
+ * **问题根源**：VitePress dev 模式下，虚拟模块 `virtual:knewbeing-page-properties`
  * 在 `.md` 文件 transform 之前就被 Vite 缓存为空对象 `{}`。即使后续
  * `PageProperties` 的 `transform` 钩子把字数写入了内存，Vite 也不会再次发送
  * 该虚拟模块的 HMR 通知，导致客户端属性面板始终显示为空。
@@ -449,7 +469,7 @@ export function createPagePropertiesDevPatch(): VitePlugin {
  * 创建完整的页面属性插件组合。
  *
  * 返回数组包含（按顺序）：
- *   1. `PagePropertiesMarkdownSection()` — 向 md 注入组件标签
+ *   1. `PagePropertiesMarkdownSection()` — 向 md 注入 `<KnewbeingPageProperties*>` 标签
  *   2. `PageProperties()` — 扫描 frontmatter，注入虚拟模块
  *   3. `createPagePropertiesDevPatch()` — dev 模式 HMR 补丁
  *
