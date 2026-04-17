@@ -1,7 +1,7 @@
 import { readdir } from 'node:fs/promises'
 import { extname, join, relative } from 'node:path'
 import fg from 'fast-glob'
-import { toPosixPath } from '@knewbeing/utils'
+import { toPosixPath } from './_utils'
 import type { DirNode, ResolvedTocSidebarOptions } from './types'
 
 const SIMPLE_INCLUDE_GLOB = '**/*.md'

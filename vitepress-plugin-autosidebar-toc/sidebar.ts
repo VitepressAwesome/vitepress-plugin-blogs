@@ -1,5 +1,5 @@
 import { basename, extname, join } from 'node:path'
-import { toPosixPath } from '@knewbeing/utils'
+import { toPosixPath } from './_utils'
 import type { DefaultTheme } from 'vitepress'
 import type { DirNode, MarkdownMeta, ResolvedTocSidebarOptions, TocSidebarNavOptions } from './types'
 import { toVitePressDirectoryRoute, toVitePressPageRoute } from './routing'

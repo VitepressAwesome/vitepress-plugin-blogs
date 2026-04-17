@@ -27,7 +27,7 @@
 
 import { writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
-import { toNormalizedAbsolutePath } from '@knewbeing/utils'
+import { toNormalizedAbsolutePath } from './_utils'
 import type { DefaultTheme } from 'vitepress'
 import type { ConfigEnv, Plugin } from 'vite'
 import type {

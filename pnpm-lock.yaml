@@ -17,20 +17,8 @@ importers:
         specifier: ^6.0.2
         version: 6.0.3
 
-  utils:
-    devDependencies:
-      '@types/node':
-        specifier: ^22.19.17
-        version: 22.19.17
-      tsup:
-        specifier: ^8.5.0
-        version: 8.5.1(postcss@8.5.10)(typescript@6.0.3)
-
   vitepress-plugin-autosidebar-toc:
     dependencies:
-      '@knewbeing/utils':
-        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\utils
-        version: link:../utils
       sanitize-html:
         specifier: ^2.17.2
         version: 2.17.3

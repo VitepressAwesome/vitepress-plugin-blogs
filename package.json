@@ -8,8 +8,8 @@
     "node": ">=22.16.0 <25"
   },
   "scripts": {
-    "build": "pnpm --filter @knewbeing/utils build && pnpm --filter @knewbeing/vitepress-plugin-autosidebar-toc build && pnpm --filter @knewbeing/vitepress-plugin-page-properties build && pnpm --filter @knewbeing/vitepress-plugin-remove-sidebar build",
-    "dev": "pnpm -r --parallel --stream --filter @knewbeing/utils --filter @knewbeing/vitepress-plugin-autosidebar-toc --filter @knewbeing/vitepress-plugin-page-properties --filter @knewbeing/vitepress-plugin-remove-sidebar run dev",
+    "build": "pnpm --filter @knewbeing/vitepress-plugin-autosidebar-toc build && pnpm --filter @knewbeing/vitepress-plugin-page-properties build && pnpm --filter @knewbeing/vitepress-plugin-remove-sidebar build",
+    "dev": "pnpm -r --parallel --stream --filter @knewbeing/vitepress-plugin-autosidebar-toc --filter @knewbeing/vitepress-plugin-page-properties --filter @knewbeing/vitepress-plugin-remove-sidebar run dev",
     "typecheck": "pnpm -r run typecheck"
   },
   "devDependencies": {

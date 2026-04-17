@@ -1,4 +1,4 @@
-import { isRecord } from '@knewbeing/utils'
+import { isRecord } from './_utils'
 import type { Frontmatter } from './types'
 
 // 将任意 frontmatter 输入安全转换为对象。
