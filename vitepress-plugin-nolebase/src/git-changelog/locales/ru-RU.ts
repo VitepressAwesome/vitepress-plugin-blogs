@@ -1,0 +1,17 @@
+// Auto-converted from YAML locale - Derived from @nolebase/integrations (MIT)
+export default {
+  "changelog": {
+    "title": "История изменений",
+    "titleId": "история-изменений",
+    "noData": "Нет изменений",
+    "lastEdited": "Последнее редактирование {{daysAgo}}",
+    "lastEditedDateFnsLocaleName": "ru",
+    "viewFullHistory": "Показать историю",
+    "committedOn": " от {{date}}"
+  },
+  "contributors": {
+    "title": "Авторы",
+    "titleId": "авторы",
+    "noData": "Нет информации"
+  }
+} as const

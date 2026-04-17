@@ -57,7 +57,8 @@
       "types": "./dist/index-plugin/vitepress.d.ts"
     },
     "./enhanced-mark/client/style.css": "./src/enhanced-mark/client/style.css",
-    "./ui": "./src/ui/index.ts"
+    "./ui": "./src/ui/index.ts",
+    "./ui/style.css": "./src/ui/style.css"
   },
   "devDependencies": {
     "tsup": "^8.5.1",
