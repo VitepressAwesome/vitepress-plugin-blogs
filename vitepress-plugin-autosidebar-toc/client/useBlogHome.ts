@@ -50,6 +50,42 @@ function entryToArticle(entry: TocSidebarFileEntry): BlogArticle {
 
 const PAGE_SIZE = 10
 
+// 模块级缓存：文章列表只在首次加载时构建（map + sort 只做一次）
+let _articlesCache: BlogArticle[] | null = null
+let _articlesLoadingPromise: Promise<BlogArticle[]> | null = null
+
+async function fetchAllArticles(): Promise<BlogArticle[]> {
+  if (_articlesCache) return _articlesCache
+  if (_articlesLoadingPromise) return _articlesLoadingPromise
+
+  _articlesLoadingPromise = (async () => {
+    const rootNode = await loadNode('/')
+    if (!rootNode) return []
+
+    const allEntries: TocSidebarFileEntry[] = [
+      ...rootNode.fileItems.filter(f => f.name !== 'index.md'),
+    ]
+    const results = await Promise.all(
+      rootNode.directoryItems.map(d => collectAllFileEntries(d.path)),
+    )
+    for (const entries of results) allEntries.push(...entries)
+
+    _articlesCache = allEntries
+      .map(entryToArticle)
+      .sort((a, b) => {
+        if (a.date && b.date) return b.date.localeCompare(a.date)
+        if (a.date) return -1
+        if (b.date) return 1
+        return 0
+      })
+    return _articlesCache
+  })()
+
+  const result = await _articlesLoadingPromise
+  _articlesLoadingPromise = null
+  return result
+}
+
 export function useBlogHome() {
   const route = useRoute()
   const router = useRouter()
@@ -83,30 +119,7 @@ export function useBlogHome() {
   }
 
   async function loadAllArticles() {
-    const rootNode = await loadNode('/')
-    if (!rootNode) return
-
-    const allDirKeys = rootNode.directoryItems.map(d => d.path)
-    const allEntries: TocSidebarFileEntry[] = []
-
-    const rootFiles = rootNode.fileItems.filter(f => f.name !== 'index.md')
-    allEntries.push(...rootFiles)
-
-    const results = await Promise.all(allDirKeys.map(k => collectAllFileEntries(k)))
-    for (const entries of results) {
-      allEntries.push(...entries)
-    }
-
-    const arts = allEntries
-      .map(entryToArticle)
-      .sort((a, b) => {
-        if (a.date && b.date) return b.date.localeCompare(a.date)
-        if (a.date) return -1
-        if (b.date) return 1
-        return 0
-      })
-
-    articles.value = arts
+    articles.value = await fetchAllArticles()
   }
 
   const filteredArticles = computed(() => {

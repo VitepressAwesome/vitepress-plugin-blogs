@@ -139,6 +139,19 @@ export interface UseTocEntriesOptions {
   rootKeyStrategy?: RootKeyStrategy
 }
 
+// ── 模块级缓存：排序后的基础条目（不含 active 标志） ──
+// dirKey → sorted base items（首次加载后永久缓存，避免重复 map/sort）
+interface BaseFileItem {
+  text: string
+  link: string
+  date: string | null
+  tags: string[]
+  linkNormalized: string
+  linkClean: string
+}
+
+const sortedBaseCache = new Map<string, BaseFileItem[]>()
+
 export function useTocEntries(options: UseTocEntriesOptions = {}) {
   const { rootKeyStrategy = 'currentDir' } = options
   const route = useRoute()
@@ -201,39 +214,52 @@ export function useTocEntries(options: UseTocEntriesOptions = {}) {
         }
       }
 
-      const entries = await collectAllFileEntries(dirKey)
       const currentPath = normalizePath(route.path)
       const currentPathClean = currentPath.replace(/\.html$/, '')
 
-      const seen = new Set<string>()
-      fileItems.value = entries
-        .map((f) => {
-          const date = formatDate(f.updatedAt ?? null)
-          const linkNormalized = normalizePath(f.link)
-          const linkClean = linkNormalized.replace(/\.html$/, '')
-          const active = currentPathClean === linkClean
-            || currentPath === linkNormalized
-            || currentPath === `${linkNormalized}/`
-          const fm = f.frontmatter ?? {}
-          const tags: string[] = Array.isArray(fm.tags)
-            ? fm.tags.filter((t: unknown): t is string => typeof t === 'string')
-            : typeof fm.tags === 'string'
-              ? [fm.tags]
-              : []
-          return { text: f.displayText, link: f.link, date, active, tags }
-        })
-        .filter((item) => {
-          const key = normalizePath(item.link, true)
-          if (seen.has(key)) return false
-          seen.add(key)
-          return true
-        })
-        .sort((a, b) => {
-          if (a.date && b.date) return b.date.localeCompare(a.date)
-          if (a.date) return -1
-          if (b.date) return 1
-          return 0
-        })
+      // 读取缓存基础条目；首次加载时构建并缓存（map + dedup + sort 只做一次）
+      let base = sortedBaseCache.get(dirKey)
+      if (!base) {
+        const entries = await collectAllFileEntries(dirKey)
+        const seen = new Set<string>()
+        base = entries
+          .map((f) => {
+            const date = formatDate(f.updatedAt ?? null)
+            const linkNormalized = normalizePath(f.link)
+            const linkClean = linkNormalized.replace(/\.html$/, '')
+            const fm = f.frontmatter ?? {}
+            const tags: string[] = Array.isArray(fm.tags)
+              ? fm.tags.filter((t: unknown): t is string => typeof t === 'string')
+              : typeof fm.tags === 'string'
+                ? [fm.tags]
+                : []
+            return { text: f.displayText, link: f.link, date, tags, linkNormalized, linkClean }
+          })
+          .filter((item) => {
+            const key = normalizePath(item.link, true)
+            if (seen.has(key)) return false
+            seen.add(key)
+            return true
+          })
+          .sort((a, b) => {
+            if (a.date && b.date) return b.date.localeCompare(a.date)
+            if (a.date) return -1
+            if (b.date) return 1
+            return 0
+          })
+        sortedBaseCache.set(dirKey, base)
+      }
+
+      // 仅重算 active 标志（O(n) 比较，无 GC 压力的 object 创建）
+      fileItems.value = base.map(item => ({
+        text: item.text,
+        link: item.link,
+        date: item.date,
+        tags: item.tags,
+        active: currentPathClean === item.linkClean
+          || currentPath === item.linkNormalized
+          || currentPath === `${item.linkNormalized}/`,
+      }))
     },
     { immediate: true },
   )

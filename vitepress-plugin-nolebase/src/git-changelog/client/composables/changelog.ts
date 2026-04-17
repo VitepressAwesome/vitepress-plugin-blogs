@@ -7,7 +7,7 @@ import type { PageData } from 'vitepress'
 import changelog from 'virtual:nolebase-git-changelog'
 
 import { useData } from 'vitepress'
-import { computed, shallowRef, toValue } from 'vue'
+import { computed, effectScope, shallowRef, toValue } from 'vue'
 
 import { isStringArray } from '../utils'
 
@@ -30,65 +30,79 @@ interface SharedChangelogState {
   gitChangelog: ShallowRef<Changelog>
   commits: ComputedRef<CommitWithAuthorInfo[]>
   authors: ComputedRef<AuthorInfo[]>
+  /** 防止 HMR 监听器重复注册 */
+  hmrSetup: boolean
 }
 
+// effectScope(true) 创建的是游离 scope，不依附任何组件生命周期，
+// computed 不会因为组件卸载而停止（SPA 导航安全）。
+// SSR：每次页面渲染的 Vue app 会产生新的 page ref，旧 scope 被 stop() 释放。
+let _scope: ReturnType<typeof effectScope> | null = null
 let _shared: SharedChangelogState | null = null
 
 function getOrCreate(page: Ref<PageData>): SharedChangelogState {
-  // 若 page ref 相同则直接复用；ref 不同说明是新的 Vue app 实例（SSR 隔离）
+  // 若 page ref 身份相同则直接复用（SPA 整个生命周期共用一个 page ref）
   if (_shared && _shared.page === page)
     return _shared
 
-  const gitChangelog = shallowRef<Changelog>(changelog || { commits: [], authors: [] })
+  // SSR：每次渲染用新 page ref，停止旧 scope 防止内存泄漏
+  _scope?.stop()
+  _scope = effectScope(true)
 
-  const _commits = computed<Commit[]>(() => {
-    const currentPath = toValue(page.value.filePath)
-    const allCommits = gitChangelog.value.commits
-    const commits = allCommits.filter(c => c.paths.includes(currentPath))
+  const state = _scope.run(() => {
+    const gitChangelog = shallowRef<Changelog>(changelog || { commits: [], authors: [] })
 
-    return commits
-      .sort((a, b) => b.date_timestamp - a.date_timestamp)
-      .filter((commit, index) => {
-        if (commit.tag && (!commits[index + 1] || commits[index + 1]?.tag))
-          return false
-        return true
-      })
-  })
+    const _commits = computed<Commit[]>(() => {
+      const currentPath = toValue(page.value.filePath)
+      const allCommits = gitChangelog.value.commits
+      const commits = allCommits.filter(c => c.paths.includes(currentPath))
 
-  const authors = computed<AuthorInfo[]>(() => {
-    const uniq = new Map<string, AuthorInfo>()
+      return commits
+        .sort((a, b) => b.date_timestamp - a.date_timestamp)
+        .filter((commit, index) => {
+          if (commit.tag && (!commits[index + 1] || commits[index + 1]?.tag))
+            return false
+          return true
+        })
+    })
 
-    const authorsFromFrontMatter: string[] = isStringArray(page.value.frontmatter.authors)
-      ? page.value.frontmatter.authors
-      : []
+    const authors = computed<AuthorInfo[]>(() => {
+      const uniq = new Map<string, AuthorInfo>()
 
-    ;[..._commits.value.map(c => c.authors), ...authorsFromFrontMatter]
-      .flat()
-      .forEach((name) => {
-        if (!uniq.has(name))
-          uniq.set(name, { name, commitsCount: 1 })
-        else
-          uniq.get(name)!.commitsCount++
-      })
+      const authorsFromFrontMatter: string[] = isStringArray(page.value.frontmatter.authors)
+        ? page.value.frontmatter.authors
+        : []
 
-    return Array.from(uniq.values())
-      .sort((a, b) => b.commitsCount - a.commitsCount)
-      .map(a => ({
-        ...a,
-        ...gitChangelog.value.authors.find(item => item.name === a.name) ?? {
-          avatarUrl: `https://gravatar.com/avatar/${a.name}?d=retro`,
-        },
-      }))
-  })
+      ;[..._commits.value.map(c => c.authors), ...authorsFromFrontMatter]
+        .flat()
+        .forEach((name) => {
+          if (!uniq.has(name))
+            uniq.set(name, { name, commitsCount: 1 })
+          else
+            uniq.get(name)!.commitsCount++
+        })
 
-  const commits = computed<CommitWithAuthorInfo[]>(() =>
-    _commits.value.map(_c => ({
-      ..._c,
-      authors: _c.authors.map(_a => authors.value.find(v => v.name === _a)!),
-    })),
-  )
+      return Array.from(uniq.values())
+        .sort((a, b) => b.commitsCount - a.commitsCount)
+        .map(a => ({
+          ...a,
+          ...gitChangelog.value.authors.find(item => item.name === a.name) ?? {
+            avatarUrl: `https://gravatar.com/avatar/${a.name}?d=retro`,
+          },
+        }))
+    })
 
-  _shared = { page, gitChangelog, commits, authors }
+    const commits = computed<CommitWithAuthorInfo[]>(() =>
+      _commits.value.map(_c => ({
+        ..._c,
+        authors: _c.authors.map(_a => authors.value.find(v => v.name === _a)!),
+      })),
+    )
+
+    return { gitChangelog, commits, authors }
+  })!
+
+  _shared = { page, ...state, hmrSetup: false }
   return _shared
 }
 
@@ -103,25 +117,27 @@ export function useChangelog() {
   }
 
   const useHmr = () => {
-    if (import.meta.hot) {
-      import.meta.hot.send('nolebase-git-changelog:client-mounted', {
-        page: { filePath: page.value.filePath },
-      })
+    // 防止 Changelog.vue 和 Contributors.vue 同时调用时重复注册 HMR 监听器
+    if (state.hmrSetup || !import.meta.hot) return
+    state.hmrSetup = true
 
-      // Plugin API | Vite
-      // https://vitejs.dev/guide/api-plugin.html#handlehotupdate
-      import.meta.hot.on('nolebase-git-changelog:updated', (data) => {
-        if (data && typeof data === 'object')
-          update(data as Changelog)
-      })
+    import.meta.hot.send('nolebase-git-changelog:client-mounted', {
+      page: { filePath: page.value.filePath },
+    })
 
-      // HMR API | Vite
-      // https://vitejs.dev/guide/api-hmr.html
-      import.meta.hot.accept('virtual:nolebase-git-changelog', (newModule) => {
-        if (newModule && 'default' in newModule && newModule.default)
-          update(newModule.default as Changelog)
-      })
-    }
+    // Plugin API | Vite
+    // https://vitejs.dev/guide/api-plugin.html#handlehotupdate
+    import.meta.hot.on('nolebase-git-changelog:updated', (data) => {
+      if (data && typeof data === 'object')
+        update(data as Changelog)
+    })
+
+    // HMR API | Vite
+    // https://vitejs.dev/guide/api-hmr.html
+    import.meta.hot.accept('virtual:nolebase-git-changelog', (newModule) => {
+      if (newModule && 'default' in newModule && newModule.default)
+        update(newModule.default as Changelog)
+    })
   }
 
   return {
