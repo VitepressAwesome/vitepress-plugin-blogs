@@ -1,0 +1,37 @@
+{
+  "name": "@knewbeing/utils",
+  "version": "0.0.0",
+  "description": "Cross-platform utility library for VitePress projects. Provides path handling, type detection, text sanitization, and ESM environment support.",
+  "keywords": [
+    "utils",
+    "vitepress",
+    "path",
+    "cross-platform",
+    "esm",
+    "typescript"
+  ],
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.17",
+    "tsup": "^8.5.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  }
+}

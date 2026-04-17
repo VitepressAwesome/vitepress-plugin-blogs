@@ -1,0 +1,9 @@
+/* ── SidebarArticleList: hide empty groups created by createRemoveSidebarPlugin ── */
+.VPSidebar .group {
+  display: none;
+}
+
+/* ── IndexTagsAside: hide outline on index pages, replaced by TagsCloud ── */
+body.is-index-page .VPDocAsideOutline {
+  display: none;
+}
