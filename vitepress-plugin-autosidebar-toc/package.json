@@ -79,6 +79,11 @@
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
+    "./vitepress-plugins": {
+      "types": "./dist/vitepress-plugins.d.ts",
+      "import": "./dist/vitepress-plugins.js",
+      "default": "./dist/vitepress-plugins.js"
+    },
     "./client/AutoToc.vue": "./client/AutoToc.vue",
     "./client/BlogHome.vue": "./client/BlogHome.vue",
     "./client/SidebarArticleList.vue": "./client/SidebarArticleList.vue",

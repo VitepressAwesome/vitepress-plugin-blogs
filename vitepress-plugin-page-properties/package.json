@@ -1,0 +1,65 @@
+{
+  "name": "@knewbeing/vitepress-plugin-page-properties",
+  "version": "0.1.0",
+  "description": "Enhanced wrapper for @nolebase/vitepress-plugin-page-properties with merged dev-mode HMR patch plugin.",
+  "keywords": [
+    "vitepress",
+    "page-properties",
+    "frontmatter",
+    "blog",
+    "vite-plugin",
+    "typescript"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "知在",
+    "email": "zz@dmsrs.org",
+    "url": "https://www.dmsrs.org"
+  },
+  "homepage": "https://github.com/VitepressAwesome/vitepress-plugin-blogs#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VitepressAwesome/vitepress-plugin-blogs.git",
+    "directory": "vitepress-plugin-page-properties"
+  },
+  "bugs": {
+    "url": "https://github.com/VitepressAwesome/vitepress-plugin-blogs/issues"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@nolebase/vitepress-plugin-page-properties": "^2.18.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.17",
+    "tsup": "^8.5.0",
+    "typescript": "^6.0.2",
+    "vite": "^7.3.2",
+    "vitepress": "2.0.0-alpha.15"
+  },
+  "peerDependencies": {
+    "vite": "*",
+    "vitepress": "*"
+  }
+}

@@ -1,3 +1,4 @@
 packages:
   - utils
   - vitepress-plugin-autosidebar-toc
+  - vitepress-plugin-page-properties
