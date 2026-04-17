@@ -62,9 +62,9 @@ importers:
 
   vitepress-plugin-page-properties:
     dependencies:
-      '@nolebase/vitepress-plugin-page-properties':
-        specifier: ^2.18.2
-        version: 2.18.2(vitepress@2.0.0-alpha.15(@types/node@22.19.17)(less@4.6.4)(postcss@8.5.10)(typescript@6.0.3))(vue@3.5.32(typescript@6.0.3))
+      gray-matter:
+        specifier: ^4.0.3
+        version: 4.0.3
     devDependencies:
       '@types/node':
         specifier: ^22.19.17
@@ -263,12 +263,6 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@iconify-json/icon-park-outline@1.2.4':
-    resolution: {integrity: sha512-NyZxXe2gD2TbTOyoRRMdtEJhr6i2KQCdDlYYoOn5oZLndQjwpIhw79hzeFhXvP38/o40D3gQ+l+IaSJgbB+0TQ==}
-
-  '@iconify-json/octicon@1.2.22':
-    resolution: {integrity: sha512-6m0IXGRR3ooNDXoQetk4JR8rijoXQGqSKPFsOYBFx7xMJeLgIo1dTRCY8P/4FJbIHUvWj/DfRzkFrPLAW8gHCQ==}
-
   '@iconify-json/simple-icons@1.2.78':
     resolution: {integrity: sha512-I3lkNp0Qu7q2iZWkdcf/I2hqGhzK6qxdILh9T7XqowQrnpmG/BayDsiCf6PktDoWlW0U971xA5g+panm+NFrfQ==}
 
@@ -290,17 +284,6 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
-
-  '@nolebase/ui@2.18.2':
-    resolution: {integrity: sha512-xxfRacF9cqQ5/umMhvhr0y2W4SkhzTmrrAHJ0UAAu/pIWfV/JPE9Hj0buH06bK7ZEUur+036gxkKlStI6UtDBw==}
-    peerDependencies:
-      vitepress: ^1.5.0 || ^2.0.0-alpha.1
-      vue: '>= 3.5.18'
-
-  '@nolebase/vitepress-plugin-page-properties@2.18.2':
-    resolution: {integrity: sha512-ppEHZoRGGeEg2FYbz/bz6wMOZVpmAiiDPp3MnRyh3T4tsuoAYf926vEp+zTUzfjzyQrxaAbwjugs3ek+m2utwA==}
-    peerDependencies:
-      vitepress: ^1.5.0 || ^2.0.0-alpha.1
 
   '@rolldown/pluginutils@1.0.0-rc.13':
     resolution: {integrity: sha512-3ngTAv6F/Py35BsYbeeLeecvhMKdsKm4AoOETVhAA+Qc8nrA2I0kF7oa93mE9qnIurngOSpMnQ0x2nQY2FPviA==}
@@ -660,9 +643,6 @@ packages:
 
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
-
-  date-fns@4.1.0:
-    resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
 
   debug@4.4.3:
     resolution: {integrity: sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==}
@@ -1124,10 +1104,6 @@ packages:
     resolution: {integrity: sha512-5uKD0nqiYVzlmCRs01Fhs2BdkEgBS3SAVP6ndrBsuK42iC2+JHyxM05Rm9G8+5mkmRtzMZGY8Ct5+mliZxU/Ww==}
     engines: {node: '>=18.12.0'}
 
-  uuid@11.1.0:
-    resolution: {integrity: sha512-0/A9rDy9P7cJ+8w1c9WD9V//9Wj15Ce2MPz8Ri6032usz+NfePxx5AcN3bN+r6ZL6jEo066/yNYB3tn4pQEx+A==}
-    hasBin: true
-
   vfile-message@4.0.3:
     resolution: {integrity: sha512-QTHzsGd1EhbZs4AsQ20JX1rC3cOlt/IWJruk893DfLRr57lcnOeMaWG4K0JrRta4mIJZKth2Au3mM3u03/JWKw==}
 
@@ -1300,14 +1276,6 @@ snapshots:
   '@esbuild/win32-x64@0.27.7':
     optional: true
 
-  '@iconify-json/icon-park-outline@1.2.4':
-    dependencies:
-      '@iconify/types': 2.0.0
-
-  '@iconify-json/octicon@1.2.22':
-    dependencies:
-      '@iconify/types': 2.0.0
-
   '@iconify-json/simple-icons@1.2.78':
     dependencies:
       '@iconify/types': 2.0.0
@@ -1332,26 +1300,6 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
-
-  '@nolebase/ui@2.18.2(vitepress@2.0.0-alpha.15(@types/node@22.19.17)(less@4.6.4)(postcss@8.5.10)(typescript@6.0.3))(vue@3.5.32(typescript@6.0.3))':
-    dependencies:
-      '@iconify-json/octicon': 1.2.22
-      less: 4.6.4
-      vitepress: 2.0.0-alpha.15(@types/node@22.19.17)(less@4.6.4)(postcss@8.5.10)(typescript@6.0.3)
-      vue: 3.5.32(typescript@6.0.3)
-
-  '@nolebase/vitepress-plugin-page-properties@2.18.2(vitepress@2.0.0-alpha.15(@types/node@22.19.17)(less@4.6.4)(postcss@8.5.10)(typescript@6.0.3))(vue@3.5.32(typescript@6.0.3))':
-    dependencies:
-      '@iconify-json/icon-park-outline': 1.2.4
-      '@iconify-json/octicon': 1.2.22
-      '@nolebase/ui': 2.18.2(vitepress@2.0.0-alpha.15(@types/node@22.19.17)(less@4.6.4)(postcss@8.5.10)(typescript@6.0.3))(vue@3.5.32(typescript@6.0.3))
-      date-fns: 4.1.0
-      gray-matter: 4.0.3
-      less: 4.6.4
-      uuid: 11.1.0
-      vitepress: 2.0.0-alpha.15(@types/node@22.19.17)(less@4.6.4)(postcss@8.5.10)(typescript@6.0.3)
-    transitivePeerDependencies:
-      - vue
 
   '@rolldown/pluginutils@1.0.0-rc.13': {}
 
@@ -1635,10 +1583,9 @@ snapshots:
   copy-anything@3.0.5:
     dependencies:
       is-what: 4.1.16
+    optional: true
 
   csstype@3.2.3: {}
-
-  date-fns@4.1.0: {}
 
   debug@4.4.3:
     dependencies:
@@ -1788,7 +1735,8 @@ snapshots:
 
   is-plain-object@5.0.0: {}
 
-  is-what@4.1.16: {}
+  is-what@4.1.16:
+    optional: true
 
   joycon@3.1.1: {}
 
@@ -1811,6 +1759,7 @@ snapshots:
       mime: 1.6.0
       needle: 3.5.0
       source-map: 0.6.1
+    optional: true
 
   lilconfig@3.1.3: {}
 
@@ -1903,7 +1852,8 @@ snapshots:
       regex: 6.1.0
       regex-recursion: 6.0.2
 
-  parse-node-version@1.0.1: {}
+  parse-node-version@1.0.1:
+    optional: true
 
   parse-srcset@1.0.2: {}
 
@@ -2165,8 +2115,6 @@ snapshots:
       acorn: 8.16.0
       picomatch: 4.0.4
       webpack-virtual-modules: 0.6.2
-
-  uuid@11.1.0: {}
 
   vfile-message@4.0.3:
     dependencies:

@@ -1,11 +1,13 @@
 {
   "name": "@knewbeing/vitepress-plugin-page-properties",
   "version": "0.1.0",
-  "description": "Enhanced wrapper for @nolebase/vitepress-plugin-page-properties with merged dev-mode HMR patch plugin.",
+  "description": "Page-properties Vite plugin for VitePress: word count, reading time, and dev-mode HMR patch. Fully self-contained, no @nolebase dependency.",
   "keywords": [
     "vitepress",
     "page-properties",
     "frontmatter",
+    "word-count",
+    "reading-time",
     "blog",
     "vite-plugin",
     "typescript"
@@ -49,7 +51,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@nolebase/vitepress-plugin-page-properties": "^2.18.2"
+    "gray-matter": "^4.0.3"
   },
   "devDependencies": {
     "@types/node": "^22.19.17",
