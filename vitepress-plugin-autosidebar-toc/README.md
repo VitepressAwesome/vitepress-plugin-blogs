@@ -1,230 +1,288 @@
 # @knewbeing/vitepress-plugin-autosidebar-toc
 
-自动生成 VitePress 侧边栏、导航栏和文章列表的一站式插件。
+[![npm version](https://img.shields.io/npm/v/@knewbeing/vitepress-plugin-autosidebar-toc.svg)](https://www.npmjs.com/package/@knewbeing/vitepress-plugin-autosidebar-toc)
+[![license](https://img.shields.io/npm/l/@knewbeing/vitepress-plugin-autosidebar-toc.svg)](./LICENSE)
 
-支持自动扫描 Markdown 文档、生成目录树、创建侧边栏配置、提取元数据，并提供开箱即用的 BlogHome 和 AutoToc 组件。
+> All-in-one VitePress plugin: auto-generate sidebar, navigation, and blog components from your Markdown files.
 
-## 功能特性
+自动生成 VitePress 侧边栏、导航栏和文章列表的一站式插件。支持自动扫描 Markdown 文档、生成目录树、创建侧边栏配置、提取元数据，并提供开箱即用的 BlogHome 和 AutoToc 组件。
 
-- 🚀 **自动侧边栏生成** - 根据目录结构自动生成 VitePress 侧边栏配置
-- 📚 **文章索引** - 提取 Frontmatter 元数据，生成文章列表和目录树
-- 🏠 **博客首页组件** - 开箱即用的 BlogHome 组件，支持封面、摘要、标签展示
-- 📝 **TOC 组件** - AutoToc 和 SidebarArticleList 组件用于文章导航
-- 🔍 **虚拟模块** - 通过虚拟模块访问 doctree 数据，实现实时更新
-- 🛠️ **高度可定制** - 支持自定义排序、过滤、导航插件等
-- 📦 **增量更新** - 开发模式支持增量更新，提升开发体验
+---
 
-## 安装
+## 功能特性 / Features
+
+- 🚀 **自动侧边栏** — 根据目录结构自动生成 VitePress `themeConfig.sidebar`
+- 🗺 **自动导航** — 可选自动生成 `themeConfig.nav`，支持多级下拉
+- 📚 **文章索引** — 提取 Frontmatter 元数据（标题、日期、标签、摘要、封面）
+- 🏠 **BlogHome 组件** — 开箱即用的博客首页，带分页、标签过滤
+- 📝 **AutoToc 组件** — 文章内目录导航，跟踪当前阅读位置
+- 📋 **SidebarArticleList 组件** — 侧边栏文章列表，可按目录过滤
+- 🖼 **ThumbHash 封面占位** — 自动为本地封面图生成低清占位（~30 bytes），渐进加载
+- 🔍 **虚拟模块** — `virtual:@knewbeing/toc-sidebar-doctree`，按需获取目录树数据
+- 📦 **增量更新** — dev 模式支持增量更新，文件变更后自动重计算
+- 🛠 **高度可定制** — 支持自定义排序、过滤规则、导航插件等
+
+---
+
+## 安装 / Installation
 
 ```bash
 npm install @knewbeing/vitepress-plugin-autosidebar-toc
-# 或
+# or
 pnpm add @knewbeing/vitepress-plugin-autosidebar-toc
 ```
 
-## 快速开始
+---
 
-### 在 VitePress Config 中使用
+## 快速开始 / Quick Start
 
-```typescript
+### 1. 注册 Vite 插件
+
+```ts
 // .vitepress/config.ts
+import { defineConfig } from 'vitepress'
 import { createTocSidebarVitePlugin } from '@knewbeing/vitepress-plugin-autosidebar-toc'
+import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { dirname, resolve } from 'node:path'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-export default {
+export default defineConfig({
   vite: {
     plugins: [
       createTocSidebarVitePlugin({
-        baseDir: resolve(__dirname, '../'),
-        scanDirs: ['docs/', 'posts/'],
-        docMetadataFileName: 'frontmatter',
+        dir: resolve(__dirname, '../'),     // 文档根目录
+        roots: ['zh-CN/posts'],             // 作为侧边栏根的目录
+        includeGlobs: ['**/*.md'],
+        excludeGlobs: ['**/node_modules/**'],
+        collapsed: false,
+        debug: false,
+        nav: {
+          navBuilder: [
+            { text: '首页', link: '/' },
+            { navDir: 'zh-CN/posts', level: 1 },
+          ],
+        },
       }),
     ],
   },
-  // ... 其他配置
-}
-```
-
-### 在主题中注册组件
-
-```typescript
-// .vitepress/theme/index.ts
-import { createTocSidebarComponentResolver } from '@knewbeing/vitepress-plugin-autosidebar-toc'
-import Components from 'unplugin-vue-components/vite'
-
-export default {
-  enhanceApp({ app }) {
-    app.use(Components, {
-      resolvers: [createTocSidebarComponentResolver()],
-    })
-  },
-}
-```
-
-## 核心导出 API
-
-### 插件主入口
-
-#### `createTocSidebarVitePlugin(options: TocSidebarBuildOptions): Plugin`
-
-创建用于 VitePress 的自动侧边栏与导航生成插件。
-
-该插件会扫描 Markdown 文档目录，构建目录树、sidebar、可选 nav，并在开发阶段支持增量更新与调试 doctree 输出。
-
-**参数：**
-
-- `options` - 插件配置选项
-
-**返回：** 标准 Vite 插件实例
-
-### 组件解析器
-
-#### `createTocSidebarComponentResolver(options?: TocSidebarComponentResolverOptions): ComponentResolver`
-
-创建插件所有组件的统一按需自动导入解析器。
-
-可通过 `options` 按组件名单独覆盖注册别名 (`componentName`) 或来源路径 (`from`)。
-
-**示例：**
-
-```typescript
-// 使用默认配置
-Components({ resolvers: [createTocSidebarComponentResolver()] })
-
-// 自定义某个组件的来源路径
-Components({
-  resolvers: [
-    createTocSidebarComponentResolver({
-      BlogHome: { from: 'my-pkg/BlogHome.vue' },
-    }),
-  ],
 })
 ```
 
-## 提供的组件
+### 2. 注册 Vue 组件（按需自动导入）
 
-### BlogHome (推荐)
+```ts
+// .vitepress/config.ts（vite.plugins 中）
+import { createTocSidebarComponentResolver } from '@knewbeing/vitepress-plugin-autosidebar-toc'
+import Components from 'unplugin-vue-components/vite'
 
-博客首页组件，展示文章卡片列表。
-
-**属性：**
-
-- `entries` - 文章元数据数组
-- `maxDisplayArticles` - 最多显示的文章数（可选）
-
-**示例：**
-
-```vue
-<template>
-  <BlogHome :entries="articles" :maxDisplayArticles="12" />
-</template>
-
-<script setup>
-import { useBlogHome } from '@knewbeing/vitepress-plugin-autosidebar-toc/client/useBlogHome'
-
-const articles = useBlogHome()
-</script>
+plugins: [
+  createTocSidebarVitePlugin({ ... }),
+  Components({
+    resolvers: [createTocSidebarComponentResolver()],
+  }),
+]
 ```
 
-### AutoToc
+或在主题中手动注册：
 
-文章目录导航组件，显示当前文档的标题层级。
+```ts
+// .vitepress/theme/index.ts
+import BlogHome from '@knewbeing/vitepress-plugin-autosidebar-toc/client/BlogHome.vue'
+import AutoToc from '@knewbeing/vitepress-plugin-autosidebar-toc/client/AutoToc.vue'
+import SidebarArticleList from '@knewbeing/vitepress-plugin-autosidebar-toc/client/SidebarArticleList.vue'
 
-**属性：**
-
-- `entries` - 目录条目数组
-
-**示例：**
-
-```vue
-<template>
-  <AutoToc :entries="tocEntries" />
-</template>
-
-<script setup>
-import { useTocEntries } from '@knewbeing/vitepress-plugin-autosidebar-toc/client/useTocEntries'
-
-const tocEntries = useTocEntries()
-</script>
+export default {
+  enhanceApp({ app }) {
+    app.component('BlogHome', BlogHome)
+    app.component('AutoToc', AutoToc)
+    app.component('SidebarArticleList', SidebarArticleList)
+  }
+}
 ```
 
-### SidebarArticleList
+---
 
-侧边栏文章列表组件，显示特定分类的文章。
-
-## 类型定义
+## 插件配置 / Plugin Options
 
 ### `TocSidebarBuildOptions`
 
-插件主配置选项接口。
+| 参数 | 类型 | 必填 | 默认值 | 说明 |
+|------|------|------|--------|------|
+| `dir` | `string` | ✅ | — | 文档根目录（绝对路径） |
+| `roots` | `string[]` | — | `[]` | 作为侧边栏独立根节点的子目录 |
+| `includeGlobs` | `string[]` | — | `['**/*.md']` | 参与扫描的 glob 规则 |
+| `excludeGlobs` | `string[]` | — | `[]` | 扫描时排除的 glob 规则 |
+| `showMarkdownLinks` | `boolean` | — | `false` | 链接是否保留 `.md` 后缀 |
+| `includeDotFiles` | `boolean` | — | `false` | 是否包含点文件/点目录 |
+| `collapsed` | `boolean` | — | `false` | 侧边栏目录节点默认是否折叠 |
+| `debug` | `boolean` | — | `false` | 在 dev 阶段写入 doctree 调试 JSON |
+| `nav` | `TocSidebarNavOptions` | — | — | 顶部导航生成配置 |
 
-```typescript
-export interface TocSidebarBuildOptions {
-  /** 扫描的基础目录 */
-  baseDir: string
+### `TocSidebarNavOptions`
 
-  /** 要扫描的子目录列表 */
-  scanDirs?: string[]
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| `insertMode` | `'replace' \| number` | `'replace'` 替换已有 nav；`number` 在指定位置插入 |
+| `navBuilder` | `(NavItem \| AutoNavOption)[]` | 按顺序构建 nav 的混合数组 |
+| `order` | `string[]` | 按 text 字段排序 nav 项的顺序 |
 
-  /** 虚拟模块输出路径 */
-  outputVirtualModule?: boolean
+### `AutoNavOption`
 
-  // ... 更多选项见源码
-}
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| `navDir` | `string` | 要扫描的目录路径（相对于 `dir`） |
+| `level` | `number` | 子目录层级，用于生成下拉菜单 |
+| `subMenuIncludeGlobs` | `string[]` | 子菜单包含的 glob |
+| `subMenuExcludeGlobs` | `string[]` | 子菜单排除的 glob |
+| `navOrder` | `'navOrder'` | 设为 `'navOrder'` 时按 frontmatter `navOrder` 字段排序 |
+
+---
+
+## 提供的组件 / Client Components
+
+### `BlogHome`
+
+博客首页组件，展示文章卡片列表，支持分页和标签过滤。
+
+```vue
+<template>
+  <BlogHome />
+</template>
 ```
 
-### `TocSidebarComponentResolverOptions`
+数据由 `useBlogHome()` composable 自动加载，无需传 props。
 
-组件解析器配置选项。
+封面图（frontmatter 中的 `cover` 或 `image` 字段）会自动生成 **ThumbHash 低清占位**，在图片加载前渲染模糊预览，加载完成后渐入（0.4s）。
 
-```typescript
-export interface TocSidebarComponentResolverOptions {
-  AutoToc?: AutoTocResolverOptions
-  SidebarArticleList?: AutoTocResolverOptions
-  BlogHome?: AutoTocResolverOptions
-}
+### `AutoToc`
+
+文章内目录导航，自动跟踪当前阅读标题。
+
+```vue
+<template>
+  <AutoToc />
+</template>
 ```
 
-### 文章元数据
+### `SidebarArticleList`
 
-```typescript
-export interface TocSidebarFileEntry {
-  title: string | null
-  path: string
-  createdAt: string | null
-  updatedAt: string | null
-  excerpt: string | null
+侧边栏文章列表，适合挂载在 `sidebar-nav-after` slot。
+
+```vue
+<template>
+  <Layout>
+    <template #sidebar-nav-after>
+      <SidebarArticleList />
+    </template>
+  </Layout>
+</template>
+```
+
+### `ThumbHashImage`
+
+带 ThumbHash 低清占位的渐进式图片组件，可单独使用：
+
+```vue
+<ThumbHashImage
+  src="/covers/abc.jpg"
+  alt="封面"
+  :hash="thumbHashBase64"
+/>
+```
+
+| prop | 类型 | 说明 |
+|------|------|------|
+| `src` | `string` | 真实图片 URL |
+| `alt` | `string` | 图片 alt 文本 |
+| `hash` | `string \| null` | ThumbHash base64 字符串 |
+
+---
+
+## Composables
+
+### `useBlogHome()`
+
+```ts
+import { useBlogHome } from '@knewbeing/vitepress-plugin-autosidebar-toc/client/useBlogHome'
+
+const { pagedArticles, allTags, currentPage, totalPages, selectTag, goToPage } = useBlogHome()
+```
+
+返回的 `pagedArticles` 每项类型 `BlogArticle`：
+
+```ts
+interface BlogArticle {
+  title: string
+  link: string
+  date: string | null
+  tags: string[]
+  description: string
   cover: string | null
+  coverHash: string | null  // ThumbHash base64
 }
 ```
 
-## 虚拟模块
+### `useTocEntries()`
 
-通过虚拟模块访问构建时生成的 doctree：
+```ts
+import { useTocEntries } from '@knewbeing/vitepress-plugin-autosidebar-toc/client/useTocEntries'
 
-```typescript
-import doctree from 'virtual:@knewbeing/toc-sidebar-doctree'
-
-console.log(doctree)  // 完整的目录树和文章元数据
+const tocEntries = useTocEntries()
 ```
 
-## TypeScript 支持
+---
 
-本包完全采用 TypeScript 编写，提供完整的类型定义文件。所有导出类型和函数均带有详细的 JSDoc 注释。
+## 虚拟模块 / Virtual Module
 
-## 配置示例
+```ts
+import doctree from 'virtual:@knewbeing/toc-sidebar-doctree'
+// doctree: TocSidebarDoctreePayload
+// 包含所有目录的文件树、文章元数据
 
-更详细的配置示例见 [VitePress 官方文档](https://vitepress.dev)。
+// 按需加载单个目录
+import { loadNode } from '@knewbeing/vitepress-plugin-autosidebar-toc/client/useTocEntries'
+const node = await loadNode('/zh-CN/posts')
+```
 
-## 许可证
+---
 
-MIT
+## Frontmatter 约定 / Frontmatter Convention
 
-## 相关链接
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `title` | `string` | 文章标题（覆盖 H1 自动提取） |
+| `date` | `string` | 发布日期（ISO 格式） |
+| `tags` | `string[]` | 文章标签 |
+| `cover` / `image` | `string` | 封面图（相对路径或绝对路径或 URL） |
+| `description` / `excerpt` | `string` | 文章摘要 |
+| `navOrder` | `number` | 导航项排序权重 |
 
-- [项目仓库](https://github.com/calmripple/calmripple.github.io)
-- [VitePress 官方文档](https://vitepress.dev)
-- [Nolebase 集成文档](https://nolebase.vercel.app)
+---
+
+## ThumbHash 封面占位 / ThumbHash Cover Placeholder
+
+插件在构建时自动为**本地封面图**（相对路径）生成 ThumbHash：
+
+1. 使用 `sharp` 将图片缩至 100px 内并解码为 RGBA
+2. 用 `thumbhash.rgbaToThumbHash()` 生成约 30 bytes 的 hash
+3. 以 base64 字符串存入 doctree，随虚拟模块传给客户端
+4. 客户端 `ThumbHashImage.vue` 在 `onMounted` 中解码为 data URL，作为 CSS `background-image` 占位
+5. 真实图片加载完成后以 0.4s 过渡渐入
+
+外链（`https://`）和绝对路径（`/`）的封面不生成 hash，直接作为普通懒加载图片。
+
+---
+
+## 许可证 / License
+
+[MIT](./LICENSE)
+
+## 相关链接 / Links
+
+- [npm](https://www.npmjs.com/package/@knewbeing/vitepress-plugin-autosidebar-toc)
+- [源码仓库](https://github.com/VitepressAwesome/vitepress-plugin-blogs)
+- [问题反馈](https://github.com/VitepressAwesome/vitepress-plugin-blogs/issues)
+- [配合使用：vitepress-plugin-remove-sidebar](https://www.npmjs.com/package/@knewbeing/vitepress-plugin-remove-sidebar)
+- [配合使用：vitepress-plugin-page-properties](https://www.npmjs.com/package/@knewbeing/vitepress-plugin-page-properties)
+
