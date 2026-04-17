@@ -1,4 +1,4 @@
-import { computed } from 'vue'
+import { computed, type ComputedRef } from 'vue'
 import { useData } from 'vitepress'
 
 export interface TocSidebarClientConfig {
@@ -12,10 +12,16 @@ export interface TocSidebarClientConfig {
   tocMaxPageButtons?: number
 }
 
-export function useTocSidebarConfig() {
-  const { theme } = useData()
-  const cfg = computed<TocSidebarClientConfig>(
-    () => (theme.value?.tocSidebar as TocSidebarClientConfig | undefined) ?? {},
-  )
-  return cfg
+// 模块级缓存：themeConfig 在整个 SPA 生命周期中不变，
+// 共用一个 computed 避免多组件重复订阅 theme ref。
+let _cfg: ComputedRef<TocSidebarClientConfig> | null = null
+
+export function useTocSidebarConfig(): ComputedRef<TocSidebarClientConfig> {
+  if (!_cfg) {
+    const { theme } = useData()
+    _cfg = computed<TocSidebarClientConfig>(
+      () => (theme.value?.tocSidebar as TocSidebarClientConfig | undefined) ?? {},
+    )
+  }
+  return _cfg
 }
