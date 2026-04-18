@@ -1,5 +1,9 @@
 {
     "evenBetterToml.formatter.allowedBlankLines": 4,
     "evenBetterToml.formatter.compactArrays": false,
-    "evenBetterToml.formatter.columnWidth": 120
+    "evenBetterToml.formatter.columnWidth": 120,
+    "github.copilot.chat.agent.autoFix": true,
+    "git.detectWorktrees": true,
+    "gitlens.worktrees.openAfterCreate": "alwaysNewWindow",
+    "github.copilot.chat.cli.isolationOption.enabled": false
 }
