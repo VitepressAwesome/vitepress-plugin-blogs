@@ -5,8 +5,9 @@
  * Uses `pnpm publish` so workspace:* and catalog: are replaced with real versions.
  *
  * Usage:
- *   NPM_TOKEN=npm_xxx node scripts/publish-all.mjs           # publish all pending packages
- *   NPM_TOKEN=npm_xxx node scripts/publish-all.mjs --dry-run # list what would be published
+ *   NPM_TOKEN=npm_xxx node scripts/publish-all.mjs             # install -> build -> publish
+ *   NPM_TOKEN=npm_xxx node scripts/publish-all.mjs --dry-run   # list what would be published
+ *   NPM_TOKEN=npm_xxx node scripts/publish-all.mjs --skip-build # skip install+build steps
  */
 
 import { execSync, spawnSync } from 'node:child_process'
@@ -17,31 +18,56 @@ import { tmpdir } from 'node:os'
 import { globSync } from 'tinyglobby'
 
 const dryRun = process.argv.includes('--dry-run')
+const skipBuild = process.argv.includes('--skip-build')
+const repoRoot = resolve(fileURLToPath(import.meta.url), '../..')
 const root = resolve(fileURLToPath(import.meta.url), '../../packages')
 
-// ─────────────────────────────────────────────────────────
+// ---------------------------------------------------------
 // 工具函数
-// ─────────────────────────────────────────────────────────
+// ---------------------------------------------------------
 const startTime = Date.now()
 
 function elapsed() {
   return `${((Date.now() - startTime) / 1000).toFixed(1)}s`
 }
 
+/**
+ * @param {string} label
+ */
 function step(label) {
   console.log(`\n${'─'.repeat(60)}`)
   console.log(`  ${label}`)
   console.log('─'.repeat(60))
 }
 
+/**
+ * @param {string} msg
+ */
 function log(msg) {
   process.stdout.write(`  ${msg}\n`)
 }
 
-// ─────────────────────────────────────────────────────────
+/**
+ * @param {string} cmd
+ * @param {readonly string[]} args
+ */
+function runCommand(cmd, args, options = {}) {
+  const t0 = Date.now()
+  const result = spawnSync(cmd, args, {
+    cwd: repoRoot,
+    stdio: 'inherit',
+    encoding: 'utf8',
+    ...options,
+  })
+  const duration = `${((Date.now() - t0) / 1000).toFixed(1)}s`
+  return { ...result, duration }
+}
+
+// ---------------------------------------------------------
 // Step 1: 检查 NPM_TOKEN
-// ─────────────────────────────────────────────────────────
-step('Step 1/4 · 检查 NPM_TOKEN 环境变量')
+// ---------------------------------------------------------
+const totalSteps = skipBuild ? 4 : 6
+step(`Step 1/${totalSteps} · 检查 NPM_TOKEN 环境变量`)
 
 const token = process.env.NPM_TOKEN
 if (!token) {
@@ -60,10 +86,10 @@ if (!token) {
 }
 log(`✔  NPM_TOKEN 已设置 (长度: ${token.length} 字符)`)
 
-// ─────────────────────────────────────────────────────────
+// ---------------------------------------------------------
 // Step 2: 写入临时 .npmrc 并验证 token
-// ─────────────────────────────────────────────────────────
-step('Step 2/4 · 验证 npm 身份认证')
+// ---------------------------------------------------------
+step(`Step 2/${totalSteps} · 验证 npm 身份认证`)
 
 const tmpNpmrc = join(tmpdir(), `.npmrc-publish-${Date.now()}`)
 writeFileSync(tmpNpmrc, `//registry.npmjs.org/:_authToken=${token}\nregistry=https://registry.npmjs.org/\n`)
@@ -83,10 +109,48 @@ if (dryRun) {
   log('\n🔍 Dry run 模式 — 不会实际发布，仅列出待发布包')
 }
 
-// ─────────────────────────────────────────────────────────
-// Step 3: 扫描 packages 目录
-// ─────────────────────────────────────────────────────────
-step('Step 3/4 · 扫描 packages 目录')
+// ---------------------------------------------------------
+// Step 3: pnpm install
+// ---------------------------------------------------------
+if (!skipBuild) {
+  step(`Step 3/${totalSteps} · 安装依赖 (pnpm install)`)
+  log(`  工作目录: ${repoRoot}`)
+
+  const install = runCommand('pnpm', ['install', '--frozen-lockfile'])
+  if (install.status !== 0) {
+    log('  frozen-lockfile 失败，尝试 --no-frozen-lockfile ...')
+    const installFallback = runCommand('pnpm', ['install', '--no-frozen-lockfile'])
+    if (installFallback.status !== 0) {
+      console.error(`\n❌ pnpm install 失败 (${installFallback.duration})`)
+      process.exit(1)
+    }
+    log(`✔  依赖安装完成 (${installFallback.duration})`)
+  } else {
+    log(`✔  依赖安装完成 (${install.duration})`)
+  }
+
+  // -------------------------------------------------------
+  // Step 4: pnpm build
+  // -------------------------------------------------------
+  step(`Step 4/${totalSteps} · 构建所有包 (pnpm build)`)
+  log(`  工作目录: ${repoRoot}`)
+
+  const build = runCommand('pnpm', ['build'])
+  if (build.status !== 0) {
+    console.error(`\n❌ pnpm build 失败 (${build.duration})，终止发布`)
+    console.error('   请修复构建错误后重新运行')
+    process.exit(1)
+  }
+  log(`✔  构建完成 (${build.duration})`)
+} else {
+  log('\n  --skip-build: 跳过 install 和 build 步骤')
+}
+
+// ---------------------------------------------------------
+// Step 5 (或 3): 扫描 packages 目录
+// ---------------------------------------------------------
+const scanStep = skipBuild ? 3 : 5
+step(`Step ${scanStep}/${totalSteps} · 扫描 packages 目录`)
 
 const pkgDirs = globSync(['*/package.json'], { cwd: root, absolute: false })
   .map(f => resolve(root, f.replace(/[/\\]package\.json$/, '')))
@@ -99,11 +163,16 @@ for (const dir of pkgDirs) {
   log(`    · ${pkgJson.name}@${pkgJson.version}${flag}`)
 }
 
-// ─────────────────────────────────────────────────────────
-// Step 4: 逐包检查并发布
-// ─────────────────────────────────────────────────────────
-step('Step 4/4 · 发布包')
+// ---------------------------------------------------------
+// Step 6 (或 4): 逐包检查并发布
+// ---------------------------------------------------------
+const publishStep = skipBuild ? 4 : 6
+step(`Step ${publishStep}/${totalSteps} · 发布包`)
 
+/**
+ * @param {any} name
+ * @param {any} version
+ */
 function npmViewExists(name, version) {
   try {
     execSync(`npm view ${name}@${version} version --userconfig=${tmpNpmrc}`, { stdio: 'pipe' })
@@ -116,6 +185,10 @@ function npmViewExists(name, version) {
 const stats = { published: 0, skipped: 0, failed: 0, noDist: 0, private: 0 }
 const total = pkgDirs.length
 
+/**
+ * @param {string} pkgDir
+ * @param {number} index
+ */
 function publishPackage(pkgDir, index) {
   const pkgJsonPath = join(pkgDir, 'package.json')
   if (!existsSync(pkgJsonPath)) return
@@ -131,7 +204,7 @@ function publishPackage(pkgDir, index) {
 
   const distExists = existsSync(join(pkgDir, 'dist'))
   if (!distExists) {
-    log(`${prefix} ⚠️  ${pkg.name}@${pkg.version}  →  跳过 (无 dist 目录，请先运行 pnpm build)`)
+    log(`${prefix} ⚠️  ${pkg.name}@${pkg.version}  →  跳过 (无 dist 目录)`)
     stats.noDist++
     return
   }
@@ -159,7 +232,6 @@ function publishPackage(pkgDir, index) {
     ['publish', '--access', 'public', '--no-git-checks'],
     {
       cwd: pkgDir,
-      // pipe stdout so we can print it prefixed; inherit stderr for real-time errors
       stdio: ['ignore', 'pipe', 'inherit'],
       encoding: 'utf8',
       env: {
@@ -192,9 +264,9 @@ for (let i = 0; i < pkgDirs.length; i++) {
   publishPackage(pkgDirs[i], i + 1)
 }
 
-// ─────────────────────────────────────────────────────────
+// ---------------------------------------------------------
 // 汇总报告
-// ─────────────────────────────────────────────────────────
+// ---------------------------------------------------------
 console.log(`\n${'═'.repeat(60)}`)
 console.log('  📊 发布汇总')
 console.log('═'.repeat(60))
@@ -202,11 +274,11 @@ if (dryRun) {
   log(`  📦 待发布:   ${stats.published}`)
 } else {
   log(`  ✅ 发布成功: ${stats.published}`)
-  if (stats.failed > 0)  log(`  ❌ 发布失败: ${stats.failed}`)
+  if (stats.failed > 0) log(`  ❌ 发布失败: ${stats.failed}`)
 }
-if (stats.skipped > 0)   log(`  ⏭  已是最新: ${stats.skipped}`)
-if (stats.noDist > 0)    log(`  ⚠️  缺少 dist: ${stats.noDist}  (请运行 pnpm build)`)
-if (stats.private > 0)   log(`  🔒 私有跳过: ${stats.private}`)
+if (stats.skipped > 0) log(`  ⏭  已是最新: ${stats.skipped}`)
+if (stats.noDist > 0)  log(`  ⚠️  缺少 dist: ${stats.noDist}`)
+if (stats.private > 0) log(`  🔒 私有跳过: ${stats.private}`)
 log(`  ⏱  总耗时:   ${elapsed()}`)
 console.log('═'.repeat(60))
 
