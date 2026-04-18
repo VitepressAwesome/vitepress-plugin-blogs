@@ -2,73 +2,52 @@
   "name": "@knewbeing/vitepress-plugin-page-properties",
   "version": "1.0.1",
   "description": "Page-properties Vite plugin for VitePress: word count, reading time, and dev-mode HMR patch. Fully self-contained, no @nolebase dependency.",
-  "keywords": [
-    "vitepress",
-    "page-properties",
-    "frontmatter",
-    "word-count",
-    "reading-time",
-    "blog",
-    "vite-plugin",
-    "typescript"
-  ],
+  "keywords": ["vitepress", "page-properties", "frontmatter", "word-count", "reading-time", "blog", "vite-plugin", "typescript"],
   "license": "MIT",
-  "author": {
-    "name": "知在",
-    "email": "zz@dmsrs.org",
-    "url": "https://www.dmsrs.org"
-  },
+  "author": { "name": "知在", "email": "zz@dmsrs.org", "url": "https://www.dmsrs.org" },
   "homepage": "https://github.com/VitepressAwesome/vitepress-plugin-blogs#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/VitepressAwesome/vitepress-plugin-blogs.git",
     "directory": "packages/vitepress-plugin-page-properties"
   },
-  "bugs": {
-    "url": "https://github.com/VitepressAwesome/vitepress-plugin-blogs/issues"
-  },
+  "bugs": { "url": "https://github.com/VitepressAwesome/vitepress-plugin-blogs/issues" },
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "sideEffects": ["**/*.css"],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
     },
-    "./client/PageProperties.vue": "./client/PageProperties.vue",
-    "./client/PagePropertiesEditor.vue": "./client/PagePropertiesEditor.vue",
-    "./client.d.ts": "./client.d.ts"
+    "./client/PageProperties.vue": "./dist/client/PageProperties.vue",
+    "./client/PagePropertiesEditor.vue": "./dist/client/PagePropertiesEditor.vue"
   },
-  "files": [
-    "dist",
-    "client",
-    "client.d.ts"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
-  },
+  "files": ["dist", "package.json"],
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" },
   "scripts": {
-    "dev": "tsup --watch",
-    "build": "tsup",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "stub": "unbuild --stub",
+    "dev": "unbuild --stub",
+    "build": "unbuild",
+    "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "gray-matter": "^4.0.3"
+    "gray-matter": "catalog:"
   },
   "devDependencies": {
-    "@types/node": "^22.19.17",
-    "tsup": "^8.5.0",
-    "typescript": "^6.0.2",
-    "vite": "^7.3.2",
-    "vitepress": "2.0.0-alpha.15",
-    "vue": "^3.5.32"
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vue-tsc": "catalog:",
+    "vite": "catalog:",
+    "vitepress": "catalog:",
+    "vue": "catalog:"
   },
   "peerDependencies": {
-    "vite": "*",
-    "vitepress": "*",
-    "vue": "^3.0.0"
+    "vite": "catalog:",
+    "vitepress": "catalog:",
+    "vue": "catalog:"
   }
 }

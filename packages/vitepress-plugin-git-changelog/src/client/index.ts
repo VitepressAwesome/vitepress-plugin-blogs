@@ -1,7 +1,7 @@
 // Derived from @nolebase/vitepress-plugin-git-changelog (MIT) https://github.com/nolebase/integrations
 import type { Plugin } from 'vue'
 
-import type { Author, Changelog, Commit, Contributor } from '../types/index.ts'
+import type { Author, Changelog, Commit, Contributor } from '../types/index'
 import type { Locale, Options } from './types'
 
 import NolebaseGitChangelog from './components/Changelog.vue'
@@ -17,7 +17,7 @@ const components = {
   NolebaseGitContributors,
 }
 
-export * from './composables/index.ts'
+export * from './composables/index'
 
 export const NolebaseGitChangelogPlugin: Plugin<Options[], Options[]> = {
   install(app, options?) {

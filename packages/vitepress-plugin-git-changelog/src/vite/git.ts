@@ -2,7 +2,7 @@
 import type { Plugin, ResolvedConfig } from 'vite'
 import type { SiteConfig } from 'vitepress'
 
-import type { Author, Changelog } from '../types/index.ts'
+import type { Author, Changelog } from '../types/index'
 import type { CommitToStringHandler, CommitToStringsHandler, RewritePathsBy } from './helpers'
 import type { GitChangelogOptions } from './types'
 

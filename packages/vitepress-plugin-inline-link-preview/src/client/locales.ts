@@ -1,7 +1,7 @@
 // Derived from @nolebase/vitepress-plugin-inline-link-preview (MIT) https://github.com/nolebase/integrations
 import type { Locale } from './types'
 
-import { defaultEnLocale, defaultZhCNLocale } from '../locales/index.ts'
+import { defaultEnLocale, defaultZhCNLocale } from '../locales/index'
 
 export {
   defaultEnLocale,

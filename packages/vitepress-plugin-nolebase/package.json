@@ -2,48 +2,47 @@
   "name": "@knewbeing/vitepress-plugin-nolebase",
   "version": "1.0.0",
   "description": "Vendored nolebase integrations for VitePress — enhanced-readabilities, git-changelog, inline-link-preview, highlight-targeted-heading, index, and more. Derived from @nolebase/integrations (MIT).",
-  "keywords": [
-    "vitepress",
-    "nolebase",
-    "enhanced-readabilities",
-    "git-changelog",
-    "inline-link-preview",
-    "vite-plugin",
-    "typescript"
-  ],
+  "keywords": ["vitepress", "nolebase", "enhanced-readabilities", "git-changelog", "inline-link-preview", "vite-plugin", "typescript"],
   "license": "MIT",
-  "author": {
-    "name": "知在",
-    "email": "zz@dmsrs.org",
-    "url": "https://www.dmsrs.org"
-  },
+  "author": { "name": "知在", "email": "zz@dmsrs.org", "url": "https://www.dmsrs.org" },
   "type": "module",
+  "sideEffects": ["**/*.css"],
   "scripts": {
-    "build": "tsup"
+    "stub": "unbuild --stub",
+    "dev": "unbuild --stub",
+    "build": "unbuild",
+    "typecheck": "vue-tsc --noEmit"
   },
   "exports": {
-    ".": "./src/index.ts",
-    "./vitepress/client": "./src/vitepress/client/index.ts",
+    "./vitepress/client": {
+      "types": "./dist/client/index.d.ts",
+      "import": "./dist/client/index.mjs",
+      "require": "./dist/client/index.js"
+    },
     "./vitepress/vite": {
-      "import": "./dist/vitepress/vite.js",
-      "types": "./src/vitepress/vite/index.ts"
+      "types": "./dist/vitepress/vite/index.d.ts",
+      "import": "./dist/vitepress/vite/index.mjs",
+      "require": "./dist/vitepress/vite/index.cjs"
     },
     "./vitepress/markdown-it": {
-      "import": "./dist/vitepress/markdown-it.js",
-      "types": "./src/vitepress/markdown-it/index.ts"
+      "types": "./dist/vitepress/markdown-it/index.d.ts",
+      "import": "./dist/vitepress/markdown-it/index.mjs",
+      "require": "./dist/vitepress/markdown-it/index.cjs"
     }
   },
+  "files": ["dist", "package.json"],
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" },
   "devDependencies": {
-    "tsup": "^8.5.1",
-    "typescript": "^5.7.0"
+    "typescript": "catalog:",
+    "vue-tsc": "catalog:"
   },
   "peerDependencies": {
-    "vite": "*",
-    "vitepress": "*",
-    "vue": "^3.0.0"
+    "vite": "catalog:",
+    "vitepress": "catalog:",
+    "vue": "catalog:"
   },
   "dependencies": {
-    "defu": "*",
+    "defu": "catalog:",
     "@knewbeing/ui": "workspace:*",
     "@knewbeing/markdown-it-element-transform": "workspace:*",
     "@knewbeing/markdown-it-bi-directional-links": "workspace:*",

@@ -8,13 +8,20 @@
     "node": ">=22.16.0 <25"
   },
   "scripts": {
-    "build": "pnpm --filter @knewbeing/markdown-it-element-transform build && pnpm --filter @knewbeing/markdown-it-unlazy-img build && pnpm --filter @knewbeing/markdown-it-bi-directional-links build && pnpm --filter @knewbeing/vitepress-plugin-git-changelog build && pnpm --filter @knewbeing/vitepress-plugin-inline-link-preview build && pnpm --filter @knewbeing/vitepress-plugin-meta build && pnpm --filter @knewbeing/vitepress-plugin-index build && pnpm --filter @knewbeing/vitepress-plugin-autosidebar-toc build && pnpm --filter @knewbeing/vitepress-plugin-page-properties build && pnpm --filter @knewbeing/vitepress-plugin-remove-sidebar build && pnpm --filter @knewbeing/vitepress-plugin-nolebase build",
+    "stub": "pnpm -r --filter=./packages/* run stub",
+    "build": "pnpm cleanup:dist && pnpm packages:build",
+    "packages:build": "pnpm --filter @knewbeing/markdown-it-element-transform build && pnpm --filter @knewbeing/markdown-it-unlazy-img build && pnpm --filter @knewbeing/markdown-it-bi-directional-links build && pnpm --filter @knewbeing/ui build && pnpm --filter @knewbeing/vitepress-plugin-enhanced-mark build && pnpm --filter @knewbeing/vitepress-plugin-git-changelog build && pnpm --filter @knewbeing/vitepress-plugin-inline-link-preview build && pnpm --filter @knewbeing/vitepress-plugin-meta build && pnpm --filter @knewbeing/vitepress-plugin-index build && pnpm --filter @knewbeing/vitepress-plugin-enhanced-readabilities build && pnpm --filter @knewbeing/vitepress-plugin-highlight-targeted-heading build && pnpm --filter @knewbeing/vitepress-plugin-autosidebar-toc build && pnpm --filter @knewbeing/vitepress-plugin-page-properties build && pnpm --filter @knewbeing/vitepress-plugin-remove-sidebar build && pnpm --filter @knewbeing/vitepress-plugin-nolebase build",
+    "cleanup:dist": "rimraf --glob packages/*/dist",
     "dev": "pnpm -r --parallel --stream --filter @knewbeing/vitepress-plugin-autosidebar-toc --filter @knewbeing/vitepress-plugin-page-properties --filter @knewbeing/vitepress-plugin-remove-sidebar run dev",
     "typecheck": "pnpm -r run typecheck"
   },
   "devDependencies": {
-    "@types/node": "^22.0.0",
-    "tsup": "^8.5.0",
-    "typescript": "^6.0.2"
+    "@types/node": "catalog:",
+    "@unocss/cli": "catalog:",
+    "rimraf": "catalog:",
+    "typescript": "catalog:",
+    "unbuild": "catalog:",
+    "unocss": "catalog:",
+    "vue-tsc": "catalog:"
   }
 }

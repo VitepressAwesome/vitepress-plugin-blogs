@@ -1,6 +1,6 @@
 // Derived from @nolebase/vitepress-plugin-git-changelog (MIT) https://github.com/nolebase/integrations
 /// <reference path="../../types/virtual.d.ts" />
-import type { Changelog, Commit, CommitAuthor } from '../../types/index.ts'
+import type { Changelog, Commit, CommitAuthor } from '../../types/index'
 import type { ComputedRef, Ref, ShallowRef } from 'vue'
 import type { PageData } from 'vitepress'
 

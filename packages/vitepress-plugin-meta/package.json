@@ -6,15 +6,30 @@
   "author": { "name": "知在", "email": "zz@dmsrs.org", "url": "https://www.dmsrs.org" },
   "type": "module",
   "repository": { "type": "git", "url": "https://github.com/VitepressAwesome/vitepress-plugin-blogs.git", "directory": "packages/vitepress-plugin-meta" },
-  "scripts": { "build": "tsup" },
-  "exports": {
-    "./vitepress": { "import": "./dist/vitepress.js", "types": "./src/vitepress/index.ts" }
+  "scripts": {
+    "stub": "unbuild --stub",
+    "dev": "unbuild --stub",
+    "build": "unbuild",
+    "typecheck": "tsc --noEmit"
   },
-  "devDependencies": { "tsup": "^8.5.1", "typescript": "^5.7.0" },
-  "peerDependencies": { "vitepress": "*" },
+  "exports": {
+    "./vitepress": {
+      "types": "./dist/vitepress/index.d.ts",
+      "import": "./dist/vitepress/index.mjs",
+      "require": "./dist/vitepress/index.cjs"
+    }
+  },
+  "files": ["dist", "package.json"],
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" },
+  "devDependencies": { "typescript": "catalog:" },
+  "peerDependencies": { "vitepress": "catalog:" },
   "dependencies": {
-    "unified": "*", "rehype-parse": "*", "hast-util-select": "*",
-    "hast-util-to-text": "*", "retext-stringify": "*",
-    "unist-util-remove": "*", "unist-util-remove-position": "*"
+    "unified": "catalog:",
+    "rehype-parse": "catalog:",
+    "hast-util-select": "catalog:",
+    "hast-util-to-text": "catalog:",
+    "retext-stringify": "catalog:",
+    "unist-util-remove": "catalog:",
+    "unist-util-remove-position": "catalog:"
   }
 }

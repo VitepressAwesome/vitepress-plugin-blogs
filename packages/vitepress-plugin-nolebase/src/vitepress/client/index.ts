@@ -1,6 +1,6 @@
 // Derived from @nolebase/integrations (MIT) https://github.com/nolebase/integrations
 import type { PresetClientOptions } from './types'
-import type { PresetClient, Slots } from './utils/index.ts'
+import type { PresetClient, Slots } from './utils/index'
 
 import defu from 'defu'
 

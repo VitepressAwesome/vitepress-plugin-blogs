@@ -6,10 +6,21 @@
   "author": { "name": "知在", "email": "zz@dmsrs.org", "url": "https://www.dmsrs.org" },
   "type": "module",
   "repository": { "type": "git", "url": "https://github.com/VitepressAwesome/vitepress-plugin-blogs.git", "directory": "packages/markdown-it-element-transform" },
-  "scripts": { "build": "tsup" },
-  "exports": {
-    ".": { "import": "./dist/index.js", "types": "./src/index.ts" }
+  "scripts": {
+    "stub": "unbuild --stub",
+    "dev": "unbuild --stub",
+    "build": "unbuild",
+    "typecheck": "tsc --noEmit"
   },
-  "devDependencies": { "tsup": "^8.5.1", "typescript": "^5.7.0" },
-  "peerDependencies": { "markdown-it": "*" }
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": ["dist", "package.json"],
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" },
+  "devDependencies": { "typescript": "catalog:" },
+  "peerDependencies": { "markdown-it": "catalog:" }
 }

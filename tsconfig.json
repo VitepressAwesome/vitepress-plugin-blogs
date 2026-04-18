@@ -5,6 +5,23 @@
     "lib": ["DOM", "ESNext"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
+    "paths": {
+      "@knewbeing/ui": ["./packages/ui/src/index.ts"],
+      "@knewbeing/markdown-it-element-transform": ["./packages/markdown-it-element-transform/src/index.ts"],
+      "@knewbeing/markdown-it-unlazy-img": ["./packages/markdown-it-unlazy-img/src/index.ts"],
+      "@knewbeing/markdown-it-bi-directional-links": ["./packages/markdown-it-bi-directional-links/src/index.ts"],
+      "@knewbeing/vitepress-plugin-enhanced-readabilities/*": ["./packages/vitepress-plugin-enhanced-readabilities/src/*"],
+      "@knewbeing/vitepress-plugin-enhanced-mark/*": ["./packages/vitepress-plugin-enhanced-mark/src/*"],
+      "@knewbeing/vitepress-plugin-git-changelog/*": ["./packages/vitepress-plugin-git-changelog/src/*"],
+      "@knewbeing/vitepress-plugin-highlight-targeted-heading/*": ["./packages/vitepress-plugin-highlight-targeted-heading/src/*"],
+      "@knewbeing/vitepress-plugin-index/*": ["./packages/vitepress-plugin-index/src/*"],
+      "@knewbeing/vitepress-plugin-inline-link-preview/*": ["./packages/vitepress-plugin-inline-link-preview/src/*"],
+      "@knewbeing/vitepress-plugin-meta/*": ["./packages/vitepress-plugin-meta/src/*"],
+      "@knewbeing/vitepress-plugin-nolebase/*": ["./packages/vitepress-plugin-nolebase/src/*"],
+      "@knewbeing/vitepress-plugin-autosidebar-toc": ["./packages/vitepress-plugin-autosidebar-toc/index.ts"],
+      "@knewbeing/vitepress-plugin-page-properties": ["./packages/vitepress-plugin-page-properties/index.ts"],
+      "@knewbeing/vitepress-plugin-remove-sidebar": ["./packages/vitepress-plugin-remove-sidebar/index.ts"]
+    },
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "types": ["vite/client", "node"],
@@ -12,11 +29,16 @@
     "strict": true,
     "strictNullChecks": true,
     "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "skipLibCheck": true
   },
-  "include": ["packages/**/*.ts", "packages/**/*.d.ts", "packages/**/*.vue"],
-  "exclude": ["**/node_modules/**", "**/dist"]
+  "include": [
+    "packages/**/*.d.ts",
+    "packages/**/*.ts",
+    "packages/**/*.vue"
+  ],
+  "exclude": ["**/node_modules/**", "**/dist/**"]
 }

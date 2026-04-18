@@ -1,7 +1,7 @@
 // Derived from @nolebase/vitepress-plugin-git-changelog (MIT) https://github.com/nolebase/integrations
 import type { Locale } from './types'
 
-import { defaultEnLocale, defaultRuLocale, defaultZhCNLocale, defaultZhHantLocale } from '../locales/index.ts'
+import { defaultEnLocale, defaultRuLocale, defaultZhCNLocale, defaultZhHantLocale } from '../locales/index'
 
 export {
   defaultEnLocale,

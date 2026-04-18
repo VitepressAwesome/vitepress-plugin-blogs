@@ -5,15 +5,40 @@
   "license": "MIT",
   "author": { "name": "知在", "email": "zz@dmsrs.org", "url": "https://www.dmsrs.org" },
   "type": "module",
+  "sideEffects": ["**/*.css"],
   "repository": { "type": "git", "url": "https://github.com/VitepressAwesome/vitepress-plugin-blogs.git", "directory": "packages/vitepress-plugin-inline-link-preview" },
-  "scripts": { "build": "tsup" },
-  "exports": {
-    "./client": "./src/client/index.ts",
-    "./client/style.css": "./src/client/style.css",
-    "./markdown-it": { "import": "./dist/markdown-it.js", "types": "./src/markdown-it/index.ts" }
+  "scripts": {
+    "stub": "unbuild --stub",
+    "dev": "unbuild --stub",
+    "build": "unbuild",
+    "typecheck": "vue-tsc --noEmit"
   },
-  "devDependencies": { "tsup": "^8.5.1", "typescript": "^5.7.0" },
-  "peerDependencies": { "vue": "^3.0.0", "vitepress": "*", "markdown-it": "*" },
+  "exports": {
+    "./client": {
+      "types": "./dist/client/index.d.ts",
+      "import": "./dist/client/index.mjs",
+      "require": "./dist/client/index.js"
+    },
+    "./client/style.css": "./dist/client/style.css",
+    "./locales": {
+      "types": "./dist/locales/index.d.ts",
+      "import": "./dist/locales/index.mjs",
+      "require": "./dist/locales/index.cjs"
+    },
+    "./markdown-it": {
+      "types": "./dist/markdown-it/index.d.ts",
+      "import": "./dist/markdown-it/index.mjs",
+      "require": "./dist/markdown-it/index.cjs"
+    }
+  },
+  "files": ["dist", "package.json"],
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" },
+  "devDependencies": {
+    "@rollup/plugin-yaml": "catalog:",
+    "typescript": "catalog:",
+    "vue-tsc": "catalog:"
+  },
+  "peerDependencies": { "vue": "catalog:", "vitepress": "catalog:", "markdown-it": "catalog:" },
   "dependencies": {
     "@knewbeing/ui": "workspace:*",
     "@knewbeing/markdown-it-element-transform": "workspace:*"

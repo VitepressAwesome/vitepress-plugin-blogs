@@ -1,5 +1,5 @@
 // Derived from @nolebase/vitepress-plugin-git-changelog (MIT) https://github.com/nolebase/integrations
-import type { Commit, Contributor, MergedRawCommit } from '../types/index.ts'
+import type { Commit, Contributor, MergedRawCommit } from '../types/index'
 
 import { describe, expect, it } from 'vitest'
 
