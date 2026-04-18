@@ -10,7 +10,7 @@
     "stub": "unbuild --stub",
     "dev": "unbuild --stub",
     "build": "unbuild",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "vue-tsc --noEmit"
   },
   "exports": {
     ".": {
@@ -21,6 +21,6 @@
   },
   "files": ["dist", "package.json"],
   "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" },
-  "devDependencies": { "typescript": "catalog:" },
+  "devDependencies": { "vue-tsc": "catalog:" },
   "peerDependencies": { "markdown-it": "catalog:" }
 }

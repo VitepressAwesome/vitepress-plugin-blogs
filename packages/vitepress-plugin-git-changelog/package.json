@@ -36,7 +36,8 @@
   "devDependencies": {
     "@rollup/plugin-yaml": "catalog:",
     "typescript": "catalog:",
-    "vue-tsc": "catalog:"
+    "vue-tsc": "catalog:",
+    "vitest": "catalog:"
   },
   "peerDependencies": { "vue": "catalog:", "vitepress": "catalog:", "vite": "catalog:" },
   "dependencies": {

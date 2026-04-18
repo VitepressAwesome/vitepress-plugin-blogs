@@ -29,11 +29,11 @@
     "stub": "unbuild --stub",
     "dev": "unbuild --stub",
     "build": "unbuild",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "vue-tsc --noEmit"
   },
   "devDependencies": {
     "@types/node": "catalog:",
-    "typescript": "catalog:",
+    "vue-tsc": "catalog:",
     "vite": "catalog:",
     "vitepress": "catalog:"
   },
