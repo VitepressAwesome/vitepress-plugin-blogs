@@ -40,7 +40,7 @@ function scanLocalPackages(root) {
   return map
 }
 
-const LOCAL_MAP = scanLocalPackages(resolve(__dirname))
+const LOCAL_MAP = scanLocalPackages(resolve(__dirname, 'packages'))
 
 function rewrite(deps) {
   if (!deps)

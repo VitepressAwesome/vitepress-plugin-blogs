@@ -4,7 +4,7 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-pnpmfileChecksum: sha256-jTXdz+po/IVFNeaGbv4PzzLNros91k35kr1tfkgfjps=
+pnpmfileChecksum: sha256-WROIMxrkB1W3nMQoWkIIiO6/PUuCzNB3md0/yDc/+Tc=
 
 importers:
 
@@ -17,7 +17,7 @@ importers:
         specifier: ^6.0.2
         version: 6.0.3
 
-  vitepress-plugin-autosidebar-toc:
+  packages/vitepress-plugin-autosidebar-toc:
     dependencies:
       sanitize-html:
         specifier: ^2.17.2
@@ -54,7 +54,7 @@ importers:
         specifier: ^3.5.32
         version: 3.5.32(typescript@6.0.3)
 
-  vitepress-plugin-nolebase:
+  packages/vitepress-plugin-nolebase:
     dependencies:
       '@vueuse/core':
         specifier: '*'
@@ -133,7 +133,7 @@ importers:
         specifier: ^5.7.0
         version: 5.9.3
 
-  vitepress-plugin-page-properties:
+  packages/vitepress-plugin-page-properties:
     dependencies:
       gray-matter:
         specifier: ^4.0.3
@@ -158,7 +158,7 @@ importers:
         specifier: ^3.5.32
         version: 3.5.32(typescript@6.0.3)
 
-  vitepress-plugin-remove-sidebar:
+  packages/vitepress-plugin-remove-sidebar:
     devDependencies:
       '@types/node':
         specifier: ^22.19.17

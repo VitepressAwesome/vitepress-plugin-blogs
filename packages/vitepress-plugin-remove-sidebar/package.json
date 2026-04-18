@@ -1,14 +1,10 @@
 {
-  "name": "@knewbeing/vitepress-plugin-page-properties",
-  "version": "1.0.1",
-  "description": "Page-properties Vite plugin for VitePress: word count, reading time, and dev-mode HMR patch. Fully self-contained, no @nolebase dependency.",
+  "name": "@knewbeing/vitepress-plugin-remove-sidebar",
+  "version": "1.0.0",
+  "description": "Vite plugin for VitePress that replaces auto-generated sidebar entries with empty placeholders, keeping the sidebar panel visible for custom slot components.",
   "keywords": [
     "vitepress",
-    "page-properties",
-    "frontmatter",
-    "word-count",
-    "reading-time",
-    "blog",
+    "sidebar",
     "vite-plugin",
     "typescript"
   ],
@@ -22,7 +18,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/VitepressAwesome/vitepress-plugin-blogs.git",
-    "directory": "vitepress-plugin-page-properties"
+    "directory": "packages/vitepress-plugin-remove-sidebar"
   },
   "bugs": {
     "url": "https://github.com/VitepressAwesome/vitepress-plugin-blogs/issues"
@@ -36,16 +32,9 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
-    },
-    "./client/PageProperties.vue": "./client/PageProperties.vue",
-    "./client/PagePropertiesEditor.vue": "./client/PagePropertiesEditor.vue",
-    "./client.d.ts": "./client.d.ts"
+    }
   },
-  "files": [
-    "dist",
-    "client",
-    "client.d.ts"
-  ],
+  "files": ["dist"],
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
@@ -55,20 +44,15 @@
     "build": "tsup",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
-  "dependencies": {
-    "gray-matter": "^4.0.3"
-  },
   "devDependencies": {
     "@types/node": "^22.19.17",
     "tsup": "^8.5.0",
     "typescript": "^6.0.2",
     "vite": "^7.3.2",
-    "vitepress": "2.0.0-alpha.15",
-    "vue": "^3.5.32"
+    "vitepress": "2.0.0-alpha.15"
   },
   "peerDependencies": {
     "vite": "*",
-    "vitepress": "*",
-    "vue": "^3.0.0"
+    "vitepress": "*"
   }
 }

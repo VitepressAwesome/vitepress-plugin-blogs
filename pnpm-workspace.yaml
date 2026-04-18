@@ -1,5 +1,2 @@
 packages:
-  - vitepress-plugin-autosidebar-toc
-  - vitepress-plugin-nolebase
-  - vitepress-plugin-page-properties
-  - vitepress-plugin-remove-sidebar
+  - packages/*

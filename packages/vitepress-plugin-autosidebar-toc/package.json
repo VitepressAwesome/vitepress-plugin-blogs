@@ -23,7 +23,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/VitepressAwesome/vitepress-plugin-blogs.git",
-    "directory": "vitepress-plugin-autosidebar-toc"
+    "directory": "packages/vitepress-plugin-autosidebar-toc"
   },
   "bugs": {
     "url": "https://github.com/VitepressAwesome/vitepress-plugin-blogs/issues"
