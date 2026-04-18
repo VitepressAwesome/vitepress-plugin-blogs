@@ -46,7 +46,7 @@ interface VitePressConfig extends ResolvedConfig {
 const VirtualModuleID = 'virtual:nolebase-git-changelog'
 const ResolvedVirtualModuleId = `\0${VirtualModuleID}`
 
-const logModulePrefix = `${cyan(`@nolebase/vitepress-plugin-git-changelog`)}${gray(':')}`
+const logModulePrefix = `${cyan(`@knewbeing/vitepress-plugin-git-changelog`)}${gray(':')}`
 const logger = console
 
 export function GitChangelog(options: GitChangelogOptions = {}): Plugin {
@@ -93,21 +93,21 @@ export function GitChangelog(options: GitChangelogOptions = {}): Plugin {
   }
 
   return {
-    name: '@nolebase/vitepress-plugin-git-changelog',
+    name: '@knewbeing/vitepress-plugin-git-changelog',
     config: () => ({
       optimizeDeps: {
         exclude: [
-          '@nolebase/vitepress-plugin-git-changelog/client',
+          '@knewbeing/vitepress-plugin-git-changelog/client',
         ],
       },
       ssr: {
         noExternal: [
-          '@nolebase/vitepress-plugin-git-changelog',
-          // @nolebase/ui required here as noExternal to avoid the following error:
+          '@knewbeing/vitepress-plugin-git-changelog',
+          // @knewbeing/ui required here as noExternal to avoid the following error:
           // TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".vue" for ...
           // Read more here: https://github.com/vuejs/vitepress/issues/2915
           // And here: https://stackblitz.com/edit/vite-gjz9zf?file=docs%2F.vitepress%2Fconfig.ts
-          '@nolebase/ui',
+          '@knewbeing/ui',
         ],
       },
     }),

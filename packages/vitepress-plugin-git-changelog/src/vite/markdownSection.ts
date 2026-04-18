@@ -23,7 +23,7 @@ export function GitChangelogMarkdownSection(options?: GitChangelogMarkdownSectio
   let root = ''
 
   return {
-    name: '@nolebase/vitepress-plugin-git-changelog-markdown-section',
+    name: '@knewbeing/vitepress-plugin-git-changelog-markdown-section',
     // May set to 'pre' since end user may use vitepress wrapped vite plugin to
     // specify the plugins, which may cause this plugin to be executed after
     // vitepress or the other markdown processing plugins.

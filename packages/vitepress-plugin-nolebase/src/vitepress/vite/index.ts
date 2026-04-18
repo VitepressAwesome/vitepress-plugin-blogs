@@ -36,7 +36,7 @@ export function presetVite(options: PresetViteOptions): PresetVite {
   }
 
   return {
-    name: 'nolebase:vitepress',
+    name: 'knewbeing:vitepress',
     plugins: () => plugins || [],
     config: () => {
       return {
