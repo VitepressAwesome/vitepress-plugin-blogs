@@ -11,8 +11,27 @@
  * @module @knewbeing/vitepress-plugin-autosidebar-toc/client/resolvers
  */
 
-import type { ComponentResolver } from 'unplugin-vue-components/types'
 import type { TocSidebarComponentResolverOptions } from '../types'
+
+export interface ComponentResolveInfo {
+  as?: string
+  from: string
+  name?: string
+  sideEffects?: string | string[]
+}
+
+export type ComponentResolveResult =
+  | string
+  | ComponentResolveInfo
+  | null
+  | undefined
+  | void
+  | Promise<string | ComponentResolveInfo | null | undefined | void>
+
+export interface ComponentResolver {
+  resolve: (name: string) => ComponentResolveResult
+  type?: 'component'
+}
 
 const COMPONENT_MAP: Record<string, string> = {
   AutoToc: '@knewbeing/vitepress-plugin-autosidebar-toc/client/AutoToc.vue',

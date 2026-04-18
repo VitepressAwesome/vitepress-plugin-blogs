@@ -30,6 +30,8 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "fast-glob": "catalog:",
+    "gray-matter": "catalog:",
     "sanitize-html": "catalog:",
     "thumbhash": "catalog:"
   },

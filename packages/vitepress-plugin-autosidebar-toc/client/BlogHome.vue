@@ -191,7 +191,7 @@ function tagStyle(name: string, isActive: boolean) {
             <button
               v-else
               :class="['pagination__btn', { 'is-active': p === currentPage }]"
-              @click="goToPage(p as number)"
+              @click="goToPage(Number(p))"
             >
               {{ p }}
             </button>

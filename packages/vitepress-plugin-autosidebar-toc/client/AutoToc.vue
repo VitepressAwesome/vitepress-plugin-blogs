@@ -134,7 +134,7 @@ function handleClick(e: MouseEvent, link: string) {
         <button
           v-else
           :class="['auto-toc__page-btn', { 'is-active': p === currentPage }]"
-          @click="currentPage = (p as number)"
+          @click="currentPage = Number(p)"
         >{{ p }}</button>
       </template>
       <button
