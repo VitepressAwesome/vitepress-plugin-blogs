@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-inline-link-preview (MIT) https://github.com/nolebase/integrations
 <script setup lang="ts">
 import { refDebounced, useMediaQuery, useMounted, useMouseInElement, useWindowSize } from '@vueuse/core'
 import { computed, inject, ref, watch } from 'vue'

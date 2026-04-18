@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-git-changelog (MIT) https://github.com/nolebase/integrations
 import type { Locale } from 'date-fns'
 
 import { formatDistanceToNow, toDate } from 'date-fns'

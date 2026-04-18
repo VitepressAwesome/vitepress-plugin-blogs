@@ -1,4 +1,3 @@
-// Derived from @nolebase/ui (MIT) https://github.com/nolebase/integrations
 <script setup lang="ts">
 import { useElementHover } from '@vueuse/core'
 import { onMounted, ref, watch } from 'vue'

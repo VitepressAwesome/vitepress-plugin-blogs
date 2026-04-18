@@ -1,8 +1,8 @@
 /**
  * Script: add-license-headers.mjs
- * Adds appropriate MIT license/attribution headers to all source files missing them.
+ * Adds appropriate MIT license headers to all source files missing them.
  *
- * - Files in nolebase-derived packages get: "Derived from @nolebase/... (MIT)"
+ * - Files in nolebase-derived packages get: a generic MIT header (upstream attribution stays in README)
  * - Original packages (autosidebar-toc, page-properties, remove-sidebar, ui) get: MIT copyright notice
  * - build.config.ts files get: MIT copyright notice
  */
@@ -37,8 +37,8 @@ const originalPackages = new Set([
   'vitepress-plugin-remove-sidebar',
 ])
 
-const MIT_UPSTREAM_TEMPLATE = (upstream) =>
-  `// Derived from ${upstream} (MIT) https://github.com/nolebase/integrations\n`
+const MIT_UPSTREAM_TEMPLATE = () =>
+  `// MIT License. Upstream attribution is documented in this package README.\n`
 
 const MIT_ORIGINAL_TEMPLATE =
   `// Copyright (c) 2024-present 知在 (zz@dmsrs.org). MIT License.\n`
@@ -56,7 +56,7 @@ function getHeader(pkgDir, filePath) {
   if (filePath.endsWith('build.config.ts')) return BUILD_CONFIG_TEMPLATE
   if (originalPackages.has(pkgName)) return MIT_ORIGINAL_TEMPLATE
   const upstream = nolebaseDerived[pkgName]
-  if (upstream) return MIT_UPSTREAM_TEMPLATE(upstream)
+  if (upstream) return MIT_UPSTREAM_TEMPLATE()
   return MIT_ORIGINAL_TEMPLATE
 }
 

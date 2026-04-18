@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-git-changelog (MIT) https://github.com/nolebase/integrations
 import type { Plugin, ResolvedConfig } from 'vite'
 import type { SiteConfig } from 'vitepress'
 

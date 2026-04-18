@@ -1,4 +1,3 @@
-// Derived from @nolebase/integrations (MIT) https://github.com/nolebase/integrations
 import type { EnhanceAppContext as VitePressEnhanceAppContext } from 'vitepress'
 import type { h } from 'vue'
 

@@ -1,4 +1,3 @@
-// Derived from @nolebase/ui (MIT) https://github.com/nolebase/integrations
 <script setup lang="ts">
 // From: https://stackoverflow.com/a/71426342/22392721
 interface Props {

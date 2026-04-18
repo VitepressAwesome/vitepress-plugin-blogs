@@ -1,4 +1,3 @@
-// Derived from @nolebase/markdown-it-bi-directional-links (MIT) https://github.com/nolebase/integrations
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 

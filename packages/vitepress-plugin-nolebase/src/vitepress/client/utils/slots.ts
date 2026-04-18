@@ -1,4 +1,3 @@
-// Derived from @nolebase/integrations (MIT) https://github.com/nolebase/integrations
 import type { Layout, Slots } from './types'
 
 export function applySlots(globalSlots: Record<string, Array<() => Slots[number]>> = {}, slots: Layout['slots']) {

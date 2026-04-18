@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-git-changelog (MIT) https://github.com/nolebase/integrations
 import type { Plugin } from 'vue'
 
 import type { Author, Changelog, Commit, Contributor } from '../types/index'

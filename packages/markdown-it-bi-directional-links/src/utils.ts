@@ -1,4 +1,3 @@
-// Derived from @nolebase/markdown-it-bi-directional-links (MIT) https://github.com/nolebase/integrations
 import type MarkdownIt from 'markdown-it'
 import type StateInline from 'markdown-it/lib/rules_inline/state_inline.mjs'
 

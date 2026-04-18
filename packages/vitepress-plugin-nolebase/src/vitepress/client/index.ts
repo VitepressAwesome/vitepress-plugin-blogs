@@ -1,11 +1,18 @@
-// Derived from @nolebase/integrations (MIT) https://github.com/nolebase/integrations
 import type { PresetClientOptions } from './types'
 import type { PresetClient, Slots } from './utils/index'
 
 import defu from 'defu'
 
-import { LayoutMode, NolebaseEnhancedReadabilitiesMenu, NolebaseEnhancedReadabilitiesScreenMenu } from '@knewbeing/vitepress-plugin-enhanced-readabilities/client'
-import { NolebaseHighlightTargetedHeading } from '@knewbeing/vitepress-plugin-highlight-targeted-heading/client'
+import {
+  LayoutMode,
+  NolebaseEnhancedReadabilitiesMenu,
+  NolebaseEnhancedReadabilitiesPlugin,
+  NolebaseEnhancedReadabilitiesScreenMenu,
+} from '@knewbeing/vitepress-plugin-enhanced-readabilities/client'
+import {
+  NolebaseHighlightTargetedHeading,
+  NolebaseNolebaseHighlightTargetedHeadingPlugin,
+} from '@knewbeing/vitepress-plugin-highlight-targeted-heading/client'
 import { h } from 'vue'
 
 function newArrayOfOrPush<K extends PropertyKey, V>(object: Record<K, V[]>, property: K, item: V) {
@@ -52,7 +59,6 @@ export function presetClient<PagePropertiesObject extends object = any>(options?
     },
     async enhanceApp({ app }) {
       if (opts.enhancedReadabilities) {
-        const { NolebaseEnhancedReadabilitiesPlugin } = await import('@knewbeing/vitepress-plugin-enhanced-readabilities/client')
         await import('@knewbeing/vitepress-plugin-enhanced-readabilities/client/style.css')
 
         const enhancedReadabilitiesOptions = opts.enhancedReadabilities?.options ? [opts.enhancedReadabilities.options] : []
@@ -60,7 +66,6 @@ export function presetClient<PagePropertiesObject extends object = any>(options?
       }
 
       if (opts.highlightTargetedHeading) {
-        const { NolebaseNolebaseHighlightTargetedHeadingPlugin } = await import('@knewbeing/vitepress-plugin-highlight-targeted-heading/client')
         await import('@knewbeing/vitepress-plugin-highlight-targeted-heading/client/style.css')
 
         app.use(NolebaseNolebaseHighlightTargetedHeadingPlugin)

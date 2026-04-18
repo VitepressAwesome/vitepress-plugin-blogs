@@ -1,4 +1,3 @@
-// Derived from @nolebase/ui (MIT) https://github.com/nolebase/integrations
 import type { InjectionKey } from 'vue'
 
 import { useData } from 'vitepress'

@@ -1,4 +1,3 @@
-// Auto-converted from YAML locale - Derived from @nolebase/integrations (MIT)
 export default {
   "popup": {
     "loading": "加载中",

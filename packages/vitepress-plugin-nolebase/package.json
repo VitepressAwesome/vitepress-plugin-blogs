@@ -1,7 +1,7 @@
 {
   "name": "@knewbeing/vitepress-plugin-nolebase",
   "version": "1.0.1",
-  "description": "Vendored nolebase integrations for VitePress — enhanced-readabilities, git-changelog, inline-link-preview, highlight-targeted-heading, index, and more. Derived from @nolebase/integrations (MIT).",
+  "description": "Vendored nolebase integrations for VitePress -?enhanced-readabilities, git-changelog, inline-link-preview, highlight-targeted-heading, index, and more. .",
   "keywords": ["vitepress", "nolebase", "enhanced-readabilities", "git-changelog", "inline-link-preview", "vite-plugin", "typescript"],
   "license": "MIT",
   "author": { "name": "知在", "email": "zz@dmsrs.org", "url": "https://www.dmsrs.org" },

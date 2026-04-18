@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-enhanced-readabilities (MIT) https://github.com/nolebase/integrations
 <script setup lang="ts">
 import { NuInputHighlight, NuInputSlider, NuVerticalTransition } from '@knewbeing/ui'
 import { useDebounceFn, useLocalStorage, useMediaQuery, useMounted, useStorage } from '@vueuse/core'

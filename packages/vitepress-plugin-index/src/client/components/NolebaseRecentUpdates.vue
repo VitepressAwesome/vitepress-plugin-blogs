@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-index (MIT) https://github.com/nolebase/integrations
 <script setup lang="ts">
 import { useI18n } from '../composables/i18n'
 

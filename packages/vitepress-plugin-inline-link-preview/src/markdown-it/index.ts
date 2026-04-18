@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-inline-link-preview (MIT) https://github.com/nolebase/integrations
 import type { PluginWithOptions } from 'markdown-it'
 
 import { ElementTransform } from '@knewbeing/markdown-it-element-transform'

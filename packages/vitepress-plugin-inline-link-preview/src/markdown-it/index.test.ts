@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-inline-link-preview (MIT) https://github.com/nolebase/integrations
 import MarkdownIt from 'markdown-it'
 import MarkdownItAttrs from 'markdown-it-attrs'
 

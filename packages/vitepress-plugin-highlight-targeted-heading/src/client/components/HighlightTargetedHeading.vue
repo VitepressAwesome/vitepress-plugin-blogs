@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-highlight-targeted-heading (MIT) https://github.com/nolebase/integrations
 <script setup lang="ts">
 import { useEventListener } from '@vueuse/core'
 import { useRoute } from 'vitepress'

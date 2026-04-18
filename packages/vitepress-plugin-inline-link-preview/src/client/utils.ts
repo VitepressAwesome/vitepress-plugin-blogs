@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-inline-link-preview (MIT) https://github.com/nolebase/integrations
 export function attemptWithDelay<T>(maxTryIterate: number, delayMs: number, attempt: () => (T | null) | Promise<T | null>): Promise<T | null> {
   return new Promise<T | null>((resolve, reject) => {
     let tryIterate = 0

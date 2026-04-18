@@ -1,4 +1,3 @@
-// Derived from @nolebase/markdown-it-bi-directional-links (MIT) https://github.com/nolebase/integrations
 import type { PluginSimple } from 'markdown-it'
 
 import { basename, dirname, extname, posix, relative, sep } from 'node:path'

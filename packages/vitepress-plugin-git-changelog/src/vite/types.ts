@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-git-changelog (MIT) https://github.com/nolebase/integrations
 import type { Author } from '../types/index'
 import type {
   CommitToStringHandler,

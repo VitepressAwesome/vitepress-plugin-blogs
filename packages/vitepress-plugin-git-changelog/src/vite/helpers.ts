@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-git-changelog (MIT) https://github.com/nolebase/integrations
 import type { Commit, CommitAuthor, Contributor, MergedRawCommit, RawCommit } from '../types/index'
 
 import { basename, dirname, extname, posix, relative, sep, win32 } from 'node:path'

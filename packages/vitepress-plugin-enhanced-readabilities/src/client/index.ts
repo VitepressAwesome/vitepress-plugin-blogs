@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-enhanced-readabilities (MIT) https://github.com/nolebase/integrations
 import type { Plugin } from 'vue'
 
 import type {

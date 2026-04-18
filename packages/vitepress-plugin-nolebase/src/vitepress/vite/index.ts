@@ -1,4 +1,3 @@
-// Derived from @nolebase/integrations (MIT) https://github.com/nolebase/integrations
 import type { Plugin } from 'vite'
 
 import type { PresetVite, PresetViteOptions } from './types'

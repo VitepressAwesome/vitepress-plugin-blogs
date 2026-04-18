@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-inline-link-preview (MIT) https://github.com/nolebase/integrations
 import type { Plugin } from 'vue'
 
 import type { Options } from './types'

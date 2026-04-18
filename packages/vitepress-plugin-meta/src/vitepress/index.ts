@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-meta (MIT) https://github.com/nolebase/integrations
 import type { Nodes } from 'hast'
 import type { HeadConfig, TransformContext } from 'vitepress'
 

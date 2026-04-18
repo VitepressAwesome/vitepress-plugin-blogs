@@ -1,4 +1,3 @@
-// Derived from @nolebase/ui (MIT) https://github.com/nolebase/integrations
 import NuButton from './components/NuButton.vue'
 import NuInputHighlight from './components/NuInputHighlight.vue'
 import NuInputHorizontalRadioGroup from './components/NuInputHorizontalRadioGroup/index.vue'

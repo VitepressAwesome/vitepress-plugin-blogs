@@ -1,4 +1,3 @@
-// Auto-converted from YAML locale - Derived from @nolebase/integrations (MIT)
 export default {
   "title": {
     "title": "Enhanced Readability",

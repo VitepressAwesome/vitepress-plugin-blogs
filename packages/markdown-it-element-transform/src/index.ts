@@ -1,4 +1,3 @@
-// Derived from @nolebase/markdown-it-element-transform (MIT) https://github.com/nolebase/integrations
 import type { PluginWithOptions } from 'markdown-it'
 import type StateCore from 'markdown-it/lib/rules_core/state_core.mjs'
 import type Token from 'markdown-it/lib/token.mjs'

@@ -1,4 +1,3 @@
-// Derived from @nolebase/markdown-it-unlazy-img (MIT) https://github.com/nolebase/integrations
 import type { PluginWithOptions } from 'markdown-it'
 
 import { readFileSync } from 'node:fs'

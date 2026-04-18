@@ -1,4 +1,3 @@
-// Derived from @nolebase/integrations (MIT) https://github.com/nolebase/integrations
 import type { GitChangelogMarkdownSectionOptions, GitChangelogOptions } from '@knewbeing/vitepress-plugin-git-changelog/vite/types'
 import type { Plugin } from 'vite'
 

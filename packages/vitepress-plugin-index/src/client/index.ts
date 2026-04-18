@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-index (MIT) https://github.com/nolebase/integrations
 import type { Plugin } from 'vue'
 
 import type { Locale, Options } from './types'

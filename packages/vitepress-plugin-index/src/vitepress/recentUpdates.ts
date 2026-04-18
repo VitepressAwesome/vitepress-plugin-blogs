@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-index (MIT) https://github.com/nolebase/integrations
 import { readFile } from 'node:fs/promises'
 import { basename, join, relative, sep } from 'node:path'
 import { sep as posixSep } from 'node:path/posix'

@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-enhanced-readabilities (MIT) https://github.com/nolebase/integrations
 // eslint-disable-next-line ts/ban-ts-comment
 // @ts-nocheck - VitePress doesn't have types for its internal components
 

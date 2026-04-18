@@ -1,4 +1,3 @@
-// Derived from @nolebase/integrations (MIT) https://github.com/nolebase/integrations
 import type { BiDirectionalLinksOptions } from '@knewbeing/markdown-it-bi-directional-links'
 import type { UnlazyImagesOptions } from '@knewbeing/markdown-it-unlazy-img'
 

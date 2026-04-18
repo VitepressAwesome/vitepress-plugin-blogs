@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-index (MIT) https://github.com/nolebase/integrations
 export interface Locale extends Record<string, any> {
   recentUpdates?: {
     category?: string

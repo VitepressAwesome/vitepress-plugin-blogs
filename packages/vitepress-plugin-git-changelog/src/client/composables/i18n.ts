@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-git-changelog (MIT) https://github.com/nolebase/integrations
 import { createI18n } from '@knewbeing/ui'
 
 import { InjectionKey } from '../constants'

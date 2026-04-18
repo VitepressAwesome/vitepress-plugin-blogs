@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-inline-link-preview (MIT) https://github.com/nolebase/integrations
 <script setup lang="ts">
 const props = defineProps<{
   showExternalIcon?: boolean

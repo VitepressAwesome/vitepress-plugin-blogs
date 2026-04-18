@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-inline-link-preview (MIT) https://github.com/nolebase/integrations
 import { useDebounceFn, useMouse } from '@vueuse/core'
 import { computed, ref, watch } from 'vue'
 

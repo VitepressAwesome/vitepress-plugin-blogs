@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-meta (MIT) https://github.com/nolebase/integrations
 import type { TransformContext } from 'vitepress'
 
 import { readFile } from 'node:fs/promises'

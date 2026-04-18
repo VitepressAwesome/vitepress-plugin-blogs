@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-enhanced-readabilities (MIT) https://github.com/nolebase/integrations
 <script setup lang="ts">
 import { NuInputHighlight, NuInputHorizontalRadioGroup } from '@knewbeing/ui'
 import { useMediaQuery, useStorage } from '@vueuse/core'

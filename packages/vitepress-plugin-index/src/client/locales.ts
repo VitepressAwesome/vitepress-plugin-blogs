@@ -1,4 +1,3 @@
-// Derived from @nolebase/vitepress-plugin-index (MIT) https://github.com/nolebase/integrations
 import type { Locale } from './types'
 
 import { defaultEnLocale, defaultZhCNLocale } from '../locales/index'
