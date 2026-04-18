@@ -24,6 +24,7 @@
     "typescript": "catalog:",
     "unbuild": "catalog:",
     "unocss": "catalog:",
+    "vue-sfc-transformer": "catalog:",
     "vue-tsc": "catalog:"
   }
 }

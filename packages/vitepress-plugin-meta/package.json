@@ -24,6 +24,7 @@
   "devDependencies": { "vue-tsc": "catalog:", "vitest": "catalog:" },
   "peerDependencies": { "vitepress": "catalog:" },
   "dependencies": {
+    "defu": "catalog:",
     "unified": "catalog:",
     "rehype-parse": "catalog:",
     "hast-util-select": "catalog:",

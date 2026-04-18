@@ -1,4 +1,3 @@
-import type { Nodes } from 'hast'
 import type { HeadConfig, TransformContext } from 'vitepress'
 
 import RehypeParse from 'rehype-parse'
@@ -11,9 +10,15 @@ import { unified } from 'unified'
 import { remove } from 'unist-util-remove'
 import { removePosition } from 'unist-util-remove-position'
 
-function RehypeRetext(option: { selector: string, removeSelectors: string[] }): (tree: Nodes) => void {
+interface RehypeLikeNode {
+  type?: string
+  children?: Array<{ type: string, value: string }>
+}
+
+function RehypeRetext(option: { selector: string, removeSelectors: string[] }): (tree: unknown) => void {
   return (nodes) => {
-    const vpDocElement = select(option.selector, nodes)
+    const rootNode = nodes as RehypeLikeNode
+    const vpDocElement = select(option.selector, rootNode as any)
     if (!vpDocElement)
       return
     if (vpDocElement.children.length === 0)
@@ -26,13 +31,13 @@ function RehypeRetext(option: { selector: string, removeSelectors: string[] }): 
     }
 
     removePosition(vpDocElement)
-    if (nodes.type !== 'root' && nodes.type !== 'element')
+    if (rootNode.type !== 'root' && rootNode.type !== 'element')
       return
 
     const text = toText(vpDocElement)
       .replaceAll(/(\n){2,}/g, ' ')
 
-    nodes.children = [{ type: 'text', value: text }]
+    rootNode.children = [{ type: 'text', value: text }]
   }
 }
 
