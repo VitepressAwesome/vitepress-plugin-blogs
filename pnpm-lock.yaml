@@ -246,7 +246,7 @@ importers:
   packages/vitepress-plugin-enhanced-readabilities:
     dependencies:
       '@knewbeing/ui':
-        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\ui
+        specifier: link:G:\tmp\vitepress-plugin-blogs-fix\packages\ui
         version: link:../ui
       '@vueuse/core':
         specifier: 'catalog:'
@@ -271,7 +271,7 @@ importers:
   packages/vitepress-plugin-git-changelog:
     dependencies:
       '@knewbeing/ui':
-        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\ui
+        specifier: link:G:\tmp\vitepress-plugin-blogs-fix\packages\ui
         version: link:../ui
       colorette:
         specifier: 'catalog:'
@@ -339,7 +339,7 @@ importers:
   packages/vitepress-plugin-index:
     dependencies:
       '@knewbeing/ui':
-        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\ui
+        specifier: link:G:\tmp\vitepress-plugin-blogs-fix\packages\ui
         version: link:../ui
       defu:
         specifier: 'catalog:'
@@ -376,10 +376,10 @@ importers:
   packages/vitepress-plugin-inline-link-preview:
     dependencies:
       '@knewbeing/markdown-it-element-transform':
-        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\markdown-it-element-transform
+        specifier: link:G:\tmp\vitepress-plugin-blogs-fix\packages\markdown-it-element-transform
         version: link:../markdown-it-element-transform
       '@knewbeing/ui':
-        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\ui
+        specifier: link:G:\tmp\vitepress-plugin-blogs-fix\packages\ui
         version: link:../ui
       markdown-it:
         specifier: 'catalog:'
@@ -444,37 +444,37 @@ importers:
   packages/vitepress-plugin-nolebase:
     dependencies:
       '@knewbeing/markdown-it-bi-directional-links':
-        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\markdown-it-bi-directional-links
+        specifier: link:G:\tmp\vitepress-plugin-blogs-fix\packages\markdown-it-bi-directional-links
         version: link:../markdown-it-bi-directional-links
       '@knewbeing/markdown-it-element-transform':
-        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\markdown-it-element-transform
+        specifier: link:G:\tmp\vitepress-plugin-blogs-fix\packages\markdown-it-element-transform
         version: link:../markdown-it-element-transform
       '@knewbeing/markdown-it-unlazy-img':
-        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\markdown-it-unlazy-img
+        specifier: link:G:\tmp\vitepress-plugin-blogs-fix\packages\markdown-it-unlazy-img
         version: link:../markdown-it-unlazy-img
       '@knewbeing/ui':
-        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\ui
+        specifier: link:G:\tmp\vitepress-plugin-blogs-fix\packages\ui
         version: link:../ui
       '@knewbeing/vitepress-plugin-enhanced-mark':
-        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\vitepress-plugin-enhanced-mark
+        specifier: link:G:\tmp\vitepress-plugin-blogs-fix\packages\vitepress-plugin-enhanced-mark
         version: link:../vitepress-plugin-enhanced-mark
       '@knewbeing/vitepress-plugin-enhanced-readabilities':
-        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\vitepress-plugin-enhanced-readabilities
+        specifier: link:G:\tmp\vitepress-plugin-blogs-fix\packages\vitepress-plugin-enhanced-readabilities
         version: link:../vitepress-plugin-enhanced-readabilities
       '@knewbeing/vitepress-plugin-git-changelog':
-        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\vitepress-plugin-git-changelog
+        specifier: link:G:\tmp\vitepress-plugin-blogs-fix\packages\vitepress-plugin-git-changelog
         version: link:../vitepress-plugin-git-changelog
       '@knewbeing/vitepress-plugin-highlight-targeted-heading':
-        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\vitepress-plugin-highlight-targeted-heading
+        specifier: link:G:\tmp\vitepress-plugin-blogs-fix\packages\vitepress-plugin-highlight-targeted-heading
         version: link:../vitepress-plugin-highlight-targeted-heading
       '@knewbeing/vitepress-plugin-index':
-        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\vitepress-plugin-index
+        specifier: link:G:\tmp\vitepress-plugin-blogs-fix\packages\vitepress-plugin-index
         version: link:../vitepress-plugin-index
       '@knewbeing/vitepress-plugin-inline-link-preview':
-        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\vitepress-plugin-inline-link-preview
+        specifier: link:G:\tmp\vitepress-plugin-blogs-fix\packages\vitepress-plugin-inline-link-preview
         version: link:../vitepress-plugin-inline-link-preview
       '@knewbeing/vitepress-plugin-meta':
-        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\vitepress-plugin-meta
+        specifier: link:G:\tmp\vitepress-plugin-blogs-fix\packages\vitepress-plugin-meta
         version: link:../vitepress-plugin-meta
       defu:
         specifier: 'catalog:'

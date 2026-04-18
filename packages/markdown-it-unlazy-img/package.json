@@ -1,6 +1,6 @@
 {
   "name": "@knewbeing/markdown-it-unlazy-img",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Derived from @nolebase/integrations (MIT) https://github.com/nolebase/integrations",
   "license": "MIT",
   "author": { "name": "知在", "email": "zz@dmsrs.org", "url": "https://www.dmsrs.org" },

@@ -1,6 +1,6 @@
 {
   "name": "@knewbeing/vitepress-plugin-page-properties",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Page-properties Vite plugin for VitePress: word count, reading time, and dev-mode HMR patch. Fully self-contained, no @nolebase dependency.",
   "keywords": ["vitepress", "page-properties", "frontmatter", "word-count", "reading-time", "blog", "vite-plugin", "typescript"],
   "license": "MIT",
