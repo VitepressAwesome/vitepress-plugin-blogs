@@ -5,7 +5,7 @@
 
 > All-in-one VitePress plugin: auto-generate sidebar, navigation, and blog components from your Markdown files.
 
-自动生成 VitePress 侧边栏、导航栏和文章列表的一站式插件。支持自动扫描 Markdown 文档、生成目录树、创建侧边栏配置、提取元数据，并提供开箱即用的 BlogHome 和 AutoToc 组件。
+自动生成 VitePress 侧边栏、导航栏和文章列表的一站式插件。支持自动扫描 Markdown 文档、生成目录树、创建侧边栏配置、提取元数据，并提供开箱即用的 AutoToc 组件。
 
 ---
 
@@ -14,8 +14,7 @@
 - 🚀 **自动侧边栏** — 根据目录结构自动生成 VitePress `themeConfig.sidebar`
 - 🗺 **自动导航** — 可选自动生成 `themeConfig.nav`，支持多级下拉
 - 📚 **文章索引** — 提取 Frontmatter 元数据（标题、日期、标签、摘要、封面）
-- 🏠 **BlogHome 组件** — 开箱即用的博客首页，带分页、标签过滤
-- 📝 **AutoToc 组件** — 文章内目录导航，跟踪当前阅读位置
+- 📝 **AutoToc 组件** — 博客首页文章列表（分页、标签过滤）+ 文章内目录导航
 - 📋 **SidebarArticleList 组件** — 侧边栏文章列表，可按目录过滤
 - 🖼 **ThumbHash 封面占位** — 自动为本地封面图生成低清占位（~30 bytes），渐进加载
 - 🔍 **虚拟模块** — `virtual:@knewbeing/toc-sidebar-doctree`，按需获取目录树数据
@@ -100,13 +99,11 @@ plugins: [
 
 ```ts
 // .vitepress/theme/index.ts
-import BlogHome from '@knewbeing/vitepress-plugin-autosidebar-toc/client/BlogHome.vue'
 import AutoToc from '@knewbeing/vitepress-plugin-autosidebar-toc/client/AutoToc.vue'
 import SidebarArticleList from '@knewbeing/vitepress-plugin-autosidebar-toc/client/SidebarArticleList.vue'
 
 export default {
   enhanceApp({ app }) {
-    app.component('BlogHome', BlogHome)
     app.component('AutoToc', AutoToc)
     app.component('SidebarArticleList', SidebarArticleList)
   }
@@ -153,29 +150,17 @@ export default {
 
 ## 提供的组件 / Client Components
 
-### `BlogHome`
-
-博客首页组件，展示文章卡片列表，支持分页和标签过滤。
-
-```vue
-<template>
-  <BlogHome />
-</template>
-```
-
-数据由 `useBlogHome()` composable 自动加载，无需传 props。
-
-封面图（frontmatter 中的 `cover` 或 `image` 字段）会自动生成 **ThumbHash 低清占位**，在图片加载前渲染模糊预览，加载完成后渐入（0.4s）。
-
 ### `AutoToc`
 
-文章内目录导航，自动跟踪当前阅读标题。
+在首页展示博客文章卡片列表（分页、标签过滤），在文章页展示目录导航，自动跟踪当前阅读标题。
 
 ```vue
 <template>
   <AutoToc />
 </template>
 ```
+
+封面图（frontmatter 中的 `cover` 或 `image` 字段）会自动生成 **ThumbHash 低清占位**，在图片加载前渲染模糊预览，加载完成后渐入（0.4s）。
 
 ### `SidebarArticleList`
 

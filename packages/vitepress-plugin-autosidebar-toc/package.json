@@ -1,7 +1,7 @@
 {
   "name": "@knewbeing/vitepress-plugin-autosidebar-toc",
   "version": "1.0.3",
-  "description": "Auto-generate sidebar, navigation, and blog components for VitePress. Provides Markdown scanning, metadata extraction, and ready-to-use components (BlogHome, AutoToc, SidebarArticleList).",
+  "description": "Auto-generate sidebar, navigation, and blog components for VitePress. Provides Markdown scanning, metadata extraction, and ready-to-use components (AutoToc, SidebarArticleList).",
   "keywords": ["vitepress", "sidebar", "navigation", "blog", "markdown", "documentation", "vite-plugin", "vue3", "typescript"],
   "license": "MIT",
   "author": { "name": "知在", "email": "zz@dmsrs.org", "url": "https://www.dmsrs.org" },
@@ -61,7 +61,6 @@
       "require": "./dist/index.cjs"
     },
     "./client/AutoToc.vue": "./dist/client/AutoToc.vue",
-    "./client/BlogHome.vue": "./dist/client/BlogHome.vue",
     "./client/SidebarArticleList.vue": "./dist/client/SidebarArticleList.vue",
     "./client/useTocEntries": {
       "import": "./dist/client/useTocEntries.mjs",

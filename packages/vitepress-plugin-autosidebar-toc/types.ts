@@ -286,8 +286,6 @@ export interface TocSidebarComponentResolverOptions {
   AutoToc?: AutoTocResolverOptions
   /** {@link SidebarArticleList} 组件的覆盖配置。 */
   SidebarArticleList?: AutoTocResolverOptions
-  /** {@link BlogHome} 组件的覆盖配置。 */
-  BlogHome?: AutoTocResolverOptions
 }
 
 /**

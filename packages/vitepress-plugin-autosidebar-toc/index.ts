@@ -5,7 +5,7 @@
  * 核心功能：
  * - 自动扫描 Markdown 文档，生成侧边栏和导航配置
  * - 提取 Frontmatter 元数据，生成文章索引和目录树
- * - 提供开箱即用的组件：BlogHome（博客首页）、AutoToc（文章目录）、SidebarArticleList（文章列表）
+ * - 提供开箱即用的组件：AutoToc（博客首页 + 文章目录）、SidebarArticleList（文章列表）
  * - 虚拟模块 `virtual:@knewbeing/toc-sidebar-doctree` 用于实时访问生成的数据
  *
  * @module @knewbeing/vitepress-plugin-autosidebar-toc
@@ -93,7 +93,7 @@ export type { TocSidebarClientConfig } from './client/useTocSidebarConfig'
 
 /**
  * 创建组件自动解析器，用于 `unplugin-vue-components` 自动导入。
- * 支持 BlogHome、AutoToc、SidebarArticleList 三个内置组件。
+ * 支持 AutoToc、SidebarArticleList 两个内置组件。
  */
 export {
   createTocSidebarComponentResolver,

@@ -12,6 +12,9 @@ export interface TocFileItem {
   date: string | null
   tags: string[]
   active: boolean
+  description: string
+  cover: string | null
+  coverHash: string | null
 }
 
 // ── 路径工具 ──
@@ -149,6 +152,9 @@ interface BaseFileItem {
   tags: string[]
   linkNormalized: string
   linkClean: string
+  description: string
+  cover: string | null
+  coverHash: string | null
 }
 
 const sortedBaseCache = new Map<string, BaseFileItem[]>()
@@ -234,7 +240,8 @@ export function useTocEntries(options: UseTocEntriesOptions = {}) {
               : typeof fm.tags === 'string'
                 ? [fm.tags]
                 : []
-            return { text: f.displayText, link: f.link, date, tags, linkNormalized, linkClean }
+            const description = f.excerpt ?? fm.description ?? fm.excerpt ?? fm.summary ?? ''
+            return { text: f.displayText, link: f.link, date, tags, linkNormalized, linkClean, description, cover: f.cover ?? null, coverHash: f.coverHash ?? null }
           })
           .filter((item) => {
             const key = normalizePath(item.link, true)
@@ -260,6 +267,9 @@ export function useTocEntries(options: UseTocEntriesOptions = {}) {
         active: currentPathClean === item.linkClean
           || currentPath === item.linkNormalized
           || currentPath === `${item.linkNormalized}/`,
+        description: item.description,
+        cover: item.cover,
+        coverHash: item.coverHash,
       }))
     },
     { immediate: true },

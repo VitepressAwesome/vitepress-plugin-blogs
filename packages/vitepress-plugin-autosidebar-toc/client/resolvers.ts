@@ -4,8 +4,7 @@
  *
  * 用于 `unplugin-vue-components` 的组件自动导入解析。
  * 提供三个内置组件的统一注册方式：
- * - AutoToc: 文章目录导航
- * - BlogHome: 博客首页展示
+ * - AutoToc: 文章目录导航（首页博客列表 + 文章页目录）
  * - SidebarArticleList: 侧边栏文章列表
  *
  * @module @knewbeing/vitepress-plugin-autosidebar-toc/client/resolvers
@@ -36,7 +35,6 @@ export interface ComponentResolver {
 const COMPONENT_MAP: Record<string, string> = {
   AutoToc: '@knewbeing/vitepress-plugin-autosidebar-toc/client/AutoToc.vue',
   SidebarArticleList: '@knewbeing/vitepress-plugin-autosidebar-toc/client/SidebarArticleList.vue',
-  BlogHome: '@knewbeing/vitepress-plugin-autosidebar-toc/client/BlogHome.vue',
   TagsCloud: '@knewbeing/vitepress-plugin-autosidebar-toc/client/TagsCloud.vue',
 }
 
@@ -57,7 +55,7 @@ const COMPONENT_MAP: Record<string, string> = {
  * Components({
  *   resolvers: [
  *     createTocSidebarComponentResolver({
- *       BlogHome: { from: 'my-pkg/BlogHome.vue' },
+ *       AutoToc: { from: 'my-pkg/AutoToc.vue' },
  *     }),
  *   ],
  * })
