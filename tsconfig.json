@@ -22,7 +22,7 @@
       "@knewbeing/vitepress-plugin-page-properties": ["./packages/vitepress-plugin-page-properties/index.ts"],
       "@knewbeing/vitepress-plugin-remove-sidebar": ["./packages/vitepress-plugin-remove-sidebar/index.ts"]
     },
-    "allowImportingTsExtensions": true,
+    "allowImportingTsExtensions": false,
     "resolveJsonModule": true,
     "types": ["vite/client", "node"],
     "allowJs": true,
