@@ -8,6 +8,9 @@
 const { existsSync, readdirSync, readFileSync, statSync } = require('node:fs')
 const { resolve, join } = require('node:path')
 
+/**
+ * @param {string} root
+ */
 function scanLocalPackages(root) {
   /** @type {Record<string, string>} */
   const map = {}
@@ -40,8 +43,11 @@ function scanLocalPackages(root) {
   return map
 }
 
-const LOCAL_MAP = scanLocalPackages(resolve(__dirname))
+const LOCAL_MAP = scanLocalPackages(resolve(__dirname, 'packages'))
 
+/**
+ * @param {Record<string, string> | undefined} deps
+ */
 function rewrite(deps) {
   if (!deps)
     return

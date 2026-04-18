@@ -1,0 +1,54 @@
+{
+  "name": "@knewbeing/vitepress-plugin-page-properties",
+  "version": "1.0.3",
+  "description": "Page-properties Vite plugin for VitePress: word count, reading time, and dev-mode HMR patch. Fully self-contained, no @nolebase dependency.",
+  "keywords": ["vitepress", "page-properties", "frontmatter", "word-count", "reading-time", "blog", "vite-plugin", "typescript"],
+  "license": "MIT",
+  "author": { "name": "知在", "email": "zz@dmsrs.org", "url": "https://www.dmsrs.org" },
+  "homepage": "https://github.com/VitepressAwesome/vitepress-plugin-blogs#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VitepressAwesome/vitepress-plugin-blogs.git",
+    "directory": "packages/vitepress-plugin-page-properties"
+  },
+  "bugs": { "url": "https://github.com/VitepressAwesome/vitepress-plugin-blogs/issues" },
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "sideEffects": ["**/*.css"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./client/PageProperties.vue": "./dist/client/PageProperties.vue",
+    "./client/PagePropertiesEditor.vue": "./dist/client/PagePropertiesEditor.vue"
+  },
+  "files": ["dist", "package.json"],
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" },
+  "scripts": {
+    "stub": "unbuild --stub",
+    "dev": "unbuild --stub",
+    "build": "unbuild",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "gray-matter": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vue-tsc": "catalog:",
+    "vite": "catalog:",
+    "vitepress": "catalog:",
+    "vue": "catalog:"
+  },
+  "peerDependencies": {
+    "vite": "catalog:",
+    "vitepress": "catalog:",
+    "vue": "catalog:"
+  }
+}
+

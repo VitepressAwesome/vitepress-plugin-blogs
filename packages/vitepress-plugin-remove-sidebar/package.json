@@ -1,0 +1,45 @@
+{
+  "name": "@knewbeing/vitepress-plugin-remove-sidebar",
+  "version": "1.0.2",
+  "description": "Vite plugin for VitePress that replaces auto-generated sidebar entries with empty placeholders, keeping the sidebar panel visible for custom slot components.",
+  "keywords": ["vitepress", "sidebar", "vite-plugin", "typescript"],
+  "license": "MIT",
+  "author": { "name": "知在", "email": "zz@dmsrs.org", "url": "https://www.dmsrs.org" },
+  "homepage": "https://github.com/VitepressAwesome/vitepress-plugin-blogs#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VitepressAwesome/vitepress-plugin-blogs.git",
+    "directory": "packages/vitepress-plugin-remove-sidebar"
+  },
+  "bugs": { "url": "https://github.com/VitepressAwesome/vitepress-plugin-blogs/issues" },
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": ["dist", "package.json"],
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" },
+  "scripts": {
+    "stub": "unbuild --stub",
+    "dev": "unbuild --stub",
+    "build": "unbuild",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "vue-tsc": "catalog:",
+    "vite": "catalog:",
+    "vitepress": "catalog:"
+  },
+  "peerDependencies": {
+    "vite": "catalog:",
+    "vitepress": "catalog:"
+  }
+}
+

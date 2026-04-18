@@ -1,0 +1,5 @@
+{
+    "evenBetterToml.formatter.allowedBlankLines": 4,
+    "evenBetterToml.formatter.compactArrays": false,
+    "evenBetterToml.formatter.columnWidth": 120
+}

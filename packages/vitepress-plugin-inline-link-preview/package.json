@@ -1,0 +1,48 @@
+{
+  "name": "@knewbeing/vitepress-plugin-inline-link-preview",
+  "version": "1.0.1",
+  "description": "",
+  "license": "MIT",
+  "author": { "name": "知在", "email": "zz@dmsrs.org", "url": "https://www.dmsrs.org" },
+  "type": "module",
+  "sideEffects": ["**/*.css"],
+  "repository": { "type": "git", "url": "https://github.com/VitepressAwesome/vitepress-plugin-blogs.git", "directory": "packages/vitepress-plugin-inline-link-preview" },
+  "scripts": {
+    "stub": "unbuild --stub",
+    "dev": "unbuild --stub",
+    "build": "unbuild",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "exports": {
+    "./client": {
+      "types": "./dist/client/index.d.ts",
+      "import": "./dist/client/index.mjs",
+      "require": "./dist/client/index.js"
+    },
+    "./client/style.css": "./dist/client/style.css",
+    "./locales": {
+      "types": "./dist/locales/index.d.ts",
+      "import": "./dist/locales/index.mjs",
+      "require": "./dist/locales/index.cjs"
+    },
+    "./markdown-it": {
+      "types": "./dist/markdown-it/index.d.ts",
+      "import": "./dist/markdown-it/index.mjs",
+      "require": "./dist/markdown-it/index.cjs"
+    }
+  },
+  "files": ["dist", "package.json"],
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" },
+  "devDependencies": {
+    "@rollup/plugin-yaml": "catalog:",
+    "typescript": "catalog:",
+    "vue-tsc": "catalog:",
+    "vitest": "catalog:",
+    "markdown-it-attrs": "catalog:"
+  },
+  "peerDependencies": { "vue": "catalog:", "vitepress": "catalog:", "markdown-it": "catalog:" },
+  "dependencies": {
+    "@knewbeing/ui": "workspace:*",
+    "@knewbeing/markdown-it-element-transform": "workspace:*"
+  }
+}

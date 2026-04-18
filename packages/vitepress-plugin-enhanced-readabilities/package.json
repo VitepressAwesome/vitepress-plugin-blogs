@@ -1,0 +1,29 @@
+{
+  "name": "@knewbeing/vitepress-plugin-enhanced-readabilities",
+  "version": "1.0.1",
+  "description": "",
+  "license": "MIT",
+  "author": { "name": "知在", "email": "zz@dmsrs.org", "url": "https://www.dmsrs.org" },
+  "type": "module",
+  "sideEffects": ["**/*.css"],
+  "repository": { "type": "git", "url": "https://github.com/VitepressAwesome/vitepress-plugin-blogs.git", "directory": "packages/vitepress-plugin-enhanced-readabilities" },
+  "scripts": {
+    "stub": "unbuild --stub",
+    "dev": "unbuild --stub",
+    "build": "unbuild",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "exports": {
+    "./client": {
+      "types": "./dist/client/index.d.ts",
+      "import": "./dist/client/index.mjs",
+      "require": "./dist/client/index.js"
+    },
+    "./client/style.css": "./dist/client/style.css"
+  },
+  "files": ["dist", "package.json"],
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" },
+  "devDependencies": { "typescript": "catalog:", "vue-tsc": "catalog:", "@rollup/plugin-yaml": "catalog:" },
+  "peerDependencies": { "vue": "catalog:", "vitepress": "catalog:" },
+  "dependencies": { "@knewbeing/ui": "workspace:*", "@vueuse/core": "catalog:" }
+}

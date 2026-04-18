@@ -1,0 +1,55 @@
+{
+  "name": "@knewbeing/vitepress-plugin-git-changelog",
+  "version": "1.0.1",
+  "description": "",
+  "license": "MIT",
+  "author": { "name": "知在", "email": "zz@dmsrs.org", "url": "https://www.dmsrs.org" },
+  "type": "module",
+  "sideEffects": ["**/*.css"],
+  "repository": { "type": "git", "url": "https://github.com/VitepressAwesome/vitepress-plugin-blogs.git", "directory": "packages/vitepress-plugin-git-changelog" },
+  "scripts": {
+    "stub": "unbuild --stub",
+    "dev": "unbuild --stub",
+    "build": "unbuild",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "exports": {
+    "./client": {
+      "types": "./dist/client/index.d.ts",
+      "import": "./dist/client/index.mjs",
+      "require": "./dist/client/index.js"
+    },
+    "./client/style.css": "./dist/client/style.css",
+    "./locales": {
+      "types": "./dist/locales/index.d.ts",
+      "import": "./dist/locales/index.mjs",
+      "require": "./dist/locales/index.cjs"
+    },
+    "./vite": {
+      "types": "./dist/vite/index.d.ts",
+      "import": "./dist/vite/index.mjs",
+      "require": "./dist/vite/index.cjs"
+    }
+  },
+  "files": ["dist", "package.json"],
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" },
+  "devDependencies": {
+    "@rollup/plugin-yaml": "catalog:",
+    "typescript": "catalog:",
+    "vue-tsc": "catalog:",
+    "vitest": "catalog:"
+  },
+  "peerDependencies": { "vue": "catalog:", "vitepress": "catalog:", "vite": "catalog:" },
+  "dependencies": {
+    "@knewbeing/ui": "workspace:*",
+    "colorette": "catalog:",
+    "date-fns": "catalog:",
+    "debug": "catalog:",
+    "defu": "catalog:",
+    "es-toolkit": "catalog:",
+    "execa": "catalog:",
+    "gray-matter": "catalog:",
+    "globby": "catalog:",
+    "uncrypto": "catalog:"
+  }
+}

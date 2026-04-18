@@ -1,0 +1,27 @@
+{
+  "name": "@knewbeing/ui",
+  "version": "1.0.1",
+  "description": "",
+  "license": "MIT",
+  "author": { "name": "知在", "email": "zz@dmsrs.org", "url": "https://www.dmsrs.org" },
+  "type": "module",
+  "repository": { "type": "git", "url": "https://github.com/VitepressAwesome/vitepress-plugin-blogs.git", "directory": "packages/ui" },
+  "scripts": {
+    "stub": "unbuild --stub",
+    "dev": "unbuild --stub",
+    "build": "unbuild",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "package.json"],
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" },
+  "devDependencies": { "typescript": "catalog:", "vue-tsc": "catalog:" },
+  "peerDependencies": { "vue": "catalog:" },
+  "dependencies": { "@vueuse/core": "catalog:" }
+}
