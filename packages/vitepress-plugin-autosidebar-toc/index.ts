@@ -1,3 +1,4 @@
+// Copyright (c) 2024-present 知在 (zz@dmsrs.org). MIT License.
 /**
  * @knewbeing/vitepress-plugin-autosidebar-toc - VitePress 自动目录和博客插件
  *

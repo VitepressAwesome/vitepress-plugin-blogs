@@ -1,3 +1,4 @@
+// Copyright (c) 2024-present 知在 (zz@dmsrs.org). MIT License.
 import { readFile } from 'node:fs/promises'
 import { basename, extname, join, resolve } from 'node:path'
 import matter from 'gray-matter'

@@ -1,3 +1,4 @@
+// Copyright (c) 2024-present 知在 (zz@dmsrs.org). MIT License.
 import type { DefaultTheme } from 'vitepress'
 import type { AutoNavOption, DirNode, MarkdownMeta } from './types'
 import { toVitePressDirectoryRoute, toVitePressPageRoute } from './routing'

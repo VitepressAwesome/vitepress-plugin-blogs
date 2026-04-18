@@ -1,3 +1,4 @@
+// Build configuration. Copyright (c) 2024-present 知在 (zz@dmsrs.org). MIT License.
 import Yaml from '@rollup/plugin-yaml'
 import { defineBuildConfig } from 'unbuild'
 

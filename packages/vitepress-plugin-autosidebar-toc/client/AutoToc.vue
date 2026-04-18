@@ -1,3 +1,4 @@
+// Copyright (c) 2024-present 知在 (zz@dmsrs.org). MIT License.
 <script setup lang="ts">
 import { computed, watch } from "vue";
 import { useRouter } from "vitepress";

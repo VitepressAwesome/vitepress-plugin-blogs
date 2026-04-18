@@ -1,3 +1,4 @@
+// Copyright (c) 2024-present 知在 (zz@dmsrs.org). MIT License.
 import { toPosixPath } from './_utils'
 
 // 将 markdown 相对路径转换为 VitePress 路由路径。

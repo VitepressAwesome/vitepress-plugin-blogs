@@ -1,3 +1,4 @@
+// Copyright (c) 2024-present 知在 (zz@dmsrs.org). MIT License.
 /**
  * 内部工具函数（原 @knewbeing/utils 包，已内联至此）
  * @internal

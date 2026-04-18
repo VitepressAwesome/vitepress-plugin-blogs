@@ -1,3 +1,4 @@
+// Copyright (c) 2024-present 知在 (zz@dmsrs.org). MIT License.
 import { computed, ref, shallowRef, watch } from 'vue'
 import { useRoute, useRouter } from 'vitepress'
 import type { TocSidebarFileEntry } from '../types'

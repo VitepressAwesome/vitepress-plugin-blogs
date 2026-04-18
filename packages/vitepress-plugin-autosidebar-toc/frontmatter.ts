@@ -1,3 +1,4 @@
+// Copyright (c) 2024-present 知在 (zz@dmsrs.org). MIT License.
 import { isRecord } from './_utils'
 import type { Frontmatter } from './types'
 

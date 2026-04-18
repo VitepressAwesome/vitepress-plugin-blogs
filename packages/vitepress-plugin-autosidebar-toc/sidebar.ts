@@ -1,3 +1,4 @@
+// Copyright (c) 2024-present 知在 (zz@dmsrs.org). MIT License.
 import { basename, extname, join } from 'node:path'
 import { toPosixPath } from './_utils'
 import type { DefaultTheme } from 'vitepress'

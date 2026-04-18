@@ -1,3 +1,4 @@
+// Copyright (c) 2024-present 知在 (zz@dmsrs.org). MIT License.
 <!--
   ThumbHashImage.vue
   @knewbeing/vitepress-plugin-autosidebar-toc
