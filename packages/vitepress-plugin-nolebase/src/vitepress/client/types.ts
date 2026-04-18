@@ -1,7 +1,7 @@
 // Derived from @nolebase/integrations (MIT) https://github.com/nolebase/integrations
-import type { Options as NolebaseEnhancedReadabilitiesOptions } from '../../enhanced-readabilities/client/index.ts'
-import type { Options as NolebaseGitChangelogOptions } from '../../git-changelog/client/index.ts'
-import type { Options as NolebaseInlineLinkPreviewOptions } from '../../inline-link-preview/client/index.ts'
+import type { Options as NolebaseEnhancedReadabilitiesOptions } from '@knewbeing/vitepress-plugin-enhanced-readabilities/client'
+import type { Options as NolebaseGitChangelogOptions } from '@knewbeing/vitepress-plugin-git-changelog/client'
+import type { Options as NolebaseInlineLinkPreviewOptions } from '@knewbeing/vitepress-plugin-inline-link-preview/client'
 
 export interface PresetClientOptions<PagePropertiesObject extends object = any> {
   enhancedMark?: false

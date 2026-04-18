@@ -7,7 +7,7 @@ import { join } from 'node:path'
 
 import defu from 'defu'
 
-import { GitChangelog, GitChangelogMarkdownSection } from '../../git-changelog/vite/index.ts'
+import { GitChangelog, GitChangelogMarkdownSection } from '@knewbeing/vitepress-plugin-git-changelog/vite'
 
 export function presetVite(options: PresetViteOptions): PresetVite {
   const opts = defu<PresetViteOptions, PresetViteOptions[]>(options, {

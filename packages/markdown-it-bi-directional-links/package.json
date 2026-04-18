@@ -1,0 +1,16 @@
+{
+  "name": "@knewbeing/markdown-it-bi-directional-links",
+  "version": "1.0.0",
+  "description": "Derived from @nolebase/integrations (MIT) https://github.com/nolebase/integrations",
+  "license": "MIT",
+  "author": { "name": "知在", "email": "zz@dmsrs.org", "url": "https://www.dmsrs.org" },
+  "type": "module",
+  "repository": { "type": "git", "url": "https://github.com/VitepressAwesome/vitepress-plugin-blogs.git", "directory": "packages/markdown-it-bi-directional-links" },
+  "scripts": { "build": "tsup" },
+  "exports": {
+    ".": { "import": "./dist/index.js", "types": "./src/index.ts" }
+  },
+  "devDependencies": { "tsup": "^8.5.1", "typescript": "^5.7.0" },
+  "peerDependencies": { "markdown-it": "*" },
+  "dependencies": { "colorette": "*", "debug": "*", "tinyglobby": "*" }
+}

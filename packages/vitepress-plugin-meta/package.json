@@ -1,0 +1,20 @@
+{
+  "name": "@knewbeing/vitepress-plugin-meta",
+  "version": "1.0.0",
+  "description": "Derived from @nolebase/integrations (MIT) https://github.com/nolebase/integrations",
+  "license": "MIT",
+  "author": { "name": "知在", "email": "zz@dmsrs.org", "url": "https://www.dmsrs.org" },
+  "type": "module",
+  "repository": { "type": "git", "url": "https://github.com/VitepressAwesome/vitepress-plugin-blogs.git", "directory": "packages/vitepress-plugin-meta" },
+  "scripts": { "build": "tsup" },
+  "exports": {
+    "./vitepress": { "import": "./dist/vitepress.js", "types": "./src/vitepress/index.ts" }
+  },
+  "devDependencies": { "tsup": "^8.5.1", "typescript": "^5.7.0" },
+  "peerDependencies": { "vitepress": "*" },
+  "dependencies": {
+    "unified": "*", "rehype-parse": "*", "hast-util-select": "*",
+    "hast-util-to-text": "*", "retext-stringify": "*",
+    "unist-util-remove": "*", "unist-util-remove-position": "*"
+  }
+}

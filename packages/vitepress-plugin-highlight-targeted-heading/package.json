@@ -1,0 +1,14 @@
+{
+  "name": "@knewbeing/vitepress-plugin-highlight-targeted-heading",
+  "version": "1.0.0",
+  "description": "Derived from @nolebase/integrations (MIT) https://github.com/nolebase/integrations",
+  "license": "MIT",
+  "author": { "name": "知在", "email": "zz@dmsrs.org", "url": "https://www.dmsrs.org" },
+  "type": "module",
+  "repository": { "type": "git", "url": "https://github.com/VitepressAwesome/vitepress-plugin-blogs.git", "directory": "packages/vitepress-plugin-highlight-targeted-heading" },
+  "exports": {
+    "./client": "./src/client/index.ts",
+    "./client/style.css": "./src/client/style.css"
+  },
+  "peerDependencies": { "vue": "^3.0.0", "vitepress": "*" }
+}

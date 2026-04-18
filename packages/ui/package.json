@@ -1,0 +1,15 @@
+{
+  "name": "@knewbeing/ui",
+  "version": "1.0.0",
+  "description": "Derived from @nolebase/integrations (MIT) https://github.com/nolebase/integrations",
+  "license": "MIT",
+  "author": { "name": "知在", "email": "zz@dmsrs.org", "url": "https://www.dmsrs.org" },
+  "type": "module",
+  "repository": { "type": "git", "url": "https://github.com/VitepressAwesome/vitepress-plugin-blogs.git", "directory": "packages/ui" },
+  "exports": {
+    ".": "./src/index.ts",
+    "./style.css": "./src/style.css"
+  },
+  "peerDependencies": { "vue": "^3.0.0" },
+  "dependencies": { "@vueuse/core": "*" }
+}

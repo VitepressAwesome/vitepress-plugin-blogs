@@ -1,6 +1,6 @@
 // Derived from @nolebase/integrations (MIT) https://github.com/nolebase/integrations
-import type { BiDirectionalLinksOptions } from '../../markdown-it-bi-directional-links/index.ts'
-import type { UnlazyImagesOptions } from '../../markdown-it-unlazy-img/index.ts'
+import type { BiDirectionalLinksOptions } from '@knewbeing/markdown-it-bi-directional-links'
+import type { UnlazyImagesOptions } from '@knewbeing/markdown-it-unlazy-img'
 
 import type { PresetMarkdownIt } from './types'
 
@@ -32,16 +32,16 @@ export function presetMarkdownIt(options?: MarkdownItOptions): PresetMarkdownIt 
   return {
     async install(md) {
       if (opts.bidirectionalLinks) {
-        const { BiDirectionalLinks } = await import('../../markdown-it-bi-directional-links/index')
+        const { BiDirectionalLinks } = await import('@knewbeing/markdown-it-bi-directional-links')
         md.use(BiDirectionalLinks(opts.bidirectionalLinks.options))
       }
       if (opts.unlazyImages) {
-        const { UnlazyImages } = await import('../../markdown-it-unlazy-img/index')
+        const { UnlazyImages } = await import('@knewbeing/markdown-it-unlazy-img')
         md.use(UnlazyImages(), opts.unlazyImages.options)
       }
 
       if (opts.inlineLinkPreview) {
-        const { InlineLinkPreviewElementTransform } = await import('../../inline-link-preview/markdown-it/index')
+        const { InlineLinkPreviewElementTransform } = await import('@knewbeing/vitepress-plugin-inline-link-preview/markdown-it')
         md.use(InlineLinkPreviewElementTransform, opts.inlineLinkPreview.options)
       }
     },

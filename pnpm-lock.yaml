@@ -10,12 +10,72 @@ importers:
 
   .:
     devDependencies:
+      '@types/node':
+        specifier: ^22.0.0
+        version: 22.19.17
       tsup:
         specifier: ^8.5.0
         version: 8.5.1(postcss@8.5.10)(typescript@6.0.3)
       typescript:
         specifier: ^6.0.2
         version: 6.0.3
+
+  packages/markdown-it-bi-directional-links:
+    dependencies:
+      colorette:
+        specifier: '*'
+        version: 2.0.20
+      debug:
+        specifier: '*'
+        version: 4.4.3
+      markdown-it:
+        specifier: '*'
+        version: 14.1.1
+      tinyglobby:
+        specifier: '*'
+        version: 0.2.16
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(postcss@8.5.10)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.0
+        version: 5.9.3
+
+  packages/markdown-it-element-transform:
+    dependencies:
+      markdown-it:
+        specifier: '*'
+        version: 14.1.1
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(postcss@8.5.10)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.0
+        version: 5.9.3
+
+  packages/markdown-it-unlazy-img:
+    dependencies:
+      markdown-it:
+        specifier: '*'
+        version: 14.1.1
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(postcss@8.5.10)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.0
+        version: 5.9.3
+
+  packages/ui:
+    dependencies:
+      '@vueuse/core':
+        specifier: '*'
+        version: 14.2.1(vue@3.5.32(typescript@6.0.3))
+      vue:
+        specifier: ^3.0.0
+        version: 3.5.32(typescript@6.0.3)
 
   packages/vitepress-plugin-autosidebar-toc:
     dependencies:
@@ -54,11 +114,28 @@ importers:
         specifier: ^3.5.32
         version: 3.5.32(typescript@6.0.3)
 
-  packages/vitepress-plugin-nolebase:
+  packages/vitepress-plugin-enhanced-mark: {}
+
+  packages/vitepress-plugin-enhanced-readabilities:
     dependencies:
+      '@knewbeing/ui':
+        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\ui
+        version: link:../ui
       '@vueuse/core':
         specifier: '*'
-        version: 14.2.1(vue@3.5.32(typescript@5.9.3))
+        version: 14.2.1(vue@3.5.32(typescript@6.0.3))
+      vitepress:
+        specifier: '*'
+        version: 1.6.4(@algolia/client-search@5.50.2)(@types/node@22.19.17)(less@4.6.4)(postcss@8.5.10)(search-insights@2.17.3)(typescript@6.0.3)
+      vue:
+        specifier: ^3.0.0
+        version: 3.5.32(typescript@6.0.3)
+
+  packages/vitepress-plugin-git-changelog:
+    dependencies:
+      '@knewbeing/ui':
+        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\ui
+        version: link:../ui
       colorette:
         specifier: '*'
         version: 2.0.20
@@ -80,33 +157,102 @@ importers:
       globby:
         specifier: '*'
         version: 16.2.0
+      uncrypto:
+        specifier: '*'
+        version: 0.1.3
+      vite:
+        specifier: '*'
+        version: 7.3.2(@types/node@22.19.17)(less@4.6.4)
+      vitepress:
+        specifier: '*'
+        version: 1.6.4(@algolia/client-search@5.50.2)(@types/node@22.19.17)(less@4.6.4)(postcss@8.5.10)(search-insights@2.17.3)(typescript@5.9.3)
+      vue:
+        specifier: ^3.0.0
+        version: 3.5.32(typescript@5.9.3)
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(postcss@8.5.10)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.0
+        version: 5.9.3
+
+  packages/vitepress-plugin-highlight-targeted-heading:
+    dependencies:
+      vitepress:
+        specifier: '*'
+        version: 1.6.4(@algolia/client-search@5.50.2)(@types/node@22.19.17)(less@4.6.4)(postcss@8.5.10)(search-insights@2.17.3)(typescript@6.0.3)
+      vue:
+        specifier: ^3.0.0
+        version: 3.5.32(typescript@6.0.3)
+
+  packages/vitepress-plugin-index:
+    dependencies:
+      '@knewbeing/ui':
+        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\ui
+        version: link:../ui
+      globby:
+        specifier: '*'
+        version: 16.2.0
       gray-matter:
         specifier: '*'
         version: 4.0.3
+      tinyglobby:
+        specifier: '*'
+        version: 0.2.16
+      vitepress:
+        specifier: '*'
+        version: 1.6.4(@algolia/client-search@5.50.2)(@types/node@22.19.17)(less@4.6.4)(postcss@8.5.10)(search-insights@2.17.3)(typescript@5.9.3)
+      vue:
+        specifier: ^3.0.0
+        version: 3.5.32(typescript@5.9.3)
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(postcss@8.5.10)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.0
+        version: 5.9.3
+
+  packages/vitepress-plugin-inline-link-preview:
+    dependencies:
+      '@knewbeing/markdown-it-element-transform':
+        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\markdown-it-element-transform
+        version: link:../markdown-it-element-transform
+      '@knewbeing/ui':
+        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\ui
+        version: link:../ui
+      markdown-it:
+        specifier: '*'
+        version: 14.1.1
+      vitepress:
+        specifier: '*'
+        version: 1.6.4(@algolia/client-search@5.50.2)(@types/node@22.19.17)(less@4.6.4)(postcss@8.5.10)(search-insights@2.17.3)(typescript@5.9.3)
+      vue:
+        specifier: ^3.0.0
+        version: 3.5.32(typescript@5.9.3)
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(postcss@8.5.10)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.0
+        version: 5.9.3
+
+  packages/vitepress-plugin-meta:
+    dependencies:
       hast-util-select:
         specifier: '*'
         version: 6.0.4
       hast-util-to-text:
         specifier: '*'
         version: 4.0.2
-      markdown-it:
-        specifier: '*'
-        version: 14.1.1
-      markdown-it-attrs:
-        specifier: '*'
-        version: 4.3.1(markdown-it@14.1.1)
       rehype-parse:
         specifier: '*'
         version: 9.0.1
       retext-stringify:
         specifier: '*'
         version: 4.0.0
-      tinyglobby:
-        specifier: '*'
-        version: 0.2.16
-      uncrypto:
-        specifier: '*'
-        version: 0.1.3
       unified:
         specifier: '*'
         version: 11.0.5
@@ -116,6 +262,55 @@ importers:
       unist-util-remove-position:
         specifier: '*'
         version: 5.0.0
+      vitepress:
+        specifier: '*'
+        version: 1.6.4(@algolia/client-search@5.50.2)(@types/node@22.19.17)(less@4.6.4)(postcss@8.5.10)(search-insights@2.17.3)(typescript@5.9.3)
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(postcss@8.5.10)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.0
+        version: 5.9.3
+
+  packages/vitepress-plugin-nolebase:
+    dependencies:
+      '@knewbeing/markdown-it-bi-directional-links':
+        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\markdown-it-bi-directional-links
+        version: link:../markdown-it-bi-directional-links
+      '@knewbeing/markdown-it-element-transform':
+        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\markdown-it-element-transform
+        version: link:../markdown-it-element-transform
+      '@knewbeing/markdown-it-unlazy-img':
+        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\markdown-it-unlazy-img
+        version: link:../markdown-it-unlazy-img
+      '@knewbeing/ui':
+        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\ui
+        version: link:../ui
+      '@knewbeing/vitepress-plugin-enhanced-mark':
+        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\vitepress-plugin-enhanced-mark
+        version: link:../vitepress-plugin-enhanced-mark
+      '@knewbeing/vitepress-plugin-enhanced-readabilities':
+        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\vitepress-plugin-enhanced-readabilities
+        version: link:../vitepress-plugin-enhanced-readabilities
+      '@knewbeing/vitepress-plugin-git-changelog':
+        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\vitepress-plugin-git-changelog
+        version: link:../vitepress-plugin-git-changelog
+      '@knewbeing/vitepress-plugin-highlight-targeted-heading':
+        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\vitepress-plugin-highlight-targeted-heading
+        version: link:../vitepress-plugin-highlight-targeted-heading
+      '@knewbeing/vitepress-plugin-index':
+        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\vitepress-plugin-index
+        version: link:../vitepress-plugin-index
+      '@knewbeing/vitepress-plugin-inline-link-preview':
+        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\vitepress-plugin-inline-link-preview
+        version: link:../vitepress-plugin-inline-link-preview
+      '@knewbeing/vitepress-plugin-meta':
+        specifier: link:G:\code\vPress\calmripple.github.io\vitepress-plugin-blogs\packages\vitepress-plugin-meta
+        version: link:../vitepress-plugin-meta
+      defu:
+        specifier: '*'
+        version: 6.1.7
       vite:
         specifier: '*'
         version: 7.3.2(@types/node@22.19.17)(less@4.6.4)
@@ -1584,12 +1779,6 @@ packages:
   mark.js@8.11.1:
     resolution: {integrity: sha512-1I+1qpDt4idfgLQG+BNWmrqku+7/2bi5nLf4YwF8y8zXvmfiTBY3PV3ZibfrjBueCByROpuBjLLFCajqkgYoLQ==}
 
-  markdown-it-attrs@4.3.1:
-    resolution: {integrity: sha512-/ko6cba+H6gdZ0DOw7BbNMZtfuJTRp9g/IrGIuz8lYc/EfnmWRpaR3CFPnNbVz0LDvF8Gf1hFGPqrQqq7De0rg==}
-    engines: {node: '>=6'}
-    peerDependencies:
-      markdown-it: '>= 9.0.0'
-
   markdown-it@14.1.1:
     resolution: {integrity: sha512-BuU2qnTti9YKgK5N+IeMubp14ZUKUUw7yeJbkjtosvHiP0AZ5c8IAgEMk79D0eC8F23r4Ac/q8cAIFdm2FtyoA==}
     hasBin: true
@@ -2818,6 +3007,11 @@ snapshots:
       vite: 5.4.21(@types/node@22.19.17)(less@4.6.4)
       vue: 3.5.32(typescript@5.9.3)
 
+  '@vitejs/plugin-vue@5.2.4(vite@5.4.21(@types/node@22.19.17)(less@4.6.4))(vue@3.5.32(typescript@6.0.3))':
+    dependencies:
+      vite: 5.4.21(@types/node@22.19.17)(less@4.6.4)
+      vue: 3.5.32(typescript@6.0.3)
+
   '@vitejs/plugin-vue@6.0.6(vite@7.3.2(@types/node@22.19.17)(less@4.6.4))(vue@3.5.32(typescript@6.0.3))':
     dependencies:
       '@rolldown/pluginutils': 1.0.0-rc.13
@@ -2924,12 +3118,14 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@vueuse/core@14.2.1(vue@3.5.32(typescript@5.9.3))':
+  '@vueuse/core@12.8.2(typescript@6.0.3)':
     dependencies:
       '@types/web-bluetooth': 0.0.21
-      '@vueuse/metadata': 14.2.1
-      '@vueuse/shared': 14.2.1(vue@3.5.32(typescript@5.9.3))
-      vue: 3.5.32(typescript@5.9.3)
+      '@vueuse/metadata': 12.8.2
+      '@vueuse/shared': 12.8.2(typescript@6.0.3)
+      vue: 3.5.32(typescript@6.0.3)
+    transitivePeerDependencies:
+      - typescript
 
   '@vueuse/core@14.2.1(vue@3.5.32(typescript@6.0.3))':
     dependencies:
@@ -2943,6 +3139,16 @@ snapshots:
       '@vueuse/core': 12.8.2(typescript@5.9.3)
       '@vueuse/shared': 12.8.2(typescript@5.9.3)
       vue: 3.5.32(typescript@5.9.3)
+    optionalDependencies:
+      focus-trap: 7.8.0
+    transitivePeerDependencies:
+      - typescript
+
+  '@vueuse/integrations@12.8.2(focus-trap@7.8.0)(typescript@6.0.3)':
+    dependencies:
+      '@vueuse/core': 12.8.2(typescript@6.0.3)
+      '@vueuse/shared': 12.8.2(typescript@6.0.3)
+      vue: 3.5.32(typescript@6.0.3)
     optionalDependencies:
       focus-trap: 7.8.0
     transitivePeerDependencies:
@@ -2966,9 +3172,11 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@vueuse/shared@14.2.1(vue@3.5.32(typescript@5.9.3))':
+  '@vueuse/shared@12.8.2(typescript@6.0.3)':
     dependencies:
-      vue: 3.5.32(typescript@5.9.3)
+      vue: 3.5.32(typescript@6.0.3)
+    transitivePeerDependencies:
+      - typescript
 
   '@vueuse/shared@14.2.1(vue@3.5.32(typescript@6.0.3))':
     dependencies:
@@ -3450,10 +3658,6 @@ snapshots:
     optional: true
 
   mark.js@8.11.1: {}
-
-  markdown-it-attrs@4.3.1(markdown-it@14.1.1):
-    dependencies:
-      markdown-it: 14.1.1
 
   markdown-it@14.1.1:
     dependencies:
@@ -4066,6 +4270,55 @@ snapshots:
       shiki: 2.5.0
       vite: 5.4.21(@types/node@22.19.17)(less@4.6.4)
       vue: 3.5.32(typescript@5.9.3)
+    optionalDependencies:
+      postcss: 8.5.10
+    transitivePeerDependencies:
+      - '@algolia/client-search'
+      - '@types/node'
+      - '@types/react'
+      - async-validator
+      - axios
+      - change-case
+      - drauu
+      - fuse.js
+      - idb-keyval
+      - jwt-decode
+      - less
+      - lightningcss
+      - nprogress
+      - qrcode
+      - react
+      - react-dom
+      - sass
+      - sass-embedded
+      - search-insights
+      - sortablejs
+      - stylus
+      - sugarss
+      - terser
+      - typescript
+      - universal-cookie
+
+  vitepress@1.6.4(@algolia/client-search@5.50.2)(@types/node@22.19.17)(less@4.6.4)(postcss@8.5.10)(search-insights@2.17.3)(typescript@6.0.3):
+    dependencies:
+      '@docsearch/css': 3.8.2
+      '@docsearch/js': 3.8.2(@algolia/client-search@5.50.2)(search-insights@2.17.3)
+      '@iconify-json/simple-icons': 1.2.78
+      '@shikijs/core': 2.5.0
+      '@shikijs/transformers': 2.5.0
+      '@shikijs/types': 2.5.0
+      '@types/markdown-it': 14.1.2
+      '@vitejs/plugin-vue': 5.2.4(vite@5.4.21(@types/node@22.19.17)(less@4.6.4))(vue@3.5.32(typescript@6.0.3))
+      '@vue/devtools-api': 7.7.9
+      '@vue/shared': 3.5.32
+      '@vueuse/core': 12.8.2(typescript@6.0.3)
+      '@vueuse/integrations': 12.8.2(focus-trap@7.8.0)(typescript@6.0.3)
+      focus-trap: 7.8.0
+      mark.js: 8.11.1
+      minisearch: 7.2.0
+      shiki: 2.5.0
+      vite: 5.4.21(@types/node@22.19.17)(less@4.6.4)
+      vue: 3.5.32(typescript@6.0.3)
     optionalDependencies:
       postcss: 8.5.10
     transitivePeerDependencies:

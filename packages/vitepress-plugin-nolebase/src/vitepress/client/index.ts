@@ -4,8 +4,8 @@ import type { PresetClient, Slots } from './utils/index.ts'
 
 import defu from 'defu'
 
-import { LayoutMode, NolebaseEnhancedReadabilitiesMenu, NolebaseEnhancedReadabilitiesScreenMenu } from '../../enhanced-readabilities/client/index.ts'
-import { NolebaseHighlightTargetedHeading } from '../../highlight-targeted-heading/client/index.ts'
+import { LayoutMode, NolebaseEnhancedReadabilitiesMenu, NolebaseEnhancedReadabilitiesScreenMenu } from '@knewbeing/vitepress-plugin-enhanced-readabilities/client'
+import { NolebaseHighlightTargetedHeading } from '@knewbeing/vitepress-plugin-highlight-targeted-heading/client'
 import { h } from 'vue'
 
 function newArrayOfOrPush<K extends PropertyKey, V>(object: Record<K, V[]>, property: K, item: V) {
@@ -52,42 +52,42 @@ export function presetClient<PagePropertiesObject extends object = any>(options?
     },
     async enhanceApp({ app }) {
       if (opts.enhancedReadabilities) {
-        const { NolebaseEnhancedReadabilitiesPlugin } = await import('../../enhanced-readabilities/client/index')
-        await import('../../enhanced-readabilities/client/style.css')
+        const { NolebaseEnhancedReadabilitiesPlugin } = await import('@knewbeing/vitepress-plugin-enhanced-readabilities/client')
+        await import('@knewbeing/vitepress-plugin-enhanced-readabilities/client/style.css')
 
         const enhancedReadabilitiesOptions = opts.enhancedReadabilities?.options ? [opts.enhancedReadabilities.options] : []
         app.use(NolebaseEnhancedReadabilitiesPlugin, ...enhancedReadabilitiesOptions)
       }
 
       if (opts.highlightTargetedHeading) {
-        const { NolebaseNolebaseHighlightTargetedHeadingPlugin } = await import('../../highlight-targeted-heading/client/index')
-        await import('../../highlight-targeted-heading/client/style.css')
+        const { NolebaseNolebaseHighlightTargetedHeadingPlugin } = await import('@knewbeing/vitepress-plugin-highlight-targeted-heading/client')
+        await import('@knewbeing/vitepress-plugin-highlight-targeted-heading/client/style.css')
 
         app.use(NolebaseNolebaseHighlightTargetedHeadingPlugin)
       }
 
       if (opts.inlineLinkPreview) {
-        const { NolebaseInlineLinkPreviewPlugin } = await import('../../inline-link-preview/client/index')
-        await import('../../inline-link-preview/client/style.css')
+        const { NolebaseInlineLinkPreviewPlugin } = await import('@knewbeing/vitepress-plugin-inline-link-preview/client')
+        await import('@knewbeing/vitepress-plugin-inline-link-preview/client/style.css')
 
         const linkPreviewOptions = opts.inlineLinkPreview?.options ? [opts.inlineLinkPreview.options] : []
         app.use(NolebaseInlineLinkPreviewPlugin, ...linkPreviewOptions)
       }
 
       if (opts.gitChangelog) {
-        const { NolebaseGitChangelogPlugin } = await import('../../git-changelog/client/index')
-        await import('../../git-changelog/client/style.css')
+        const { NolebaseGitChangelogPlugin } = await import('@knewbeing/vitepress-plugin-git-changelog/client')
+        await import('@knewbeing/vitepress-plugin-git-changelog/client/style.css')
 
         const gitChangelogOptions = opts.gitChangelog?.options ? [opts.gitChangelog.options] : []
         app.use(NolebaseGitChangelogPlugin, ...gitChangelogOptions)
       }
 
       if (opts.enhancedMark)
-        await import('../../enhanced-mark/client/style.css')
+        await import('@knewbeing/vitepress-plugin-enhanced-mark/client/style.css')
 
       if (opts.index) {
-        const { NolebaseIndexPlugin } = await import('../../index-plugin/client/index')
-        await import('../../index-plugin/client/style.css')
+        const { NolebaseIndexPlugin } = await import('@knewbeing/vitepress-plugin-index/client')
+        await import('@knewbeing/vitepress-plugin-index/client/style.css')
 
         app.use(NolebaseIndexPlugin)
       }
