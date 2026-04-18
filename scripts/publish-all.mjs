@@ -31,16 +31,26 @@ function elapsed() {
   return `${((Date.now() - startTime) / 1000).toFixed(1)}s`
 }
 
+/**
+ * @param {string} label
+ */
 function step(label) {
   console.log(`\n${'─'.repeat(60)}`)
   console.log(`  ${label}`)
   console.log('─'.repeat(60))
 }
 
+/**
+ * @param {string} msg
+ */
 function log(msg) {
   process.stdout.write(`  ${msg}\n`)
 }
 
+/**
+ * @param {string} cmd
+ * @param {readonly string[]} args
+ */
 function runCommand(cmd, args, options = {}) {
   const t0 = Date.now()
   const result = spawnSync(cmd, args, {
@@ -159,6 +169,10 @@ for (const dir of pkgDirs) {
 const publishStep = skipBuild ? 4 : 6
 step(`Step ${publishStep}/${totalSteps} · 发布包`)
 
+/**
+ * @param {any} name
+ * @param {any} version
+ */
 function npmViewExists(name, version) {
   try {
     execSync(`npm view ${name}@${version} version --userconfig=${tmpNpmrc}`, { stdio: 'pipe' })
@@ -171,6 +185,10 @@ function npmViewExists(name, version) {
 const stats = { published: 0, skipped: 0, failed: 0, noDist: 0, private: 0 }
 const total = pkgDirs.length
 
+/**
+ * @param {string} pkgDir
+ * @param {number} index
+ */
 function publishPackage(pkgDir, index) {
   const pkgJsonPath = join(pkgDir, 'package.json')
   if (!existsSync(pkgJsonPath)) return
