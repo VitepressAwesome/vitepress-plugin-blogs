@@ -1,7 +1,11 @@
 /**
  * Script: publish-all.mjs
  * Publishes all workspace packages to npm using NPM_TOKEN env var.
- * Skips packages whose exact version is already published.
+ * - If an exact version is already published AND its gitHead matches the current
+ *   git commit, the package is skipped (nothing changed).
+ * - If an exact version is already published but from a different commit, the
+ *   patch version is bumped automatically and the new version is published.
+ * - If the version has not been published yet, it is published as-is.
  * Uses `pnpm publish` so workspace:* and catalog: are replaced with real versions.
  *
  * Usage:
@@ -170,8 +174,8 @@ const publishStep = skipBuild ? 4 : 6
 step(`Step ${publishStep}/${totalSteps} · 发布包`)
 
 /**
- * @param {any} name
- * @param {any} version
+ * @param {string} name
+ * @param {string} version
  */
 function npmViewExists(name, version) {
   try {
@@ -182,8 +186,88 @@ function npmViewExists(name, version) {
   }
 }
 
-const stats = { published: 0, skipped: 0, failed: 0, noDist: 0, private: 0 }
+/**
+ * Get the gitHead (commit hash) recorded in the published npm package.
+ * @param {string} name
+ * @param {string} version
+ * @returns {string | null}
+ */
+function getNpmGitHead(name, version) {
+  try {
+    const out = execSync(
+      `npm view ${name}@${version} gitHead --userconfig=${tmpNpmrc}`,
+      { stdio: 'pipe', encoding: 'utf8' }
+    )
+    return out.trim() || null
+  } catch {
+    return null
+  }
+}
+
+/**
+ * Bump the patch segment of a semver string.
+ * @param {string} version
+ */
+function bumpPatch(version) {
+  const parts = version.split('.')
+  parts[parts.length - 1] = String(Number(parts[parts.length - 1]) + 1)
+  return parts.join('.')
+}
+
+// Get current git commit hash once, used for all packages.
+let currentGitCommit = null
+try {
+  currentGitCommit = execSync('git rev-parse HEAD', { cwd: repoRoot, encoding: 'utf8' }).trim()
+  log(`  当前 Git commit: ${currentGitCommit.slice(0, 12)}`)
+} catch {
+  log('  ⚠️  无法获取当前 Git commit hash，已发布版本将依赖 gitHead 比对跳过')
+}
+
+const stats = { published: 0, skipped: 0, bumped: 0, failed: 0, noDist: 0, private: 0 }
 const total = pkgDirs.length
+
+/**
+ * Run pnpm publish for the given package directory and version label.
+ * @param {string} pkgDir
+ * @param {string} label  e.g. "name@version"
+ * @param {string} prefix e.g. "[1/15]"
+ * @returns {boolean} success
+ */
+function runPublish(pkgDir, label, prefix) {
+  const pkgStart = Date.now()
+  log(`${prefix} 📦 发布中: ${label} ...`)
+
+  const result = spawnSync(
+    'pnpm',
+    ['publish', '--access', 'public', '--no-git-checks'],
+    {
+      cwd: pkgDir,
+      stdio: ['ignore', 'pipe', 'inherit'],
+      encoding: 'utf8',
+      env: {
+        ...process.env,
+        NPM_TOKEN: token,
+        npm_config_userconfig: tmpNpmrc,
+      },
+    }
+  )
+
+  const duration = `${((Date.now() - pkgStart) / 1000).toFixed(1)}s`
+
+  if (result.stdout?.trim()) {
+    for (const line of result.stdout.trim().split('\n')) {
+      log(`       ${line}`)
+    }
+  }
+
+  if (result.status === 0) {
+    log(`${prefix} ✅ ${label}  →  发布成功 (${duration})`)
+    return true
+  } else {
+    log(`${prefix} ❌ ${label}  →  发布失败 (exit code: ${result.status}, ${duration})`)
+    return false
+  }
+}
 
 /**
  * @param {string} pkgDir
@@ -213,8 +297,43 @@ function publishPackage(pkgDir, index) {
   const alreadyPublished = npmViewExists(pkg.name, pkg.version)
 
   if (alreadyPublished) {
-    log(`${prefix} ⏭  ${pkg.name}@${pkg.version}  →  已发布，跳过`)
-    stats.skipped++
+    // Check whether the published copy is from the current git commit.
+    const npmGitHead = getNpmGitHead(pkg.name, pkg.version)
+    const commitMatch = currentGitCommit && npmGitHead && npmGitHead === currentGitCommit
+
+    if (commitMatch) {
+      log(`${prefix} ⏭  ${pkg.name}@${pkg.version}  →  已发布且为当前提交，跳过`)
+      stats.skipped++
+      return
+    }
+
+    // Already published but from a different commit — bump patch and republish.
+    const reason = npmGitHead
+      ? `已发布 gitHead=${npmGitHead.slice(0, 12)} ≠ 当前 ${(currentGitCommit ?? '').slice(0, 12)}`
+      : '已发布但无 gitHead 信息，视为需要重新发布'
+    const newVersion = bumpPatch(pkg.version)
+    log(`${prefix} 🔄 ${pkg.name}@${pkg.version}  →  ${reason}`)
+    log(`${prefix}    升级版本: ${pkg.version} → ${newVersion}`)
+
+    if (dryRun) {
+      log(`${prefix} 📦 ${pkg.name}@${newVersion}  →  待发布 [dry-run]`)
+      stats.bumped++
+      stats.published++
+      return
+    }
+
+    // Write bumped version back to package.json.
+    pkg.version = newVersion
+    writeFileSync(pkgJsonPath, `${JSON.stringify(pkg, null, 2)}\n`, 'utf-8')
+
+    const ok = runPublish(pkgDir, `${pkg.name}@${newVersion}`, prefix)
+    if (ok) {
+      stats.bumped++
+      stats.published++
+    } else {
+      stats.failed++
+      process.exitCode = 1
+    }
     return
   }
 
@@ -224,37 +343,10 @@ function publishPackage(pkgDir, index) {
     return
   }
 
-  const pkgStart = Date.now()
-  log(`${prefix} 📦 发布中: ${pkg.name}@${pkg.version} ...`)
-
-  const result = spawnSync(
-    'pnpm',
-    ['publish', '--access', 'public', '--no-git-checks'],
-    {
-      cwd: pkgDir,
-      stdio: ['ignore', 'pipe', 'inherit'],
-      encoding: 'utf8',
-      env: {
-        ...process.env,
-        NPM_TOKEN: token,
-        npm_config_userconfig: tmpNpmrc,
-      },
-    }
-  )
-
-  const duration = `${((Date.now() - pkgStart) / 1000).toFixed(1)}s`
-
-  if (result.stdout?.trim()) {
-    for (const line of result.stdout.trim().split('\n')) {
-      log(`       ${line}`)
-    }
-  }
-
-  if (result.status === 0) {
-    log(`${prefix} ✅ ${pkg.name}@${pkg.version}  →  发布成功 (${duration})`)
+  const ok = runPublish(pkgDir, `${pkg.name}@${pkg.version}`, prefix)
+  if (ok) {
     stats.published++
   } else {
-    log(`${prefix} ❌ ${pkg.name}@${pkg.version}  →  发布失败 (exit code: ${result.status}, ${duration})`)
     stats.failed++
     process.exitCode = 1
   }
@@ -274,6 +366,7 @@ if (dryRun) {
   log(`  📦 待发布:   ${stats.published}`)
 } else {
   log(`  ✅ 发布成功: ${stats.published}`)
+  if (stats.bumped > 0) log(`  🔄 版本升级: ${stats.bumped}`)
   if (stats.failed > 0) log(`  ❌ 发布失败: ${stats.failed}`)
 }
 if (stats.skipped > 0) log(`  ⏭  已是最新: ${stats.skipped}`)
