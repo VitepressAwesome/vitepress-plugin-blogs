@@ -30,7 +30,7 @@ export type ComponentResolveResult =
 
 export interface ComponentResolver {
   resolve: (name: string) => ComponentResolveResult
-  type?: 'component'
+  type: 'component' | 'directive'
 }
 
 const COMPONENT_MAP: Record<string, string> = {
