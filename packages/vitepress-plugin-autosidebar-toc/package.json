@@ -36,6 +36,7 @@
   "devDependencies": {
     "@types/node": "catalog:",
     "@types/sanitize-html": "catalog:",
+    "unplugin-vue-components": "catalog:",
     "typescript": "catalog:",
     "vue-tsc": "catalog:",
     "vite": "catalog:",

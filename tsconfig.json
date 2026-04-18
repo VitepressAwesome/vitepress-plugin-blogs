@@ -36,6 +36,7 @@
     "skipLibCheck": true
   },
   "include": [
+    "shims-vue.d.ts",
     "packages/**/*.d.ts",
     "packages/**/*.ts",
     "packages/**/*.vue"
